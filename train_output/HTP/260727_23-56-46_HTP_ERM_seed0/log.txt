@@ -1,0 +1,88 @@
+[37m[36mINFO[0m[0m 07/27 23:56:47 | Command :: /home/s21_yhr/lzh/GGA-new/train_all.py HTP_ERM_seed0 --dataset HTP --data_dir /home/s21_yhr/lzh/GGA-new/dataset --algorithm ERM --steps 5000 --checkpoint_freq 100 --batch_size 32 --optimizer adam --lr 5e-5 --weight_decay 0 --resnet_dropout 0 --resnet18 False --pretrained True --freeze_bn True --swad False --seed 0 --trial_seed 0 --deterministic --prebuild_loader --cache_size 256
+Environment:
+	Python: 3.11.15
+	PyTorch: 2.11.0+cu128
+	Torchvision: 0.26.0+cu128
+	CUDA: 12.8
+	CUDNN: 91900
+	NumPy: 2.4.6
+	PIL: 12.2.0
+Args:
+	algorithm: ERM
+	batch_size: 32
+	cache_root: cache
+	cache_size: 256
+	checkpoint_freq: 100
+	configs: []
+	data_dir: /home/s21_yhr/lzh/GGA-new/dataset
+	dataset: HTP
+	debug: False
+	deterministic: True
+	end_step: 200
+	evalmode: fast
+	extra_search: n
+	extra_search_end: None
+	extra_search_start: None
+	gga_l_gamma: 0.001
+	grad_fn: sum
+	holdout_fraction: 0.2
+	model_save: None
+	name: HTP_ERM_seed0
+	neighborhoodSize: 1e-06
+	out_dir: train_output/HTP/260727_23-56-46_HTP_ERM_seed0
+	out_root: train_output/HTP
+	prebuild_loader: True
+	seed: 0
+	show: False
+	start_step: 100
+	steps: 5000
+	tb_freq: 10
+	test_envs: None
+	train_output: train_output
+	trial_seed: 0
+	unique_name: 260727_23-56-46_HTP_ERM_seed0
+	work_dir: .
+HParams:
+	data_augmentation: True
+	val_augment: False
+	[36mresnet18: False
+	[0m[36mresnet_dropout: 0
+	[0mclass_balanced: False
+	[36moptimizer: adam
+	[0m[36mfreeze_bn: True
+	[0m[36mpretrained: True
+	[0m[36mlr: 5e-05
+	[0mbatch_size: 32
+	[36mweight_decay: 0
+	[0m[36mswad: False
+	[0mswad_kwargs: 
+	  n_converge: 3
+	  n_tolerance: 6
+	  tolerance_ratio: 0.3
+	test_batchsize: 128
+	indomain_test: False
+	grad_fn: sum
+	extra_search: n
+	logdir: train_output/HTP/260727_23-56-46_HTP_ERM_seed0
+	neighborhoodSize: 1e-06
+	start_step: 100
+	end_step: 200
+	extra_search_start: None
+	extra_search_end: None
+	gga_l_gamma: 0.001
+Dataset:
+	[HTP] #envs=3, #classes=2
+	env0: 00 (#367)
+	env1: 01 (#523)
+	env2: 02 (#274)
+
+[37m[36mINFO[0m[0m 07/27 23:56:47 | n_steps = 5000
+[37m[36mINFO[0m[0m 07/27 23:56:47 | checkpoint_freq = 100
+[37m[36mINFO[0m[0m 07/27 23:56:47 | n_steps is updated to 5000 => 5001 for checkpointing
+[37m[36mINFO[0m[0m 07/27 23:56:47 | Target test envs = [[0], [1], [2]]
+[37m[36mINFO[0m[0m 07/27 23:56:47 | 
+[37m[36mINFO[0m[0m 07/27 23:56:47 | Testenv name escaping te_00 -> te_00
+[37m[36mINFO[0m[0m 07/27 23:56:47 | Test envs = [0], name = te_00
+[37m[36mINFO[0m[0m 07/27 23:56:47 | Batch sizes for each domain: [0, 32, 32] (total=64)
+[37m[36mINFO[0m[0m 07/27 23:56:47 | steps-per-epoch for each domain: 13.09, 6.88 -> min = 6.88
+[37m[36mINFO[0m[0m 07/27 23:56:52 | # of params = 23512130

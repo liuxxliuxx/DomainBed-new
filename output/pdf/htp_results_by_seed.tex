@@ -1,0 +1,126 @@
+\documentclass[10pt]{article}
+\usepackage[letterpaper,margin=0.82in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{microtype}
+\captionsetup{font=small,labelfont=bf,labelsep=period}
+\setlength{\tabcolsep}{14pt}
+\renewcommand{\arraystretch}{1.18}
+\pagestyle{plain}
+\begin{document}
+\noindent\textbf{Domain mapping:} 0 = Child, 1 = College, 2 = Social. Within each column, the best result is bold and the second-best result is underlined.
+\vspace{0.7em}
+\begin{table}[H]
+  \centering
+  \caption{Out-of-domain accuracy (\%) for seed 0. Results use IID model selection.}
+  \label{tab:seed-0}
+  \begin{tabular}{lrrrr}
+    \toprule
+    Algorithm & Child & College & Social & Avg. \\
+    \midrule
+    ERM & \textbf{58.163} & 50.358 & 55.000 & 54.507 \\
+    Mixup & \underline{56.463} & 47.733 & 54.545 & 52.914 \\
+    SagNet & 52.381 & 46.301 & 57.727 & 52.136 \\
+    Fish & 53.741 & \underline{52.267} & \underline{58.182} & \underline{54.730} \\
+    SWAD & \textbf{58.163} & 46.778 & \textbf{59.091} & 54.677 \\
+    Arith & 54.762 & \textbf{53.938} & 56.364 & \textbf{55.021} \\
+    GGA & 53.741 & 46.539 & 56.364 & 52.215 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+\begin{table}[H]
+  \centering
+  \caption{Out-of-domain accuracy (\%) for seed 1. Results use IID model selection.}
+  \label{tab:seed-1}
+  \begin{tabular}{lrrrr}
+    \toprule
+    Algorithm & Child & College & Social & Avg. \\
+    \midrule
+    ERM & 50.680 & \underline{55.609} & 54.545 & 53.611 \\
+    Mixup & \underline{52.381} & 52.267 & 55.455 & 53.368 \\
+    SagNet & 51.701 & 50.358 & \textbf{61.818} & \textbf{54.626} \\
+    Fish & 51.701 & 49.642 & 54.545 & 51.963 \\
+    SWAD & 50.340 & \textbf{56.086} & 57.273 & \underline{54.566} \\
+    Arith & \textbf{55.102} & 48.449 & \underline{57.727} & 53.759 \\
+    GGA & 51.020 & 50.119 & 57.273 & 52.804 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+% \clearpage
+\begin{table}[H]
+  \centering
+  \caption{Out-of-domain accuracy (\%) for seed 2. Results use IID model selection.}
+  \label{tab:seed-2}
+  \begin{tabular}{lrrrr}
+    \toprule
+    Algorithm & Child & College & Social & Avg. \\
+    \midrule
+    ERM & \underline{54.082} & \textbf{60.143} & 58.636 & \underline{57.620} \\
+    Mixup & 53.401 & 53.222 & 54.545 & 53.723 \\
+    SagNet & 52.721 & 51.790 & 56.364 & 53.625 \\
+    Fish & 53.741 & 49.642 & \underline{60.000} & 54.461 \\
+    SWAD & 51.020 & 43.437 & 54.091 & 49.516 \\
+    Arith & 52.381 & 46.778 & \textbf{62.727} & 53.962 \\
+    GGA & \textbf{58.163} & \underline{56.086} & 58.636 & \textbf{57.628} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+\begin{table}[H]
+  \centering
+  \caption{Out-of-domain accuracy (\%) for seed 3. Results use IID model selection.}
+  \label{tab:seed-3}
+  \begin{tabular}{lrrrr}
+    \toprule
+    Algorithm & Child & College & Social & Avg. \\
+    \midrule
+    ERM & 54.082 & 52.029 & 54.091 & 53.400 \\
+    Mixup & 51.701 & 53.699 & 50.909 & 52.103 \\
+    SagNet & \textbf{54.762} & 50.119 & 44.091 & 49.657 \\
+    Fish & \underline{54.422} & \textbf{56.086} & \underline{55.909} & \underline{55.472} \\
+    SWAD & 54.082 & 53.699 & \textbf{56.818} & 54.866 \\
+    Arith & 52.041 & 46.062 & 50.909 & 49.671 \\
+    GGA & \textbf{54.762} & \underline{55.847} & \underline{55.909} & \textbf{55.506} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+% \clearpage
+\begin{table}[H]
+  \centering
+  \caption{Out-of-domain accuracy (\%) for seed 4. Results use IID model selection.}
+  \label{tab:seed-4}
+  \begin{tabular}{lrrrr}
+    \toprule
+    Algorithm & Child & College & Social & Avg. \\
+    \midrule
+    ERM & \underline{58.503} & \underline{57.757} & \underline{60.000} & \textbf{58.753} \\
+    Mixup & 57.143 & 52.745 & 54.545 & 54.811 \\
+    SagNet & 56.463 & 48.210 & \underline{60.000} & 54.891 \\
+    Fish & 56.122 & 57.041 & 57.273 & 56.812 \\
+    SWAD & 56.122 & 56.802 & 54.091 & 55.672 \\
+    Arith & 54.762 & \textbf{59.427} & \textbf{60.909} & 58.366 \\
+    GGA & \textbf{58.844} & 57.518 & 59.091 & \underline{58.484} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+\begin{table}[H]
+  \centering
+  \caption{Mean out-of-domain accuracy (\%) over five seeds. Results use IID model selection.}
+  \label{tab:five-seed-mean}
+  \begin{tabular}{lrrrr}
+    \toprule
+    Algorithm & Child & College & Social & Avg. \\
+    \midrule
+    ERM & \underline{55.102} & \textbf{55.179} & 56.454 & \textbf{55.578} \\
+    Mixup & 54.218 & 51.933 & 54.000 & 53.384 \\
+    SagNet & 53.606 & 49.356 & 56.000 & 52.987 \\
+    Fish & 53.945 & 52.936 & 57.182 & 54.688 \\
+    SWAD & 53.945 & 51.360 & 56.273 & 53.859 \\
+    Arith & 53.810 & 50.931 & \textbf{57.727} & 54.156 \\
+    GGA & \textbf{55.306} & \underline{53.222} & \underline{57.455} & \underline{55.328} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+\end{document}

@@ -1,0 +1,116 @@
+[37m[36mINFO[0m[0m 07/28 00:15:20 | Command :: train_all.py smoke --dataset HTP --data_dir dataset --algorithm ERM --cache_size 256 --prebuild_loader --debug
+Environment:
+	Python: 3.11.15
+	PyTorch: 2.11.0+cu128
+	Torchvision: 0.26.0+cu128
+	CUDA: 12.8
+	CUDNN: 91900
+	NumPy: 1.26.4
+	PIL: 12.2.0
+Args:
+	algorithm: ERM
+	batch_size: 32
+	cache_root: cache
+	cache_size: 256
+	checkpoint_freq: 5
+	configs: []
+	data_dir: dataset
+	dataset: HTP
+	debug: True
+	deterministic: False
+	end_step: 200
+	evalmode: fast
+	extra_search: n
+	extra_search_end: None
+	extra_search_start: None
+	gga_l_gamma: 0.001
+	grad_fn: sum
+	holdout_fraction: 0.2
+	model_save: None
+	name: smoke_debug
+	neighborhoodSize: 1e-06
+	out_dir: train_output/HTP/260728_00-15-20_smoke_debug
+	out_root: train_output/HTP
+	prebuild_loader: True
+	seed: 0
+	show: False
+	start_step: 100
+	steps: 10
+	tb_freq: 10
+	test_envs: None
+	train_output: train_output
+	trial_seed: 0
+	unique_name: 260728_00-15-20_smoke_debug
+	work_dir: .
+HParams:
+	data_augmentation: True
+	val_augment: False
+	resnet18: False
+	resnet_dropout: 0.0
+	class_balanced: False
+	optimizer: adam
+	freeze_bn: True
+	pretrained: True
+	lr: 5e-05
+	batch_size: 32
+	weight_decay: 0.0
+	swad: LossValley
+	swad_kwargs: 
+	  n_converge: 3
+	  n_tolerance: 6
+	  tolerance_ratio: 0.3
+	test_batchsize: 128
+	indomain_test: False
+	grad_fn: sum
+	extra_search: n
+	logdir: train_output/HTP/260728_00-15-20_smoke_debug
+	neighborhoodSize: 1e-06
+	start_step: 100
+	end_step: 200
+	extra_search_start: None
+	extra_search_end: None
+	gga_l_gamma: 0.001
+Dataset:
+	[HTP] #envs=3, #classes=2
+	env0: 00 (#367)
+	env1: 01 (#523)
+	env2: 02 (#274)
+
+[37m[36mINFO[0m[0m 07/28 00:15:20 | n_steps = 10
+[37m[36mINFO[0m[0m 07/28 00:15:20 | checkpoint_freq = 5
+[37m[36mINFO[0m[0m 07/28 00:15:20 | n_steps is updated to 10 => 11 for checkpointing
+[37m[36mINFO[0m[0m 07/28 00:15:20 | Target test envs = [[0], [1], [2]]
+[37m[36mINFO[0m[0m 07/28 00:15:20 | 
+[37m[36mINFO[0m[0m 07/28 00:15:20 | Testenv name escaping te_00 -> te_00
+[37m[36mINFO[0m[0m 07/28 00:15:20 | Test envs = [0], name = te_00
+[37m[36mINFO[0m[0m 07/28 00:15:20 | Batch sizes for each domain: [0, 32, 32] (total=64)
+[37m[36mINFO[0m[0m 07/28 00:15:20 | steps-per-epoch for each domain: 13.09, 6.88 -> min = 6.88
+[37m[36mINFO[0m[0m 07/28 00:15:24 | # of params = 23512130
+[37m[36mINFO[0m[0m 07/28 00:17:07 | test_in     test_out    train_in    train_out   test_in_au  test_out_a  train_out_  tr_outloss  env0_in     env0_in_au  env0_out    env0_out_a  env1_out    env1_out_a  env2_out    env2_out_a  step        epoch       loss        step_time   eval_time   mem_gb     
+[37m[36mINFO[0m[0m 07/28 00:17:07 | 0.609375    0.589041    0.000000    0.566239    0.514872    0.548837    0.715909    0.784123    0.609375    0.514872    0.589041    0.548837    0.576923    0.765152    0.555556    0.666667    0           0.000000    0.725082    21.727701   81.300958   7.755353   
+[37m[36mINFO[0m[0m 07/28 00:17:08 | 0.484375    0.561644    0.000000    0.732728    0.482928    0.425581    0.792361    0.641490    0.484375    0.482928    0.561644    0.425581    0.817308    0.870833    0.648148    0.713889    5           0.727273    0.696838    0.105901    0.279644    7.755353   
+[37m[36mINFO[0m[0m 07/28 00:17:29 | 0.526316    0.506849    0.000000    0.670584    0.523810    0.437209    0.805492    0.595953    0.526316    0.523810    0.506849    0.437209    0.711538    0.877652    0.629630    0.733333    10          1.454545    0.641352    0.097559    19.697687   7.755353   
+[37m[36mINFO[0m[0m 07/28 00:17:30 | ---
+[37m[31mERROR[0m[0m 07/28 00:17:30 | Requested final model, but model is not yet converged; return last model instead
+[37m[33mWARNING[0m[0m 07/28 00:17:30 | Evaluate SWAD ...
+[37m[36mINFO[0m[0m 07/28 00:17:30 | 0.593750    0.534247    0.000000    0.651709    0.524615    0.450388    0.811932    0.611318    0.593750    0.524615    0.534247    0.450388    0.692308    0.890530    0.611111    0.733333    [6-10]  (N=5)
+[37m[36mINFO[0m[0m 07/28 00:17:30 | oracle = 60.938%
+[37m[36mINFO[0m[0m 07/28 00:17:30 | iid = 48.438%
+[37m[36mINFO[0m[0m 07/28 00:17:30 | last = 52.632%
+[37m[36mINFO[0m[0m 07/28 00:17:30 | last (inD) = 67.058%
+[37m[36mINFO[0m[0m 07/28 00:17:30 | iid (inD) = 73.273%
+[37m[36mINFO[0m[0m 07/28 00:17:30 | SWAD = 59.375%
+[37m[36mINFO[0m[0m 07/28 00:17:30 | SWAD (inD) = 65.171%
+[37m[36mINFO[0m[0m 07/28 00:17:31 | 
+[37m[36mINFO[0m[0m 07/28 00:17:31 | Testenv name escaping te_01 -> te_01
+[37m[36mINFO[0m[0m 07/28 00:17:31 | Test envs = [1], name = te_01
+[37m[36mINFO[0m[0m 07/28 00:17:31 | Batch sizes for each domain: [32, 0, 32] (total=64)
+[37m[36mINFO[0m[0m 07/28 00:17:31 | steps-per-epoch for each domain: 9.19, 6.88 -> min = 6.88
+[37m[36mINFO[0m[0m 07/28 00:17:34 | # of params = 23512130
+[37m[36mINFO[0m[0m 07/28 00:17:35 | test_in     test_out    train_in    train_out   test_in_au  train_out_  tr_outloss  test_out_a  env0_out    env0_out_a  env1_in     env1_in_au  env1_out    env1_out_a  env2_out    env2_out_a  step        epoch       loss        step_time   eval_time   mem_gb     
+[37m[36mINFO[0m[0m 07/28 00:17:35 | 0.460938    0.576923    0.000000    0.572298    0.490789    0.405152    0.756064    0.493182    0.589041    0.425581    0.460938    0.490789    0.576923    0.493182    0.555556    0.384722    0           0.000000    0.731942    0.104614    0.319412    5.414672   
+[37m[36mINFO[0m[0m 07/28 00:17:36 | 0.398438    0.500000    0.000000    0.574708    0.398506    0.628957    0.685362    0.379167    0.575342    0.509302    0.398438    0.398506    0.500000    0.379167    0.574074    0.748611    5           0.727273    0.720004    0.105424    0.296213    5.816492   
+[37m[36mINFO[0m[0m 07/28 00:17:38 | 0.554688    0.576923    0.000000    0.572298    0.509266    0.628601    0.676457    0.547727    0.589041    0.489147    0.554688    0.509266    0.576923    0.547727    0.555556    0.768056    10          1.454545    0.686090    0.104464    0.307498    5.995463   
+[37m[36mINFO[0m[0m 07/28 00:17:39 | ---
+[37m[31mERROR[0m[0m 07/28 00:17:39 | Requested final model, but model is not yet converged; return last model instead
+[37m[33mWARNING[0m[0m 07/28 00:17:39 | Evaluate SWAD ...
