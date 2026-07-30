@@ -121,6 +121,17 @@ def _hparams(algorithm, dataset, random_state):
         hparams['mlp_dropout'] = (0., random_state.choice([0., 0.1, 0.5]))
     elif algorithm == "Arith":
         hparams["arith_meta_lr"] = (1e-2,10 ** random_state.uniform(-3, -1))
+    elif algorithm in ["ALOFT_E", "ALOFT_S", "ALOFT_DG"]:
+        # 论文 4.2 节："we set the perturbation strength alpha ... to 1.0 in
+        # ALOFT-E and 0.9 in ALOFT-S"
+        default_alpha = 0.9 if algorithm == "ALOFT_S" else 1.0
+        hparams["aloft_alpha"] = (default_alpha, random_state.choice([0.5, 0.7, 0.9, 1.0]))
+        # 论文 4.2 节：r = 0.5 for PACS/VLCS/Digits-DG, 0.25 for OfficeHome
+        default_r = 0.25 if dataset == "OfficeHome" else 0.5
+        hparams["aloft_mask_ratio"] = (default_r, random_state.choice([0.25, 0.5, 0.75]))
+        hparams["aloft_perturb_prob"] = (1.0, random_state.choice([0.5, 1.0]))
+        # 论文 Fig.3 里 ALOFT 出现在每个 core block；ResNet 的对应位置是每个 stage 之后
+        hparams["aloft_positions"] = (["layer1", "layer2", "layer3"],) * 2
     return hparams
 
 

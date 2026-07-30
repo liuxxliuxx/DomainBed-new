@@ -7,6 +7,7 @@ import itertools
 
 
 import torch
+import torchvision
 import torch.nn as nn
 import torch.nn.functional as F
 import torch.autograd as autograd
@@ -25,6 +26,7 @@ from domainbed import networks
 from domainbed.lib.gradient_utils import METHODS, get_method, agreement_mask
 from domainbed.lib.misc import random_pairs_of_minibatches, split_meta_train_test, ParamDict
 from domainbed.optimizers import get_optimizer
+from domainbed.models.aloft import ALOFT as ALOFTModule, resnet_aloft
 
 from domainbed.models.resnet_mixstyle import (
     resnet18_mixstyle_L234_p0d5_a0d1,
@@ -1967,3 +1969,62 @@ class Arith(ERM):
         return {
             "loss": torch.stack(losses).mean().item()
         }
+
+class ALOFT_DG(Algorithm):
+    """ALOFT (CVPR'23) 的 ResNet 版：把频域扰动插进 ResNet 的 stage 之间。
+
+    训练目标就是普通交叉熵，ALOFT 不引入任何损失项、也不引入可学习参数。
+    """
+
+    MODE = "E"          # 由子类覆盖
+
+    def __init__(self, input_shape, num_classes, num_domains, hparams):
+        assert input_shape[1:3] == (224, 224), "ALOFT supports R18/R50 only"
+        super().__init__(input_shape, num_classes, num_domains, hparams)
+
+        if hparams["resnet18"]:
+            network = torchvision.models.resnet18(pretrained=hparams["pretrained"])
+        else:
+            network = torchvision.models.resnet50(pretrained=hparams["pretrained"])
+
+        # 必须在预训练权重加载完之后再包 ALOFT，否则 state_dict 键名对不上
+        network = resnet_aloft(
+            network,
+            positions=tuple(hparams["aloft_positions"]),
+            mode=self.MODE,
+            alpha=hparams["aloft_alpha"],
+            mask_ratio=hparams["aloft_mask_ratio"],
+            perturb_prob=hparams["aloft_perturb_prob"],
+        )
+
+        self.featurizer = networks.ResNet(input_shape, self.hparams, network)
+        self.classifier = nn.Linear(self.featurizer.n_outputs, num_classes)
+        self.network = nn.Sequential(self.featurizer, self.classifier)
+        self.optimizer = self.new_optimizer(self.network.parameters())
+
+    def update(self, x, y, **kwargs):
+        # 所有源域拼成一个 batch：ALOFT 的 Sigma 是沿 batch 维统计的，
+        # 混合多域样本才能让方差真正反映域间差异（论文 3.3 的出发点）
+        all_x = torch.cat(x)
+        all_y = torch.cat(y)
+        loss = F.cross_entropy(self.predict(all_x), all_y)
+
+        self.optimizer.zero_grad()
+        loss.backward()
+        self.optimizer.step()
+        return {"loss": loss.item()}
+
+    def predict(self, x):
+        return self.network(x)
+
+
+class ALOFT_E(ALOFT_DG):
+    """按元素建模低频分布，论文 Eq.(6)(7)，论文 4.2 节给的 alpha = 1.0。"""
+
+    MODE = "E"
+
+
+class ALOFT_S(ALOFT_DG):
+    """按通道统计量建模低频分布，论文 Eq.(8)-(14)，论文 4.2 节给的 alpha = 0.9。"""
+
+    MODE = "S"
