@@ -82,6 +82,24 @@ METHODS = {
             "--mlp_dropout", "0",
         ],
     },
+    "ALOFT_E": {
+        "algorithm": "ALOFT_E",
+        "swad": "False",
+        "extra_args": [
+            "--aloft_alpha", "1.0",
+            "--aloft_mask_ratio", "0.5",
+            "--aloft_perturb_prob", "1.0",
+        ],
+    },
+    "ALOFT_S": {
+        "algorithm": "ALOFT_S",
+        "swad": "False",
+        "extra_args": [
+            "--aloft_alpha", "0.9",
+            "--aloft_mask_ratio", "0.5",
+            "--aloft_perturb_prob", "1.0",
+        ],
+    },
 }
 
 METHOD_NAMES = {
