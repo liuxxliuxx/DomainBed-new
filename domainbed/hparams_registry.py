@@ -132,6 +132,27 @@ def _hparams(algorithm, dataset, random_state):
         hparams["aloft_perturb_prob"] = (1.0, random_state.choice([0.5, 1.0]))
         # 论文 Fig.3 里 ALOFT 出现在每个 core block；ResNet 的对应位置是每个 stage 之后
         hparams["aloft_positions"] = (["layer1", "layer2", "layer3"],) * 2
+    elif algorithm == "iDAG":
+        # LightEncoder 结构：2048 -> hidden_size -> out_dim
+        hparams["hidden_size"] = (512, 512)
+        hparams["out_dim"] = (512, 512)
+        hparams["num_hidden_layers"] = (0, 0)
+        # DAG 相关损失的预热步数，之前只训分类 + 跨域对比
+        hparams["dag_anneal_steps"] = (200, int(random_state.choice([200, 400, 600, 800])))
+        # 两个原型对比损失的温度
+        hparams["temperature"] = (0.07, random_state.uniform(0.07, 0.01))
+        # 原型 EMA 动量
+        hparams["ema_ratio"] = (0.99, random_state.uniform(0.99, 0.999))
+        # lambda1: 邻接矩阵 L1 稀疏权重；lambda2: 原型重建损失权重
+        hparams["lambda1"] = (0.01, random_state.uniform(0.01, 1.0))
+        hparams["lambda2"] = (0.01, random_state.uniform(0.01, 1.0))
+        # 增广拉格朗日：rho 是二次罚系数，alpha 是乘子，rho_max 是上限
+        hparams["rho_max"] = (100.0, 10 ** random_state.uniform(1.0, 6.0))
+        hparams["rho"] = (1.0, 1.0)
+        hparams["alpha"] = (1.0, 1.0)
+        # weight_nu: 跨域原型对比权重；weight_mu: 不变原型对比权重
+        hparams["weight_nu"] = (1.0, random_state.uniform(1.0, 2.0))
+        hparams["weight_mu"] = (1.0, random_state.uniform(1.0, 2.0))
     return hparams
 
 
