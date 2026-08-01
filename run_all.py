@@ -182,7 +182,7 @@ def build_command(repo_dir, method_name, seed):
         "--trial_seed", str(seed),
         "--deterministic",
         "--prebuild_loader",
-        "--cache_size", "256",
+        "--cache_size", "640",
         # "--class_balanced","True",
     ]
     command.extend(method["extra_args"])
