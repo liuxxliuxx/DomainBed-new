@@ -7,7 +7,7 @@ from torchvision import transforms as T
 from torch.utils.data import TensorDataset
 from torchvision.datasets import MNIST, ImageFolder
 from torchvision.transforms.functional import rotate
-from domainbed.datasets.cache import CachedImageFolder
+from domainbed.datasets.cache import CachedFolder
 
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
@@ -189,20 +189,19 @@ class RotatedMNIST(MultipleEnvironmentMNIST):
 
 
 class MultipleEnvironmentImageFolder(MultipleDomainDataset):
-    def __init__(self, root, cache_size=None, cache_root="cache"):
+    def __init__(self, root, cache="none", cache_size=None,
+                 resize_mode="stretch", cache_root="cache"):
         super().__init__()
-        environments = [f.name for f in os.scandir(root) if f.is_dir()]
-        environments = sorted(environments)
+        environments = sorted(f.name for f in os.scandir(root) if f.is_dir())
         self.environments = environments
 
         self.datasets = []
         for environment in environments:
-            path = os.path.join(root, environment)
-            env_dataset = ImageFolder(path)
-            if cache_size:
-                env_dataset = CachedImageFolder(
-                    env_dataset, size=cache_size, cache_root=cache_root
-                )
+            env_dataset = ImageFolder(os.path.join(root, environment))
+            if cache in ("disk", "ram"):
+                env_dataset = CachedFolder(
+                    env_dataset, mode=cache, size=cache_size,
+                    resize_mode=resize_mode, cache_root=cache_root)
             self.datasets.append(env_dataset)
 
         self.input_shape = (3, 224, 224)

@@ -46,7 +46,9 @@ def get_dataset(test_envs, args, hparams, algorithm_class=None):
     else:
         dataset = vars(datasets)[args.dataset](
             args.data_dir,
+            cache=args.cache,
             cache_size=args.cache_size,
+            resize_mode=args.resize_mode,
             cache_root=args.cache_root,
         )
     #  if not isinstance(dataset, MultipleEnvironmentImageFolder):

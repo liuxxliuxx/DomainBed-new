@@ -19,6 +19,14 @@ from domainbed.lib.writers import get_writer
 from domainbed.lib.logger import Logger
 from domainbed.trainer import train
 
+def _cache_size(v):
+    if v.lower() in ("full", "orig", "original"):
+        return None
+    n = int(v)
+    if n < 32:
+        raise argparse.ArgumentTypeError("cache_size 至少 32")
+    return n
+
 
 def main():
     parser = argparse.ArgumentParser(description="Domain generalization")
@@ -66,7 +74,12 @@ def main():
     parser.add_argument("--extra_search_start", type=int, default=None, help="end step of the annealing")
     parser.add_argument("--extra_search_end", type=int, default=None, help="end step of the annealing")
     parser.add_argument("--gga_l_gamma", type=float, default=0.001, help="gamma hp for GGA_L")
-    parser.add_argument("--cache_size", type=int, default=None, help="预解码缓存的边长，不给则关闭缓存")
+    parser.add_argument("--cache", default="none", choices=["none", "disk", "ram"])
+    parser.add_argument("--cache_size", type=_cache_size, default=None,
+                        help="缓存边长；full 表示存原图不缩放（默认，且逐位一致）")
+    parser.add_argument("--resize_mode", default="stretch", choices=["stretch", "pad"],
+                        help="cache_size 为数字时生效：stretch 直接拉成正方形；"
+                             "pad 保持比例、四周补纯白")
     parser.add_argument("--cache_root", type=str, default="cache")
 
     args, left_argv = parser.parse_known_args()
