@@ -81,7 +81,20 @@ def main():
                         help="cache_size 为数字时生效：stretch 直接拉成正方形；"
                              "pad 保持比例、四周补纯白")
     parser.add_argument("--cache_root", type=str, default="cache")
-
+    parser.add_argument("--saliency", action="store_true",
+                        help="训练中保存显著性图（左原图 | 右显著性图）")
+    parser.add_argument("--saliency_num", type=int, default=16,
+                        help="每次保存多少张")
+    parser.add_argument("--saliency_every", type=int, default=0,
+                        help="每多少 step 存一次；0 表示跟 checkpoint_freq 一致")
+    parser.add_argument("--saliency_samples", type=int, default=25,
+                        help="SmoothGrad 的加噪采样次数")
+    parser.add_argument("--saliency_noise", type=float, default=0.15,
+                        help="噪声标准差占输入动态范围的比例")
+    parser.add_argument("--saliency_cmap", default="jet", choices=["jet", "gray"])
+    parser.add_argument("--saliency_split", default="test_in",
+                        choices=["test_in", "test_out", "train_in"],
+                        help="从哪个 split 取图；test_in 是目标域，最能看出差别")
     args, left_argv = parser.parse_known_args()
 
     # setup hparams

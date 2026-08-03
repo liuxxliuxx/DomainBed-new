@@ -9,6 +9,8 @@ import numpy as np
 import torch
 import torch.utils.data
 
+from domainbed.lib.saliency import SaliencyDumper
+
 from domainbed.datasets import get_dataset, split_dataset
 from domainbed import algorithms
 from domainbed.evaluator import Evaluator
@@ -158,6 +160,28 @@ def train(test_envs, args, hparams, n_steps, checkpoint_freq, logger, writer, ta
         target_env=target_env,
     )
 
+        # 显著性图。取的是不带增广的 split（datasets/__init__.py:28-29 用的是 DBT.basic），
+    # 所以左边那张就是 resize 后的原图，跟模型真正看到的输入一一对应
+    dumper = None
+    if getattr(args, "saliency", False):
+        if args.saliency_split == "train_in":
+            sal_dataset = in_splits[train_envs[0]][0]
+        elif args.saliency_split == "test_out":
+            sal_dataset = out_splits[test_envs[0]][0]
+        else:
+            sal_dataset = in_splits[test_envs[0]][0]
+        dumper = SaliencyDumper(
+            sal_dataset,
+            args.out_dir / "saliency" / testenv_name,
+            n_images=args.saliency_num,
+            n_samples=args.saliency_samples,
+            noise_level=args.saliency_noise,
+            cmap=args.saliency_cmap,
+            device=device,
+        )
+        logger.info(f"Saliency ON -> {args.out_dir / 'saliency' / testenv_name}")
+    sal_every = args.saliency_every or checkpoint_freq
+
     swad = None
     if hparams["swad"]:
         swad_algorithm = swa_utils.AveragedModel(algorithm)
@@ -289,6 +313,9 @@ def train(test_envs, args, hparams, n_steps, checkpoint_freq, logger, writer, ta
                     break
 
                 swad_algorithm = swa_utils.AveragedModel(algorithm)  # reset
+
+        if dumper is not None and step % sal_every == 0:
+            dumper.dump(algorithm, step)
 
         if step % args.tb_freq == 0:
             # add step values only for tb log
