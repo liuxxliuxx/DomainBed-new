@@ -221,6 +221,7 @@ def build_command(repo_dir, method_name, seed):
         "--deterministic",
         "--cache", "disk",
         "--prebuild_loader",
+        "--image_size", "224",
     ]
     command.extend(method["extra_args"])
     return command

@@ -463,7 +463,7 @@ class Mixstyle(Algorithm):
     """MixStyle w/o domain label (random shuffle)"""
 
     def __init__(self, input_shape, num_classes, num_domains, hparams):
-        assert input_shape[1:3] == (224, 224), "Mixstyle support R18 and R50 only"
+        assert input_shape[0] == 3, "Mixstyle support R18 and R50 only"
         super().__init__(input_shape, num_classes, num_domains, hparams)
         if hparams["resnet18"]:
             network = resnet18_mixstyle_L234_p0d5_a0d1()
@@ -496,7 +496,7 @@ class Mixstyle2(Algorithm):
     """MixStyle w/ domain label"""
 
     def __init__(self, input_shape, num_classes, num_domains, hparams):
-        assert input_shape[1:3] == (224, 224), "Mixstyle support R18 and R50 only"
+        assert input_shape[0] == 3, "Mixstyle support R18 and R50 only"
         super().__init__(input_shape, num_classes, num_domains, hparams)
         if hparams["resnet18"]:
             network = resnet18_mixstyle2_L234_p0d5_a0d1()
@@ -2174,7 +2174,7 @@ class ALOFT_DG(Algorithm):
     MODE = "E"          # 由子类覆盖
 
     def __init__(self, input_shape, num_classes, num_domains, hparams):
-        assert input_shape[1:3] == (224, 224), "ALOFT supports R18/R50 only"
+        assert input_shape[0] == 3, "ALOFT supports R18/R50 only"
         super().__init__(input_shape, num_classes, num_domains, hparams)
 
         if hparams["resnet18"]:

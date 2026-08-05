@@ -7,28 +7,25 @@ from domainbed.datasets import transforms as DBT
 
 
 def set_transfroms(dset, data_type, hparams, algorithm_class=None):
-    """
-    Args:
-        data_type: ['train', 'valid', 'test', 'mnist']
-    """
+
+    # Originally, DomainBed use same training augmentation policy to validation.
+    # We turn off the augmentation for validation as default,
+    # but left the option to reproducibility.
     assert hparams["data_augmentation"]
+    size = int(hparams["image_size"])
 
     additional_data = False
     if data_type == "train":
-        dset.transforms = {"x": DBT.aug}
+        dset.transforms = {"x": DBT.aug(size)}
         additional_data = True
     elif data_type == "valid":
         if hparams["val_augment"] is False:
-            dset.transforms = {"x": DBT.basic}
+            dset.transforms = {"x": DBT.basic(size)}
         else:
-            # Originally, DomainBed use same training augmentation policy to validation.
-            # We turn off the augmentation for validation as default,
-            # but left the option to reproducibility.
-            dset.transforms = {"x": DBT.aug}
+            dset.transforms = {"x": DBT.aug(size)}
     elif data_type == "test":
-        dset.transforms = {"x": DBT.basic}
+        dset.transforms = {"x": DBT.basic(size)}
     elif data_type == "mnist":
-        # No augmentation for mnist
         dset.transforms = {"x": lambda x: x}
     else:
         raise ValueError(data_type)
@@ -50,6 +47,7 @@ def get_dataset(test_envs, args, hparams, algorithm_class=None):
             cache_size=args.cache_size,
             resize_mode=args.resize_mode,
             cache_root=args.cache_root,
+            image_size=int(hparams["image_size"]),
         )
     #  if not isinstance(dataset, MultipleEnvironmentImageFolder):
     #      raise ValueError("SMALL image datasets are not implemented (corrupted), for transform.")

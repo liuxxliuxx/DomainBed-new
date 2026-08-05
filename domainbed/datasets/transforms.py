@@ -1,20 +1,22 @@
 from torchvision import transforms as T
 
+_NORM = T.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
 
-basic = T.Compose(
-    [
-        T.Resize((224, 224)),
+
+def basic(size=224):
+    return T.Compose([
+        T.Resize((size, size)),
         T.ToTensor(),
-        T.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
-    ]
-)
-aug = T.Compose(
-    [
-        T.RandomResizedCrop(224, scale=(0.7, 1.0)),
+        _NORM,
+    ])
+
+
+def aug(size=224):
+    return T.Compose([
+        T.RandomResizedCrop(size, scale=(0.7, 1.0)),
         T.RandomHorizontalFlip(),
         T.ColorJitter(0.3, 0.3, 0.3, 0.3),
         T.RandomGrayscale(p=0.1),
         T.ToTensor(),
-        T.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
-    ]
-)
+        _NORM,
+    ])

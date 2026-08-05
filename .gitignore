@@ -5,3 +5,5 @@ __pycache__/
 tmp/
 cache/
 assets/
+train_output/
+logs_newest/

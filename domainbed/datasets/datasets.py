@@ -2,6 +2,7 @@
 
 import os
 import torch
+import warnings
 from PIL import Image, ImageFile
 from torchvision import transforms as T
 from torch.utils.data import TensorDataset
@@ -189,8 +190,10 @@ class RotatedMNIST(MultipleEnvironmentMNIST):
 
 
 class MultipleEnvironmentImageFolder(MultipleDomainDataset):
+    INPUT_SHAPE = (3, 224, 224)   # 默认输入尺寸，子类可覆盖，也可被 image_size 覆盖
+
     def __init__(self, root, cache="none", cache_size=None,
-                 resize_mode="stretch", cache_root="cache"):
+                 resize_mode="stretch", cache_root="cache", image_size=None):
         super().__init__()
         environments = sorted(f.name for f in os.scandir(root) if f.is_dir())
         self.environments = environments
@@ -204,7 +207,20 @@ class MultipleEnvironmentImageFolder(MultipleDomainDataset):
                     resize_mode=resize_mode, cache_root=cache_root)
             self.datasets.append(env_dataset)
 
-        self.input_shape = (3, 224, 224)
+        if image_size is None:
+            image_size = self.INPUT_SHAPE[1]
+        image_size = int(image_size)
+        if image_size < 64:
+            raise ValueError(
+                f"image_size={image_size} 太小：ResNet 主干总共下采样 32 倍，"
+                f"低于 64 最终特征图不足 2x2")
+        if cache_size is not None and cache_size < image_size:
+            warnings.warn(
+                f"cache_size={cache_size} 小于 image_size={image_size}，"
+                f"缓存图会先被缩小再放大回去，白白损失分辨率")
+
+        self.image_size = image_size
+        self.input_shape = (3, image_size, image_size)
         self.num_classes = len(self.datasets[-1].classes)
 
 

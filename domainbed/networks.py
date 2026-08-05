@@ -195,7 +195,7 @@ def Featurizer(input_shape, hparams):
         return MNIST_CNN(input_shape)
     elif input_shape[1:3] == (32, 32):
         return wide_resnet.Wide_ResNet(input_shape, 16, 2, 0.0)
-    elif input_shape[1:3] == (224, 224):
+    elif len(input_shape) == 3 and input_shape[1] == input_shape[2] and input_shape[1] >= 64:
         return ResNet(input_shape, hparams)
     else:
         raise NotImplementedError(f"Input shape {input_shape} is not supported")
