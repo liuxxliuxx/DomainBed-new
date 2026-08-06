@@ -11,3 +11,5 @@ Pillow==8.1.0
 tensorboardX==2.1
 scikit-learn==1.6.1
 protobuf==3.20.3
+munch==2.5.0
+pyyaml==6.0.2

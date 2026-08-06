@@ -4,6 +4,7 @@ import random
 import sys
 import shutil
 from pathlib import Path
+import yaml, munch
 
 import numpy as np
 import PIL
@@ -95,8 +96,17 @@ def main():
     parser.add_argument("--saliency_split", default="test_in",
                         choices=["test_in", "test_out", "train_in"],
                         help="从哪个 split 取图；test_in 是目标域，最能看出差别")
-    args, left_argv = parser.parse_known_args()
 
+    #QT-DoG参数
+    parser.add_argument("--quant", type=int, default=0,
+                            help="1 表示启用 QT-DoG 量化，0 表示普通训练")
+    parser.add_argument("--q_steps", type=int, default=2000,
+                                help="第几步开始把 Conv2d 换成量化卷积")
+    with open("config_q.yaml", encoding="utf8") as yaml_file:
+        cfg = munch.munchify(yaml.safe_load(yaml_file))
+
+    
+    args, left_argv = parser.parse_known_args()
     # setup hparams
     hparams = hparams_registry.default_hparams(args.algorithm, args.dataset)
 
@@ -186,6 +196,8 @@ def main():
         logger.nofmt(f"\tenv{i}: {env_property} (#{len(dataset[i])})")
     logger.nofmt("")
 
+    q_steps = args.q_steps
+
     n_steps = args.steps or dataset.N_STEPS
     checkpoint_freq = args.checkpoint_freq or dataset.CHECKPOINT_FREQ
     logger.info(f"n_steps = {n_steps}")
@@ -209,10 +221,13 @@ def main():
 
     for test_env in args.test_envs:
         res, records = train(
+            cfg,
             test_env,
             args=args,
             hparams=hparams,
             n_steps=n_steps,
+            q_steps=q_steps,
+            quant=args.quant,
             checkpoint_freq=checkpoint_freq,
             logger=logger,
             writer=writer,

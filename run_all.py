@@ -138,6 +138,22 @@ METHODS = {
             "--weight_nu", "1.0",
         ],
     },
+    "QTDoG": {
+        "algorithm": "ERM",
+        "swad": "LossValley",
+        "extra_args": [
+            "--quant", "1",
+            "--q_steps", "100",
+        ],
+    },
+    "QTDoG_noswad": {
+        "algorithm": "ERM",
+        "swad": "False",
+        "extra_args": [
+            "--quant", "1",
+            "--q_steps", "100",
+        ],
+    },
 }
 
 METHOD_NAMES = {
@@ -194,7 +210,7 @@ def parse_args():
     return parser.parse_args()
 
 
-def build_command(repo_dir, method_name, seed):
+def build_command(repo_dir, method_name, seed,batch):
     method = METHODS[method_name]
     experiment_name = f"HTP_{method_name}_seed{seed}"
 
@@ -207,7 +223,7 @@ def build_command(repo_dir, method_name, seed):
         "--algorithm", method["algorithm"],
         "--steps", "5000",
         "--checkpoint_freq", "100",
-        "--batch_size", "32",
+        "--batch_size", str(batch) if batch is not None else "32",
         "--optimizer", "adam",
         "--lr", "5e-5",
         "--weight_decay", "0",
@@ -253,6 +269,7 @@ def main():
             repo_dir,
             args.algorithm,
             seed,
+            args.batch,
         )
 
         print("=" * 80, flush=True)

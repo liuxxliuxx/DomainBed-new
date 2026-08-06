@@ -19,6 +19,7 @@ from domainbed.lib import swa_utils
 from domainbed.lib.query import Q
 from domainbed.lib.fast_data_loader import InfiniteDataLoader, FastDataLoader
 from domainbed import swad as swad_module
+from domainbed.quan.utils import find_modules_to_quantize, replace_module_by_names
 
 if torch.cuda.is_available():
     device = "cuda"
@@ -32,7 +33,7 @@ def json_handler(v):
     raise TypeError(f"`{type(v)}` is not JSON Serializable")
 
 
-def train(test_envs, args, hparams, n_steps, checkpoint_freq, logger, writer, target_env=None):
+def train(args_q, test_envs, args, hparams, n_steps, q_steps, quant, checkpoint_freq, logger, writer, target_env=None):
     logger.info("")
 
     #######################################################
@@ -196,6 +197,18 @@ def train(test_envs, args, hparams, n_steps, checkpoint_freq, logger, writer, ta
     epochs_path = args.out_dir / "results.jsonl"
 
     for step in range(n_steps):
+
+        if step == q_steps and quant == 1:            # if quantization
+            modules_to_replace = find_modules_to_quantize(algorithm, args_q.quan)
+            logger.info(f"Quantizing {len(modules_to_replace)} modules at step {step}")
+            algorithm = replace_module_by_names(algorithm, modules_to_replace)
+            algorithm.to(device)
+            swad = None
+            if hparams["swad"]:
+                swad_algorithm = swa_utils.AveragedModel(algorithm)
+                swad_cls = getattr(swad_module, hparams["swad"])
+                swad = swad_cls(evaluator, **hparams.swad_kwargs)
+                
         step_start_time = time.time()
         # batches_dictlist: [{env0_data_key: tensor, env0_...}, env1_..., ...]
         batches_dictlist = next(train_minibatches_iterator)

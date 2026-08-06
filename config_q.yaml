@@ -1,0 +1,24 @@
+quan:
+  act:
+    mode: lsq
+    bit: 8
+    per_channel: false
+    symmetric: false
+    all_positive: false
+  weight:
+    mode: lsq
+    bit: 7
+    per_channel: true
+    symmetric: false
+    all_positive: false
+  excepts:
+    conv1:
+      act:
+        all_positive: false
+      weight:
+        bit:
+    fc:
+      act:
+        bit:
+      weight:
+        bit:
