@@ -207,23 +207,35 @@ def parse_args():
         metavar="INDEX",
         help="physical CUDA GPU index, for example 0 or 1",
     )
+    parser.add_argument(
+        "--batch",
+        type=int,
+        default=32,
+        help="batch size for training",
+    )
+    parser.add_argument(
+        "--dataset",
+        type=str,
+        default="HTP",
+        help="dataset to use; default is HTP",
+    )
     return parser.parse_args()
 
 
-def build_command(repo_dir, method_name, seed,batch):
+def build_command(repo_dir, method_name, seed,batch,dataset):
     method = METHODS[method_name]
-    experiment_name = f"HTP_{method_name}_seed{seed}"
+    experiment_name = f"{dataset}_{method_name}_seed{seed}"
 
     command = [
         sys.executable,
         str(repo_dir / "train_all.py"),
         experiment_name,
-        "--dataset", "HTP",
+        "--dataset", dataset,
         "--data_dir", str(repo_dir / "dataset"),
         "--algorithm", method["algorithm"],
         "--steps", "5000",
         "--checkpoint_freq", "100",
-        "--batch_size", str(batch) if batch is not None else "32",
+        "--batch_size", str(batch),
         "--optimizer", "adam",
         "--lr", "5e-5",
         "--weight_decay", "0",
@@ -246,7 +258,7 @@ def build_command(repo_dir, method_name, seed,batch):
 def main():
     args = parse_args()
     repo_dir = Path(__file__).resolve().parent
-    dataset_dir = repo_dir / "dataset" / "HTP"
+    dataset_dir = repo_dir / "dataset" / args.dataset
 
     if not dataset_dir.is_dir():
         raise FileNotFoundError(
@@ -270,6 +282,7 @@ def main():
             args.algorithm,
             seed,
             args.batch,
+            args.dataset,
         )
 
         print("=" * 80, flush=True)

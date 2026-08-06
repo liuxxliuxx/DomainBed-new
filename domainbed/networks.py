@@ -1,5 +1,5 @@
 # Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved
-
+import open_clip
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -118,6 +118,31 @@ class ResNet(torch.nn.Module):
         for m in self.network.modules():
             if isinstance(m, nn.BatchNorm2d):
                 m.eval()
+
+
+
+class CLIPBackbone(nn.Module):
+    def __init__(self, input_shape, hparams):
+        super().__init__()
+        model, _, _ = open_clip.create_model_and_transforms(
+            hparams["clip_arch"],            # 'ViT-B-16'
+            pretrained=hparams["clip_weights"],  # 'openai' / 'laion2b_s34b_b88k'
+        )
+        self.visual = model.visual.float()   # 必须 float()，见下面的坑
+        del model
+        self.n_outputs = self.visual.output_dim   # ViT-B/16 是 512
+        self.dropout = nn.Dropout(hparams["resnet_dropout"])
+        if hparams["freeze_backbone"]:
+            for p in self.visual.parameters():
+                p.requires_grad_(False)
+
+    def forward(self, x):
+        return self.dropout(self.visual(x))
+
+    def train(self, mode=True):
+        super().train(mode)
+        if self.hparams["freeze_backbone"]:
+            self.visual.eval()
 
 
 class MNIST_CNN(nn.Module):

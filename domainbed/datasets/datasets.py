@@ -244,7 +244,6 @@ class PACS(MultipleEnvironmentImageFolder):
 class HTP(MultipleEnvironmentImageFolder):
     CHECKPOINT_FREQ = 100
     ENVIRONMENTS = ["child","college","social"]
-    N_WORKERS = 1
     def __init__(self, root, **kwargs):
         self.dir = os.path.join(root, "HTP/")
         super().__init__(self.dir, **kwargs)
