@@ -14,10 +14,10 @@ class QuanConv2d(t.nn.Conv2d):
         self.quan_w_fn = quan_w_fn
         self.quan_a_fn = quan_a_fn
 
-        self.weight = t.nn.Parameter(m.weight.detach())
+        self.weight = m.weight
         self.quan_w_fn.init_from(m.weight)
         if m.bias is not None:
-            self.bias = t.nn.Parameter(m.bias.detach())
+            self.bias = m.bias
 
     def forward(self, x):
         quantized_weight = self.quan_w_fn(self.weight)
