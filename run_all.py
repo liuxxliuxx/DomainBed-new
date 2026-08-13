@@ -161,7 +161,7 @@ METHODS = {
         "swad": "LossValley",
         "extra_args": [
             "--quant", "1",
-            "--q_steps", "100",
+            "--q_steps", "2000",
         ],
     },
     "QTDoG_noswad": {
