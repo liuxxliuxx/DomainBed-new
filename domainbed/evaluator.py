@@ -151,7 +151,7 @@ class Evaluator:
                 summaries["train_" + inout] += acc / n_train_envs
                 summaries["train_" + inout + "_precision"] += precision / n_train_envs
                 summaries["train_" + inout + "_recall"] += recall / n_train_envs
-                summaries["train_" + inout + "_f1"] += f1 / n_train_env
+                summaries["train_" + inout + "_f1"] += f1 / n_train_envs
                 if inout == "out":
                     summaries["tr_" + inout + "loss"] += loss / n_train_envs
             elif is_test:
