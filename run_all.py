@@ -91,6 +91,24 @@ METHODS = {
             "--aloft_perturb_prob", "1.0",
         ],
     },
+    "AWWSL_rev_E": {
+            "algorithm": "AWWSL_rev_E",
+            "swad": "LossValley",
+            "extra_args": [
+                "--aloft_alpha", "1.0",
+                "--aloft_mask_ratio", "0.5",
+                "--aloft_perturb_prob", "1.0",
+            ],
+        },
+    "AWWSL_E": {
+        "algorithm": "AWWSL_E",
+        "swad": "LossValley",
+        "extra_args": [
+            "--aloft_alpha", "1.0",
+            "--aloft_mask_ratio", "0.5",
+            "--aloft_perturb_prob", "1.0",
+        ],
+    },
     "ALOFT_rev_E": {
             "algorithm": "ALOFT_rev_E",
             "swad": "LossValley",

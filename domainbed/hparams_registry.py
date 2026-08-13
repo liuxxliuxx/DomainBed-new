@@ -122,7 +122,7 @@ def _hparams(algorithm, dataset, random_state):
         hparams['mlp_dropout'] = (0., random_state.choice([0., 0.1, 0.5]))
     elif algorithm == "Arith":
         hparams["arith_meta_lr"] = (1e-2,10 ** random_state.uniform(-3, -1))
-    elif algorithm in ["ALOFT_E", "ALOFT_S", "ALOFT_DG"]:
+    elif algorithm in ["ALOFT_E", "ALOFT_S", "ALOFT_DG", "AWWSL_E", "AWWSL_S", "AWWSL_DG","AWWSL_rev_E","AWWSL_rev_S", "AWWSL_rev_DG"]:
         # 论文 4.2 节："we set the perturbation strength alpha ... to 1.0 in
         # ALOFT-E and 0.9 in ALOFT-S"
         default_alpha = 0.9 if algorithm == "ALOFT_S" else 1.0

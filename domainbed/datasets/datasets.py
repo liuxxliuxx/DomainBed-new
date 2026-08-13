@@ -26,6 +26,7 @@ DATASETS = [
     "TerraIncognita",
     "DomainNet",
     "HTP",
+    "SKET",
 ]
 
 
@@ -246,6 +247,13 @@ class HTP(MultipleEnvironmentImageFolder):
     ENVIRONMENTS = ["child","college","social"]
     def __init__(self, root, **kwargs):
         self.dir = os.path.join(root, "HTP/")
+        super().__init__(self.dir, **kwargs)
+        
+class SKET(MultipleEnvironmentImageFolder):
+    CHECKPOINT_FREQ = 200
+    ENVIRONMENTS = ["quickdraw","sketch","TUBerlin"]
+    def __init__(self, root, **kwargs):
+        self.dir = os.path.join(root, "SKET/")
         super().__init__(self.dir, **kwargs)
 
 
