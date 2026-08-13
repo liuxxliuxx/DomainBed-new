@@ -1,0 +1,118 @@
+Algorithm: GGA
+Physical GPU: 3
+Seeds: [0, 1, 2, 3, 4]
+Dataset: /home/s21_yhr/lzh/new/DomainBed-new/dataset/PACS
+
+================================================================================
+Starting GGA, seed=0, physical GPU=3
+/home/s21_yhr/miniconda3/envs/lzh_DG/bin/python /home/s21_yhr/lzh/new/DomainBed-new/train_all.py PACS_GGA_seed0 --dataset PACS --data_dir /home/s21_yhr/lzh/new/DomainBed-new/dataset --algorithm ERM_GGA --steps 5000 --checkpoint_freq 200 --batch_size 32 --optimizer adam --lr 5e-5 --weight_decay 0 --resnet_dropout 0 --resnet18 False --pretrained True --freeze_bn True --swad LossValley --seed 0 --trial_seed 0 --deterministic --cache disk --prebuild_loader --image_size 224 --start_step 100 --end_step 200 --neighborhoodSize 1e-5
+================================================================================
+/home/s21_yhr/miniconda3/envs/lzh_DG/lib/python3.9/site-packages/munch/__init__.py:24: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+[36mINFO[0m 08/12 23:40:36 | Command :: /home/s21_yhr/lzh/new/DomainBed-new/train_all.py PACS_GGA_seed0 --dataset PACS --data_dir /home/s21_yhr/lzh/new/DomainBed-new/dataset --algorithm ERM_GGA --steps 5000 --checkpoint_freq 200 --batch_size 32 --optimizer adam --lr 5e-5 --weight_decay 0 --resnet_dropout 0 --resnet18 False --pretrained True --freeze_bn True --swad LossValley --seed 0 --trial_seed 0 --deterministic --cache disk --prebuild_loader --image_size 224 --start_step 100 --end_step 200 --neighborhoodSize 1e-5
+Environment:
+	Python: 3.9.25
+	PyTorch: 2.7.0+cu128
+	Torchvision: 0.22.0+cu128
+	CUDA: 12.8
+	CUDNN: 90701
+	NumPy: 1.23.5
+	PIL: 8.1.0
+Args:
+	algorithm: ERM_GGA
+	batch_size: 32
+	cache: disk
+	cache_root: cache
+	cache_size: None
+	checkpoint_freq: 200
+	configs: []
+	data_dir: /home/s21_yhr/lzh/new/DomainBed-new/dataset
+	dataset: PACS
+	debug: False
+	deterministic: True
+	end_step: 200
+	evalmode: fast
+	extra_search: n
+	extra_search_end: None
+	extra_search_start: None
+	gga_l_gamma: 0.001
+	grad_fn: sum
+	holdout_fraction: 0.2
+	model_save: None
+	name: PACS_GGA_seed0
+	neighborhoodSize: 1e-05
+	out_dir: train_output/PACS/260812_23-40-30_PACS_GGA_seed0
+	out_root: train_output/PACS
+	prebuild_loader: True
+	q_steps: 2000
+	quant: 0
+	resize_mode: stretch
+	saliency: False
+	saliency_cmap: jet
+	saliency_every: 0
+	saliency_noise: 0.15
+	saliency_num: 16
+	saliency_samples: 25
+	saliency_split: test_in
+	seed: 0
+	show: False
+	start_step: 100
+	steps: 5000
+	tb_freq: 10
+	test_envs: None
+	train_output: train_output
+	trial_seed: 0
+	unique_name: 260812_23-40-30_PACS_GGA_seed0
+	work_dir: .
+HParams:
+	data_augmentation: True
+	val_augment: False
+	[36mresnet18: False
+	[0m[36mresnet_dropout: 0
+	[0mclass_balanced: False
+	[36moptimizer: adam
+	[0m[36mfreeze_bn: True
+	[0m[36mpretrained: True
+	[0m[36mimage_size: 224
+	[0m[36mlr: 5e-05
+	[0mbatch_size: 32
+	[36mweight_decay: 0
+	[0m[36mswad: LossValley
+	[0mswad_kwargs: 
+	  n_converge: 3
+	  n_tolerance: 6
+	  tolerance_ratio: 0.3
+	test_batchsize: 128
+	indomain_test: False
+	grad_fn: sum
+	extra_search: n
+	logdir: train_output/PACS/260812_23-40-30_PACS_GGA_seed0
+	neighborhoodSize: 1e-05
+	start_step: 100
+	end_step: 200
+	extra_search_start: None
+	extra_search_end: None
+	gga_l_gamma: 0.001
+Dataset:
+	[PACS] #envs=4, #classes=7
+	env0: art_painting (#2048)
+	env1: cartoon (#2344)
+	env2: photo (#1670)
+	env3: sketch (#3929)
+
+[36mINFO[0m 08/12 23:40:41 | n_steps = 5000
+[36mINFO[0m 08/12 23:40:41 | checkpoint_freq = 200
+[36mINFO[0m 08/12 23:40:41 | n_steps is updated to 5000 => 5001 for checkpointing
+[36mINFO[0m 08/12 23:40:41 | Target test envs = [[0], [1], [2], [3]]
+[36mINFO[0m 08/12 23:40:41 | 
+[36mINFO[0m 08/12 23:40:42 | Testenv name escaping te_art_painting -> te_art_painting
+[36mINFO[0m 08/12 23:40:42 | Test envs = [0], name = te_art_painting
+[36mINFO[0m 08/12 23:40:42 | Batch sizes for each domain: [0, 32, 32, 32] (total=96)
+[36mINFO[0m 08/12 23:40:42 | steps-per-epoch for each domain: 58.62, 41.75, 98.25 -> min = 41.75
+/home/s21_yhr/miniconda3/envs/lzh_DG/lib/python3.9/site-packages/torchvision/models/_utils.py:208: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/home/s21_yhr/miniconda3/envs/lzh_DG/lib/python3.9/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=ResNet50_Weights.IMAGENET1K_V1`. You can also use `weights=ResNet50_Weights.DEFAULT` to get the most up-to-date weights.
+  warnings.warn(msg)
+[36mINFO[0m 08/12 23:40:58 | # of params = 23522375
+[36mINFO[0m 08/12 23:45:55 | test_in     test_out    train_in    train_out   test_in_au  test_out_a  train_out_  tr_outloss  env0_in     env0_in_au  env0_out    env0_out_a  env1_out    env1_out_a  env2_out    env2_out_a  env3_out    env3_out_a  step        epoch       loss        step_time   eval_time   mem_gb     
+[36mINFO[0m 08/12 23:45:55 | 0.286150    0.320293    0.000000    0.345703    nan         nan         nan         1.795350    0.286150    nan         0.320293    nan         0.322650    nan         0.502994    nan         0.211465    nan         0           0.000000    1.905446    9.904016    287.087382  8.026115   

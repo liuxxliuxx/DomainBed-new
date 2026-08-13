@@ -15,7 +15,7 @@ METHODS = {
     },
     "GGA": {
         "algorithm": "ERM_GGA",
-        "swad": "False",
+        "swad": "LossValley",
         "extra_args": [
             "--start_step", "100",
             "--end_step", "200",
@@ -51,7 +51,7 @@ METHODS = {
     },
     "Arith": {
         "algorithm": "Arith",
-        "swad": "False",
+        "swad": "LossValley",
         "extra_args": [
             "--arith_meta_lr", "0.01",
         ],
@@ -84,22 +84,40 @@ METHODS = {
     },
     "ALOFT_E": {
         "algorithm": "ALOFT_E",
-        "swad": "False",
+        "swad": "LossValley",
         "extra_args": [
             "--aloft_alpha", "1.0",
             "--aloft_mask_ratio", "0.5",
             "--aloft_perturb_prob", "1.0",
         ],
     },
+    "ALOFT_rev_E": {
+            "algorithm": "ALOFT_rev_E",
+            "swad": "LossValley",
+            "extra_args": [
+                "--aloft_alpha", "1.0",
+                "--aloft_mask_ratio", "0.5",
+                "--aloft_perturb_prob", "1.0",
+            ],
+        },
     "ALOFT_S": {
         "algorithm": "ALOFT_S",
-        "swad": "False",
+        "swad": "LossValley",
         "extra_args": [
             "--aloft_alpha", "0.9",
             "--aloft_mask_ratio", "0.5",
             "--aloft_perturb_prob", "1.0",
         ],
     },
+    "ALOFT_rev_S": {
+            "algorithm": "ALOFT_rev_S",
+            "swad": "LossValley",
+            "extra_args": [
+                "--aloft_alpha", "0.9",
+                "--aloft_mask_ratio", "0.5",
+                "--aloft_perturb_prob", "1.0",
+            ],
+        },
     "iDAG": {
         "algorithm": "iDAG",
         "swad": "False",

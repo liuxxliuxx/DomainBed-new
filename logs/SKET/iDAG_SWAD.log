@@ -1,0 +1,1241 @@
+Algorithm: iDAG_SWAD
+Physical GPU: 2
+Seeds: [0, 1, 2, 3, 4]
+Dataset: /home/s21_yhr/lzh/new/DomainBed-new/dataset/SKET
+
+================================================================================
+Starting iDAG_SWAD, seed=0, physical GPU=2
+/home/s21_yhr/miniconda3/envs/lzh_DG/bin/python /home/s21_yhr/lzh/new/DomainBed-new/train_all.py SKET_iDAG_SWAD_seed0 --dataset SKET --data_dir /home/s21_yhr/lzh/new/DomainBed-new/dataset --algorithm iDAG --steps 5000 --checkpoint_freq 200 --batch_size 32 --optimizer adam --lr 5e-5 --weight_decay 0 --resnet_dropout 0 --resnet18 False --pretrained True --freeze_bn True --swad LossValley --seed 0 --trial_seed 0 --deterministic --cache disk --prebuild_loader --image_size 224 --out_dim 256 --hidden_size 256 --num_hidden_layers 0 --dag_anneal_steps 200 --temperature 0.07 --ema_ratio 0.99 --lambda1 0.01 --lambda2 0.01 --rho 1.0 --alpha 1.0 --rho_max 100.0 --weight_mu 1.0 --weight_nu 1.0
+================================================================================
+/home/s21_yhr/miniconda3/envs/lzh_DG/lib/python3.9/site-packages/munch/__init__.py:24: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+[36mINFO[0m 08/12 17:38:49 | Command :: /home/s21_yhr/lzh/new/DomainBed-new/train_all.py SKET_iDAG_SWAD_seed0 --dataset SKET --data_dir /home/s21_yhr/lzh/new/DomainBed-new/dataset --algorithm iDAG --steps 5000 --checkpoint_freq 200 --batch_size 32 --optimizer adam --lr 5e-5 --weight_decay 0 --resnet_dropout 0 --resnet18 False --pretrained True --freeze_bn True --swad LossValley --seed 0 --trial_seed 0 --deterministic --cache disk --prebuild_loader --image_size 224 --out_dim 256 --hidden_size 256 --num_hidden_layers 0 --dag_anneal_steps 200 --temperature 0.07 --ema_ratio 0.99 --lambda1 0.01 --lambda2 0.01 --rho 1.0 --alpha 1.0 --rho_max 100.0 --weight_mu 1.0 --weight_nu 1.0
+Environment:
+	Python: 3.9.25
+	PyTorch: 2.7.0+cu128
+	Torchvision: 0.22.0+cu128
+	CUDA: 12.8
+	CUDNN: 90701
+	NumPy: 1.23.5
+	PIL: 8.1.0
+Args:
+	algorithm: iDAG
+	batch_size: 32
+	cache: disk
+	cache_root: cache
+	cache_size: None
+	checkpoint_freq: 200
+	configs: []
+	data_dir: /home/s21_yhr/lzh/new/DomainBed-new/dataset
+	dataset: SKET
+	debug: False
+	deterministic: True
+	end_step: 200
+	evalmode: fast
+	extra_search: n
+	extra_search_end: None
+	extra_search_start: None
+	gga_l_gamma: 0.001
+	grad_fn: sum
+	holdout_fraction: 0.2
+	model_save: None
+	name: SKET_iDAG_SWAD_seed0
+	neighborhoodSize: 1e-06
+	out_dir: train_output/SKET/260812_17-38-49_SKET_iDAG_SWAD_seed0
+	out_root: train_output/SKET
+	prebuild_loader: True
+	q_steps: 2000
+	quant: 0
+	resize_mode: stretch
+	saliency: False
+	saliency_cmap: jet
+	saliency_every: 0
+	saliency_noise: 0.15
+	saliency_num: 16
+	saliency_samples: 25
+	saliency_split: test_in
+	seed: 0
+	show: False
+	start_step: 100
+	steps: 5000
+	tb_freq: 10
+	test_envs: None
+	train_output: train_output
+	trial_seed: 0
+	unique_name: 260812_17-38-49_SKET_iDAG_SWAD_seed0
+	work_dir: .
+HParams:
+	data_augmentation: True
+	val_augment: False
+	[36mresnet18: False
+	[0m[36mresnet_dropout: 0
+	[0mclass_balanced: False
+	[36moptimizer: adam
+	[0m[36mfreeze_bn: True
+	[0m[36mpretrained: True
+	[0m[36mimage_size: 224
+	[0m[36mlr: 5e-05
+	[0mbatch_size: 32
+	[36mweight_decay: 0
+	[0m[36mhidden_size: 256
+	[0m[36mout_dim: 256
+	[0m[36mnum_hidden_layers: 0
+	[0m[36mdag_anneal_steps: 200
+	[0m[36mtemperature: 0.07
+	[0m[36mema_ratio: 0.99
+	[0m[36mlambda1: 0.01
+	[0m[36mlambda2: 0.01
+	[0m[36mrho_max: 100.0
+	[0m[36mrho: 1.0
+	[0m[36malpha: 1.0
+	[0m[36mweight_nu: 1.0
+	[0m[36mweight_mu: 1.0
+	[0m[36mswad: LossValley
+	[0mswad_kwargs: 
+	  n_converge: 3
+	  n_tolerance: 6
+	  tolerance_ratio: 0.3
+	test_batchsize: 128
+	indomain_test: False
+	grad_fn: sum
+	extra_search: n
+	logdir: train_output/SKET/260812_17-38-49_SKET_iDAG_SWAD_seed0
+	neighborhoodSize: 1e-06
+	start_step: 100
+	end_step: 200
+	extra_search_start: None
+	extra_search_end: None
+	gga_l_gamma: 0.001
+[cache] 建缓存 full_05154964d3379510: 16320 张
+[cache] 200/16320
+[cache] 400/16320
+[cache] 600/16320
+[cache] 800/16320
+[cache] 1000/16320
+[cache] 1200/16320
+[cache] 1400/16320
+[cache] 1600/16320
+[cache] 1800/16320
+[cache] 2000/16320
+[cache] 2200/16320
+[cache] 2400/16320
+[cache] 2600/16320
+[cache] 2800/16320
+[cache] 3000/16320
+[cache] 3200/16320
+[cache] 3400/16320
+[cache] 3600/16320
+[cache] 3800/16320
+[cache] 4000/16320
+[cache] 4200/16320
+[cache] 4400/16320
+[cache] 4600/16320
+[cache] 4800/16320
+[cache] 5000/16320
+[cache] 5200/16320
+[cache] 5400/16320
+[cache] 5600/16320
+[cache] 5800/16320
+[cache] 6000/16320
+[cache] 6200/16320
+[cache] 6400/16320
+[cache] 6600/16320
+[cache] 6800/16320
+[cache] 7000/16320
+[cache] 7200/16320
+[cache] 7400/16320
+[cache] 7600/16320
+[cache] 7800/16320
+[cache] 8000/16320
+[cache] 8200/16320
+[cache] 8400/16320
+[cache] 8600/16320
+[cache] 8800/16320
+[cache] 9000/16320
+[cache] 9200/16320
+[cache] 9400/16320
+[cache] 9600/16320
+[cache] 9800/16320
+[cache] 10000/16320
+[cache] 10200/16320
+[cache] 10400/16320
+[cache] 10600/16320
+[cache] 10800/16320
+[cache] 11000/16320
+[cache] 11200/16320
+[cache] 11400/16320
+[cache] 11600/16320
+[cache] 11800/16320
+[cache] 12000/16320
+[cache] 12200/16320
+[cache] 12400/16320
+[cache] 12600/16320
+[cache] 12800/16320
+[cache] 13000/16320
+[cache] 13200/16320
+[cache] 13400/16320
+[cache] 13600/16320
+[cache] 13800/16320
+[cache] 14000/16320
+[cache] 14200/16320
+[cache] 14400/16320
+[cache] 14600/16320
+[cache] 14800/16320
+[cache] 15000/16320
+[cache] 15200/16320
+[cache] 15400/16320
+[cache] 15600/16320
+[cache] 15800/16320
+[cache] 16000/16320
+[cache] 16200/16320
+[cache] 建缓存 full_a1cbcab369637f14: 101500 张
+[cache] 200/101500
+[cache] 400/101500
+[cache] 600/101500
+[cache] 800/101500
+[cache] 1000/101500
+[cache] 1200/101500
+[cache] 1400/101500
+[cache] 1600/101500
+[cache] 1800/101500
+[cache] 2000/101500
+[cache] 2200/101500
+[cache] 2400/101500
+[cache] 2600/101500
+[cache] 2800/101500
+[cache] 3000/101500
+[cache] 3200/101500
+[cache] 3400/101500
+[cache] 3600/101500
+[cache] 3800/101500
+[cache] 4000/101500
+[cache] 4200/101500
+[cache] 4400/101500
+[cache] 4600/101500
+[cache] 4800/101500
+[cache] 5000/101500
+[cache] 5200/101500
+[cache] 5400/101500
+[cache] 5600/101500
+[cache] 5800/101500
+[cache] 6000/101500
+[cache] 6200/101500
+[cache] 6400/101500
+[cache] 6600/101500
+[cache] 6800/101500
+[cache] 7000/101500
+[cache] 7200/101500
+[cache] 7400/101500
+[cache] 7600/101500
+[cache] 7800/101500
+[cache] 8000/101500
+[cache] 8200/101500
+[cache] 8400/101500
+[cache] 8600/101500
+[cache] 8800/101500
+[cache] 9000/101500
+[cache] 9200/101500
+[cache] 9400/101500
+[cache] 9600/101500
+[cache] 9800/101500
+[cache] 10000/101500
+[cache] 10200/101500
+[cache] 10400/101500
+[cache] 10600/101500
+[cache] 10800/101500
+[cache] 11000/101500
+[cache] 11200/101500
+[cache] 11400/101500
+[cache] 11600/101500
+[cache] 11800/101500
+[cache] 12000/101500
+[cache] 12200/101500
+[cache] 12400/101500
+[cache] 12600/101500
+[cache] 12800/101500
+[cache] 13000/101500
+[cache] 13200/101500
+[cache] 13400/101500
+[cache] 13600/101500
+[cache] 13800/101500
+[cache] 14000/101500
+[cache] 14200/101500
+[cache] 14400/101500
+[cache] 14600/101500
+[cache] 14800/101500
+[cache] 15000/101500
+[cache] 15200/101500
+[cache] 15400/101500
+[cache] 15600/101500
+[cache] 15800/101500
+[cache] 16000/101500
+[cache] 16200/101500
+[cache] 16400/101500
+[cache] 16600/101500
+[cache] 16800/101500
+[cache] 17000/101500
+[cache] 17200/101500
+[cache] 17400/101500
+[cache] 17600/101500
+[cache] 17800/101500
+[cache] 18000/101500
+[cache] 18200/101500
+[cache] 18400/101500
+[cache] 18600/101500
+[cache] 18800/101500
+[cache] 19000/101500
+[cache] 19200/101500
+[cache] 19400/101500
+[cache] 19600/101500
+[cache] 19800/101500
+[cache] 20000/101500
+[cache] 20200/101500
+[cache] 20400/101500
+[cache] 20600/101500
+[cache] 20800/101500
+[cache] 21000/101500
+[cache] 21200/101500
+[cache] 21400/101500
+[cache] 21600/101500
+[cache] 21800/101500
+[cache] 22000/101500
+[cache] 22200/101500
+[cache] 22400/101500
+[cache] 22600/101500
+[cache] 22800/101500
+[cache] 23000/101500
+[cache] 23200/101500
+[cache] 23400/101500
+[cache] 23600/101500
+[cache] 23800/101500
+[cache] 24000/101500
+[cache] 24200/101500
+[cache] 24400/101500
+[cache] 24600/101500
+[cache] 24800/101500
+[cache] 25000/101500
+[cache] 25200/101500
+[cache] 25400/101500
+[cache] 25600/101500
+[cache] 25800/101500
+[cache] 26000/101500
+[cache] 26200/101500
+[cache] 26400/101500
+[cache] 26600/101500
+[cache] 26800/101500
+[cache] 27000/101500
+[cache] 27200/101500
+[cache] 27400/101500
+[cache] 27600/101500
+[cache] 27800/101500
+[cache] 28000/101500
+[cache] 28200/101500
+[cache] 28400/101500
+[cache] 28600/101500
+[cache] 28800/101500
+[cache] 29000/101500
+[cache] 29200/101500
+[cache] 29400/101500
+[cache] 29600/101500
+[cache] 29800/101500
+[cache] 30000/101500
+[cache] 30200/101500
+[cache] 30400/101500
+[cache] 30600/101500
+[cache] 30800/101500
+[cache] 31000/101500
+[cache] 31200/101500
+[cache] 31400/101500
+[cache] 31600/101500
+[cache] 31800/101500
+[cache] 32000/101500
+[cache] 32200/101500
+[cache] 32400/101500
+[cache] 32600/101500
+[cache] 32800/101500
+[cache] 33000/101500
+[cache] 33200/101500
+[cache] 33400/101500
+[cache] 33600/101500
+[cache] 33800/101500
+[cache] 34000/101500
+[cache] 34200/101500
+[cache] 34400/101500
+[cache] 34600/101500
+[cache] 34800/101500
+[cache] 35000/101500
+[cache] 35200/101500
+[cache] 35400/101500
+[cache] 35600/101500
+[cache] 35800/101500
+[cache] 36000/101500
+[cache] 36200/101500
+[cache] 36400/101500
+[cache] 36600/101500
+[cache] 36800/101500
+[cache] 37000/101500
+[cache] 37200/101500
+[cache] 37400/101500
+[cache] 37600/101500
+[cache] 37800/101500
+[cache] 38000/101500
+[cache] 38200/101500
+[cache] 38400/101500
+[cache] 38600/101500
+[cache] 38800/101500
+[cache] 39000/101500
+[cache] 39200/101500
+[cache] 39400/101500
+[cache] 39600/101500
+[cache] 39800/101500
+[cache] 40000/101500
+[cache] 40200/101500
+[cache] 40400/101500
+[cache] 40600/101500
+[cache] 40800/101500
+[cache] 41000/101500
+[cache] 41200/101500
+[cache] 41400/101500
+[cache] 41600/101500
+[cache] 41800/101500
+[cache] 42000/101500
+[cache] 42200/101500
+[cache] 42400/101500
+[cache] 42600/101500
+[cache] 42800/101500
+[cache] 43000/101500
+[cache] 43200/101500
+[cache] 43400/101500
+[cache] 43600/101500
+[cache] 43800/101500
+[cache] 44000/101500
+[cache] 44200/101500
+[cache] 44400/101500
+[cache] 44600/101500
+[cache] 44800/101500
+[cache] 45000/101500
+[cache] 45200/101500
+[cache] 45400/101500
+[cache] 45600/101500
+[cache] 45800/101500
+[cache] 46000/101500
+[cache] 46200/101500
+[cache] 46400/101500
+[cache] 46600/101500
+[cache] 46800/101500
+[cache] 47000/101500
+[cache] 47200/101500
+[cache] 47400/101500
+[cache] 47600/101500
+[cache] 47800/101500
+[cache] 48000/101500
+[cache] 48200/101500
+[cache] 48400/101500
+[cache] 48600/101500
+[cache] 48800/101500
+[cache] 49000/101500
+[cache] 49200/101500
+[cache] 49400/101500
+[cache] 49600/101500
+[cache] 49800/101500
+[cache] 50000/101500
+[cache] 50200/101500
+[cache] 50400/101500
+[cache] 50600/101500
+[cache] 50800/101500
+[cache] 51000/101500
+[cache] 51200/101500
+[cache] 51400/101500
+[cache] 51600/101500
+[cache] 51800/101500
+[cache] 52000/101500
+[cache] 52200/101500
+[cache] 52400/101500
+[cache] 52600/101500
+[cache] 52800/101500
+[cache] 53000/101500
+[cache] 53200/101500
+[cache] 53400/101500
+[cache] 53600/101500
+[cache] 53800/101500
+[cache] 54000/101500
+[cache] 54200/101500
+[cache] 54400/101500
+[cache] 54600/101500
+[cache] 54800/101500
+[cache] 55000/101500
+[cache] 55200/101500
+[cache] 55400/101500
+[cache] 55600/101500
+[cache] 55800/101500
+[cache] 56000/101500
+[cache] 56200/101500
+[cache] 56400/101500
+[cache] 56600/101500
+[cache] 56800/101500
+[cache] 57000/101500
+[cache] 57200/101500
+[cache] 57400/101500
+[cache] 57600/101500
+[cache] 57800/101500
+[cache] 58000/101500
+[cache] 58200/101500
+[cache] 58400/101500
+[cache] 58600/101500
+[cache] 58800/101500
+[cache] 59000/101500
+[cache] 59200/101500
+[cache] 59400/101500
+[cache] 59600/101500
+[cache] 59800/101500
+[cache] 60000/101500
+[cache] 60200/101500
+[cache] 60400/101500
+[cache] 60600/101500
+[cache] 60800/101500
+[cache] 61000/101500
+[cache] 61200/101500
+[cache] 61400/101500
+[cache] 61600/101500
+[cache] 61800/101500
+[cache] 62000/101500
+[cache] 62200/101500
+[cache] 62400/101500
+[cache] 62600/101500
+[cache] 62800/101500
+[cache] 63000/101500
+[cache] 63200/101500
+[cache] 63400/101500
+[cache] 63600/101500
+[cache] 63800/101500
+[cache] 64000/101500
+[cache] 64200/101500
+[cache] 64400/101500
+[cache] 64600/101500
+[cache] 64800/101500
+[cache] 65000/101500
+[cache] 65200/101500
+[cache] 65400/101500
+[cache] 65600/101500
+[cache] 65800/101500
+[cache] 66000/101500
+[cache] 66200/101500
+[cache] 66400/101500
+[cache] 66600/101500
+[cache] 66800/101500
+[cache] 67000/101500
+[cache] 67200/101500
+[cache] 67400/101500
+[cache] 67600/101500
+[cache] 67800/101500
+[cache] 68000/101500
+[cache] 68200/101500
+[cache] 68400/101500
+[cache] 68600/101500
+[cache] 68800/101500
+[cache] 69000/101500
+[cache] 69200/101500
+[cache] 69400/101500
+[cache] 69600/101500
+[cache] 69800/101500
+[cache] 70000/101500
+[cache] 70200/101500
+[cache] 70400/101500
+[cache] 70600/101500
+[cache] 70800/101500
+[cache] 71000/101500
+[cache] 71200/101500
+[cache] 71400/101500
+[cache] 71600/101500
+[cache] 71800/101500
+[cache] 72000/101500
+[cache] 72200/101500
+[cache] 72400/101500
+[cache] 72600/101500
+[cache] 72800/101500
+[cache] 73000/101500
+[cache] 73200/101500
+[cache] 73400/101500
+[cache] 73600/101500
+[cache] 73800/101500
+[cache] 74000/101500
+[cache] 74200/101500
+[cache] 74400/101500
+[cache] 74600/101500
+[cache] 74800/101500
+[cache] 75000/101500
+[cache] 75200/101500
+[cache] 75400/101500
+[cache] 75600/101500
+[cache] 75800/101500
+[cache] 76000/101500
+[cache] 76200/101500
+[cache] 76400/101500
+[cache] 76600/101500
+[cache] 76800/101500
+[cache] 77000/101500
+[cache] 77200/101500
+[cache] 77400/101500
+[cache] 77600/101500
+[cache] 77800/101500
+[cache] 78000/101500
+[cache] 78200/101500
+[cache] 78400/101500
+[cache] 78600/101500
+[cache] 78800/101500
+[cache] 79000/101500
+[cache] 79200/101500
+[cache] 79400/101500
+[cache] 79600/101500
+[cache] 79800/101500
+[cache] 80000/101500
+[cache] 80200/101500
+[cache] 80400/101500
+[cache] 80600/101500
+[cache] 80800/101500
+[cache] 81000/101500
+[cache] 81200/101500
+[cache] 81400/101500
+[cache] 81600/101500
+[cache] 81800/101500
+[cache] 82000/101500
+[cache] 82200/101500
+[cache] 82400/101500
+[cache] 82600/101500
+[cache] 82800/101500
+[cache] 83000/101500
+[cache] 83200/101500
+[cache] 83400/101500
+[cache] 83600/101500
+[cache] 83800/101500
+[cache] 84000/101500
+[cache] 84200/101500
+[cache] 84400/101500
+[cache] 84600/101500
+[cache] 84800/101500
+[cache] 85000/101500
+[cache] 85200/101500
+[cache] 85400/101500
+[cache] 85600/101500
+[cache] 85800/101500
+[cache] 86000/101500
+[cache] 86200/101500
+[cache] 86400/101500
+[cache] 86600/101500
+[cache] 86800/101500
+[cache] 87000/101500
+[cache] 87200/101500
+[cache] 87400/101500
+[cache] 87600/101500
+[cache] 87800/101500
+[cache] 88000/101500
+[cache] 88200/101500
+[cache] 88400/101500
+[cache] 88600/101500
+[cache] 88800/101500
+[cache] 89000/101500
+[cache] 89200/101500
+[cache] 89400/101500
+[cache] 89600/101500
+[cache] 89800/101500
+[cache] 90000/101500
+[cache] 90200/101500
+[cache] 90400/101500
+[cache] 90600/101500
+[cache] 90800/101500
+[cache] 91000/101500
+[cache] 91200/101500
+[cache] 91400/101500
+[cache] 91600/101500
+[cache] 91800/101500
+[cache] 92000/101500
+[cache] 92200/101500
+[cache] 92400/101500
+[cache] 92600/101500
+[cache] 92800/101500
+[cache] 93000/101500
+[cache] 93200/101500
+[cache] 93400/101500
+[cache] 93600/101500
+[cache] 93800/101500
+[cache] 94000/101500
+[cache] 94200/101500
+[cache] 94400/101500
+[cache] 94600/101500
+[cache] 94800/101500
+[cache] 95000/101500
+[cache] 95200/101500
+[cache] 95400/101500
+[cache] 95600/101500
+[cache] 95800/101500
+[cache] 96000/101500
+[cache] 96200/101500
+[cache] 96400/101500
+[cache] 96600/101500
+[cache] 96800/101500
+[cache] 97000/101500
+[cache] 97200/101500
+[cache] 97400/101500
+[cache] 97600/101500
+[cache] 97800/101500
+[cache] 98000/101500
+[cache] 98200/101500
+[cache] 98400/101500
+[cache] 98600/101500
+[cache] 98800/101500
+[cache] 99000/101500
+[cache] 99200/101500
+[cache] 99400/101500
+[cache] 99600/101500
+[cache] 99800/101500
+[cache] 100000/101500
+[cache] 100200/101500
+[cache] 100400/101500
+[cache] 100600/101500
+[cache] 100800/101500
+[cache] 101000/101500
+[cache] 101200/101500
+[cache] 101400/101500
+[cache] 建缓存 full_a59be1f77e7dcaa4: 45540 张
+[cache] 200/45540
+[cache] 400/45540
+[cache] 600/45540
+[cache] 800/45540
+[cache] 1000/45540
+[cache] 1200/45540
+[cache] 1400/45540
+[cache] 1600/45540
+[cache] 1800/45540
+[cache] 2000/45540
+[cache] 2200/45540
+[cache] 2400/45540
+[cache] 2600/45540
+[cache] 2800/45540
+[cache] 3000/45540
+[cache] 3200/45540
+[cache] 3400/45540
+[cache] 3600/45540
+[cache] 3800/45540
+[cache] 4000/45540
+[cache] 4200/45540
+[cache] 4400/45540
+[cache] 4600/45540
+[cache] 4800/45540
+[cache] 5000/45540
+[cache] 5200/45540
+[cache] 5400/45540
+[cache] 5600/45540
+[cache] 5800/45540
+[cache] 6000/45540
+[cache] 6200/45540
+[cache] 6400/45540
+[cache] 6600/45540
+[cache] 6800/45540
+[cache] 7000/45540
+[cache] 7200/45540
+[cache] 7400/45540
+[cache] 7600/45540
+[cache] 7800/45540
+[cache] 8000/45540
+[cache] 8200/45540
+[cache] 8400/45540
+[cache] 8600/45540
+[cache] 8800/45540
+[cache] 9000/45540
+[cache] 9200/45540
+[cache] 9400/45540
+[cache] 9600/45540
+[cache] 9800/45540
+[cache] 10000/45540
+[cache] 10200/45540
+[cache] 10400/45540
+[cache] 10600/45540
+[cache] 10800/45540
+[cache] 11000/45540
+[cache] 11200/45540
+[cache] 11400/45540
+[cache] 11600/45540
+[cache] 11800/45540
+[cache] 12000/45540
+[cache] 12200/45540
+[cache] 12400/45540
+[cache] 12600/45540
+[cache] 12800/45540
+[cache] 13000/45540
+[cache] 13200/45540
+[cache] 13400/45540
+[cache] 13600/45540
+[cache] 13800/45540
+[cache] 14000/45540
+[cache] 14200/45540
+[cache] 14400/45540
+[cache] 14600/45540
+[cache] 14800/45540
+[cache] 15000/45540
+[cache] 15200/45540
+[cache] 15400/45540
+[cache] 15600/45540
+[cache] 15800/45540
+[cache] 16000/45540
+[cache] 16200/45540
+[cache] 16400/45540
+[cache] 16600/45540
+[cache] 16800/45540
+[cache] 17000/45540
+[cache] 17200/45540
+[cache] 17400/45540
+[cache] 17600/45540
+[cache] 17800/45540
+[cache] 18000/45540
+[cache] 18200/45540
+[cache] 18400/45540
+[cache] 18600/45540
+[cache] 18800/45540
+[cache] 19000/45540
+[cache] 19200/45540
+[cache] 19400/45540
+[cache] 19600/45540
+[cache] 19800/45540
+[cache] 20000/45540
+[cache] 20200/45540
+[cache] 20400/45540
+[cache] 20600/45540
+[cache] 20800/45540
+[cache] 21000/45540
+[cache] 21200/45540
+[cache] 21400/45540
+[cache] 21600/45540
+[cache] 21800/45540
+[cache] 22000/45540
+[cache] 22200/45540
+[cache] 22400/45540
+[cache] 22600/45540
+[cache] 22800/45540
+[cache] 23000/45540
+[cache] 23200/45540
+[cache] 23400/45540
+[cache] 23600/45540
+[cache] 23800/45540
+[cache] 24000/45540
+[cache] 24200/45540
+[cache] 24400/45540
+[cache] 24600/45540
+[cache] 24800/45540
+[cache] 25000/45540
+[cache] 25200/45540
+[cache] 25400/45540
+[cache] 25600/45540
+[cache] 25800/45540
+[cache] 26000/45540
+[cache] 26200/45540
+[cache] 26400/45540
+[cache] 26600/45540
+[cache] 26800/45540
+[cache] 27000/45540
+[cache] 27200/45540
+[cache] 27400/45540
+[cache] 27600/45540
+[cache] 27800/45540
+[cache] 28000/45540
+[cache] 28200/45540
+[cache] 28400/45540
+[cache] 28600/45540
+[cache] 28800/45540
+[cache] 29000/45540
+[cache] 29200/45540
+[cache] 29400/45540
+[cache] 29600/45540
+[cache] 29800/45540
+[cache] 30000/45540
+[cache] 30200/45540
+[cache] 30400/45540
+[cache] 30600/45540
+[cache] 30800/45540
+[cache] 31000/45540
+[cache] 31200/45540
+[cache] 31400/45540
+[cache] 31600/45540
+[cache] 31800/45540
+[cache] 32000/45540
+[cache] 32200/45540
+[cache] 32400/45540
+[cache] 32600/45540
+[cache] 32800/45540
+[cache] 33000/45540
+[cache] 33200/45540
+[cache] 33400/45540
+[cache] 33600/45540
+[cache] 33800/45540
+[cache] 34000/45540
+[cache] 34200/45540
+[cache] 34400/45540
+[cache] 34600/45540
+[cache] 34800/45540
+[cache] 35000/45540
+[cache] 35200/45540
+[cache] 35400/45540
+[cache] 35600/45540
+[cache] 35800/45540
+[cache] 36000/45540
+[cache] 36200/45540
+[cache] 36400/45540
+[cache] 36600/45540
+[cache] 36800/45540
+[cache] 37000/45540
+[cache] 37200/45540
+[cache] 37400/45540
+[cache] 37600/45540
+[cache] 37800/45540
+[cache] 38000/45540
+[cache] 38200/45540
+[cache] 38400/45540
+[cache] 38600/45540
+[cache] 38800/45540
+[cache] 39000/45540
+[cache] 39200/45540
+[cache] 39400/45540
+[cache] 39600/45540
+[cache] 39800/45540
+[cache] 40000/45540
+[cache] 40200/45540
+[cache] 40400/45540
+[cache] 40600/45540
+[cache] 40800/45540
+[cache] 41000/45540
+[cache] 41200/45540
+[cache] 41400/45540
+[cache] 41600/45540
+[cache] 41800/45540
+[cache] 42000/45540
+[cache] 42200/45540
+[cache] 42400/45540
+[cache] 42600/45540
+[cache] 42800/45540
+[cache] 43000/45540
+[cache] 43200/45540
+[cache] 43400/45540
+[cache] 43600/45540
+[cache] 43800/45540
+[cache] 44000/45540
+[cache] 44200/45540
+[cache] 44400/45540
+[cache] 44600/45540
+[cache] 44800/45540
+[cache] 45000/45540
+[cache] 45200/45540
+[cache] 45400/45540
+Dataset:
+	[SKET] #envs=3, #classes=203
+	env0: TUBerlin (#16320)
+	env1: quickdraw (#101500)
+	env2: sketch (#45540)
+
+[36mINFO[0m 08/12 17:56:38 | n_steps = 5000
+[36mINFO[0m 08/12 17:56:38 | checkpoint_freq = 200
+[36mINFO[0m 08/12 17:56:38 | n_steps is updated to 5000 => 5001 for checkpointing
+[36mINFO[0m 08/12 17:56:38 | Target test envs = [[0], [1], [2]]
+[36mINFO[0m 08/12 17:56:38 | 
+[36mINFO[0m 08/12 17:56:41 | Testenv name escaping te_TUBerlin -> te_TUBerlin
+[36mINFO[0m 08/12 17:56:41 | Test envs = [0], name = te_TUBerlin
+[36mINFO[0m 08/12 17:56:41 | Batch sizes for each domain: [0, 32, 32] (total=64)
+[36mINFO[0m 08/12 17:56:41 | steps-per-epoch for each domain: 2537.50, 1138.50 -> min = 1138.50
+/home/s21_yhr/miniconda3/envs/lzh_DG/lib/python3.9/site-packages/torchvision/models/_utils.py:208: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/home/s21_yhr/miniconda3/envs/lzh_DG/lib/python3.9/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=ResNet50_Weights.IMAGENET1K_V1`. You can also use `weights=ResNet50_Weights.DEFAULT` to get the most up-to-date weights.
+  warnings.warn(msg)
+[36mINFO[0m 08/12 17:56:46 | # of params = 24335320
+/home/s21_yhr/lzh/new/DomainBed-new/domainbed/algorithms/algorithms.py:161: UserWarning: The use of `x.T` on tensors of dimension other than 2 to reverse their shape is deprecated and it will throw an error in a future release. Consider `x.mT` to transpose batches of matrices or `x.permute(*torch.arange(x.ndim - 1, -1, -1))` to reverse the dimensions of a tensor. (Triggered internally at /pytorch/aten/src/ATen/native/TensorShape.cpp:4413.)
+  mask_neg = torch.not_equal(labels, labels.T)
+[36mINFO[0m 08/12 18:10:07 | test_in     test_out    train_in    train_out   test_in_au  test_out_a  train_out_  tr_outloss  env0_in     env0_in_au  env0_out    env0_out_a  env1_out    env1_out_a  env2_out    env2_out_a  step        epoch       loss        inv_ce      l2          penalty     l1          cl          step_time   eval_time   mem_gb     
+[36mINFO[0m 08/12 18:10:07 | 0.006051    0.005515    0.000000    0.006138    nan         nan         nan         5.312160    0.006051    nan         0.005515    nan         0.005468    nan         0.006807    nan         0           0.000000    5.317428    5.298271    0.063140    0.000000    0.000039    0.051788    23.747906   777.491540  5.439152   
+[36mINFO[0m 08/12 18:13:33 | 0.029565    0.034007    0.000000    0.034957    nan         nan         nan         5.263921    0.029565    nan         0.034007    nan         0.024680    nan         0.045235    nan         200         0.175670    9.587835    5.293831    0.063162    0.000000    0.000039    9.305300    0.685112    63.940836   5.853986   
+[36mINFO[0m 08/12 18:16:48 | 0.079121    0.084252    0.000000    0.083618    nan         nan         nan         5.215424    0.079121    nan         0.084252    nan         0.057882    nan         0.109354    nan         400         0.351339    12.209946   5.240362    0.058645    0.000000    0.000042    6.910897    0.628823    63.618603   6.038668   
+[36mINFO[0m 08/12 18:19:57 | 0.133349    0.143995    0.000000    0.144246    nan         nan         nan         5.149346    0.133349    nan         0.143995    nan         0.104039    nan         0.184453    nan         600         0.527009    10.853928   5.180652    0.058779    0.000000    0.000042    5.614456    0.601783    63.376346   6.226437   
+[36mINFO[0m 08/12 18:22:45 | 0.193934    0.195159    0.000000    0.214232    nan         nan         nan         5.082057    0.193934    nan         0.195159    nan         0.181429    nan         0.247036    nan         800         0.702679    10.069500   5.114994    0.058970    0.000000    0.000042    4.895495    0.501905    62.995313   6.407614   
+[36mINFO[0m 08/12 18:25:28 | 0.246553    0.252757    0.000000    0.269437    nan         nan         nan         5.000312    0.246553    nan         0.252757    nan         0.228818    nan         0.310057    nan         1000        0.878349    9.575804    5.038312    0.059177    0.000000    0.000042    4.478273    0.476268    63.034498   6.589523   
+[36mINFO[0m 08/12 18:28:05 | 0.269225    0.275735    0.000000    0.312367    nan         nan         nan         4.917354    0.269225    nan         0.275735    nan         0.280640    nan         0.344093    nan         1200        1.054018    9.127160    4.954009    0.059365    0.000000    0.000042    4.113743    0.441462    62.942582   6.770700   
+[36mINFO[0m 08/12 18:30:38 | 0.305147    0.306373    0.000000    0.346488    nan         nan         nan         4.807164    0.305147    nan         0.306373    nan         0.314187    nan         0.378788    nan         1400        1.229688    8.804217    4.857332    0.059545    0.000000    0.000043    3.887298    0.425431    63.118537   6.948582   
+[36mINFO[0m 08/12 18:32:56 | 0.305530    0.320466    0.000000    0.359105    nan         nan         nan         4.680024    0.305530    nan         0.320466    nan         0.333054    nan         0.385156    nan         1600        1.405358    8.585492    4.746832    0.059702    0.000000    0.000043    3.778915    0.350988    62.739962   6.948582   
+[36mINFO[0m 08/12 18:35:05 | 0.342448    0.342831    0.000000    0.385493    nan         nan         nan         4.581019    0.342448    nan         0.342831    nan         0.357833    nan         0.413153    nan         1800        1.581028    8.326145    4.621176    0.059850    0.000000    0.000043    3.645076    0.307436    62.470513   6.950788   
+[36mINFO[0m 08/12 18:37:07 | 0.345971    0.353554    0.000000    0.397699    nan         nan         nan         4.395830    0.345971    nan         0.353554    nan         0.376207    nan         0.419192    nan         2000        1.756697    8.006712    4.472624    0.059978    0.000000    0.000043    3.474067    0.272578    62.270303   6.950788   
+[36mINFO[0m 08/12 18:39:01 | 0.342065    0.345895    0.000000    0.410729    nan         nan         nan         4.217479    0.342065    nan         0.345895    nan         0.394581    nan         0.426877    nan         2200        1.932367    7.758056    4.300687    0.060083    0.000000    0.000043    3.397243    0.225291    63.184284   6.950788   
+[36mINFO[0m 08/12 18:40:50 | 0.372089    0.372243    0.000000    0.421774    nan         nan         nan         4.051764    0.372089    nan         0.372243    nan         0.389113    nan         0.454436    nan         2400        2.108037    7.540730    4.109317    0.060168    0.000000    0.000044    3.371202    0.208382    62.439862   6.950788   
+[36mINFO[0m 08/12 18:42:57 | 0.368030    0.366422    0.000000    0.436242    nan         nan         nan         3.813707    0.368030    nan         0.366422    nan         0.408276    nan         0.464207    nan         2600        2.283707    7.252320    3.897242    0.060215    0.000000    0.000044    3.294819    0.295415    63.190445   6.951033   
+[36mINFO[0m 08/12 18:45:12 | 0.391314    0.392463    0.000000    0.442623    nan         nan         nan         3.582004    0.391314    nan         0.392463    nan         0.429163    nan         0.456083    nan         2800        2.459376    6.976322    3.673161    0.060256    0.000000    0.000044    3.242861    0.336694    62.917343   6.954206   
+[36mINFO[0m 08/12 18:47:12 | 0.386336    0.386642    0.000000    0.468834    nan         nan         nan         3.374968    0.386336    nan         0.386642    nan         0.456552    nan         0.481116    nan         3000        2.635046    6.641587    3.431669    0.060283    0.000000    0.000044    3.149590    0.257172    63.614434   6.954206   
+[36mINFO[0m 08/12 18:48:59 | 0.407782    0.415748    0.000000    0.483510    nan         nan         nan         3.078880    0.407782    nan         0.415748    nan         0.460542    nan         0.506478    nan         3200        2.810716    6.448060    3.210652    0.060291    0.000000    0.000045    3.177071    0.196693    62.877178   6.954206   
+[36mINFO[0m 08/12 18:50:40 | 0.442708    0.449142    0.000000    0.508846    nan         nan         nan         2.905268    0.442708    nan         0.449142    nan         0.491232    nan         0.526460    nan         3400        2.986386    6.080996    2.967712    0.060293    0.000000    0.000045    3.052947    0.163091    63.095740   6.954206   
+[36mINFO[0m 08/12 18:52:14 | 0.422411    0.424632    0.000000    0.516267    nan         nan         nan         2.767161    0.422411    nan         0.424632    nan         0.506404    nan         0.526131    nan         3600        3.162055    5.772022    2.734434    0.060299    0.000000    0.000045    2.977244    0.138963    62.255902   6.954206   
+[36mINFO[0m 08/12 18:53:50 | 0.459482    0.462929    0.000000    0.534406    nan         nan         nan         2.503049    0.459482    nan         0.462929    nan         0.522808    nan         0.546004    nan         3800        3.337725    5.568324    2.546724    0.060304    0.000000    0.000046    2.961251    0.137745    63.242886   6.954206   
+[36mINFO[0m 08/12 18:55:25 | 0.428156    0.428002    0.000000    0.535593    nan         nan         nan         2.405684    0.428156    nan         0.428002    nan         0.527488    nan         0.543698    nan         4000        3.513395    5.399771    2.374049    0.060309    0.000000    0.000046    2.965367    0.136438    63.710511   6.954206   
+[36mINFO[0m 08/12 18:57:00 | 0.492724    0.493566    0.000000    0.570319    nan         nan         nan         2.173453    0.492724    nan         0.493566    nan         0.563892    nan         0.576746    nan         4200        3.689065    5.177708    2.204150    0.060310    0.000000    0.000046    2.913201    0.137017    62.763893   6.954206   
+[36mINFO[0m 08/12 18:58:36 | 0.480699    0.488358    0.000000    0.574667    nan         nan         nan         2.079662    0.480699    nan         0.488358    nan         0.572808    nan         0.576526    nan         4400        3.864734    4.974939    2.049021    0.060306    0.000000    0.000047    2.865564    0.138805    63.098492   6.954206   
+[36mINFO[0m 08/12 19:00:12 | 0.504979    0.521752    0.000000    0.593642    nan         nan         nan         1.954140    0.504979    nan         0.521752    nan         0.593300    nan         0.593983    nan         4600        4.040404    4.705923    1.907605    0.060284    0.000000    0.000047    2.737987    0.141274    62.983553   6.954206   
+[36mINFO[0m 08/12 19:01:47 | 0.554841    0.558211    0.000000    0.606722    nan         nan         nan         1.866374    0.554841    nan         0.558211    nan         0.605517    nan         0.607927    nan         4800        4.216074    4.558862    1.800054    0.060258    0.000000    0.000047    2.698503    0.138527    62.544610   6.954206   
+[36mINFO[0m 08/12 19:03:24 | 0.543735    0.539522    0.000000    0.619460    nan         nan         nan         1.743062    0.543735    nan         0.539522    nan         0.617488    nan         0.621432    nan         5000        4.391744    4.441903    1.709970    0.060214    0.000000    0.000048    2.671671    0.138833    64.269434   6.954206   
+[36mINFO[0m 08/12 19:03:24 | ---
+[31mERROR[0m 08/12 19:03:24 | Requested final model, but model is not yet converged; return last model instead
+[33mWARNING[0m 08/12 19:03:24 | Evaluate SWAD ...
+[36mINFO[0m 08/12 19:04:28 | 0.546875    0.546569    0.000000    0.632238    nan         nan         nan         1.745238    0.546875    nan         0.546569    nan         0.631626    nan         0.632850    nan         [4801-5000]  (N=200)
+[36mINFO[0m 08/12 19:04:28 | oracle = 55.484%
+[36mINFO[0m 08/12 19:04:28 | iid = 54.373%
+[36mINFO[0m 08/12 19:04:28 | last = 54.373%
+[36mINFO[0m 08/12 19:04:28 | last (inD) = 61.946%
+[36mINFO[0m 08/12 19:04:28 | iid (inD) = 61.946%
+[36mINFO[0m 08/12 19:04:28 | SWAD = 54.688%
+[36mINFO[0m 08/12 19:04:28 | SWAD (inD) = 63.224%
+[36mINFO[0m 08/12 19:04:29 | 
+[36mINFO[0m 08/12 19:04:31 | Testenv name escaping te_quickdraw -> te_quickdraw
+[36mINFO[0m 08/12 19:04:31 | Test envs = [1], name = te_quickdraw
+[36mINFO[0m 08/12 19:04:31 | Batch sizes for each domain: [32, 0, 32] (total=64)
+[36mINFO[0m 08/12 19:04:31 | steps-per-epoch for each domain: 408.00, 1138.50 -> min = 408.00
+[36mINFO[0m 08/12 19:04:36 | # of params = 24335320
+[36mINFO[0m 08/12 19:08:57 | test_in     test_out    train_in    train_out   test_in_au  train_out_  tr_outloss  test_out_a  env0_out    env0_out_a  env1_in     env1_in_au  env1_out    env1_out_a  env2_out    env2_out_a  step        epoch       loss        inv_ce      l2          penalty     l1          cl          step_time   eval_time   mem_gb     
+[36mINFO[0m 08/12 19:08:57 | 0.002931    0.002857    0.000000    0.005699    nan         nan         5.312524    nan         0.006127    nan         0.002931    nan         0.002857    nan         0.005270    nan         0           0.000000    5.322859    5.301139    0.063144    0.000000    0.000039    0.065532    0.138085    260.706853  5.437932   
+[36mINFO[0m 08/12 19:12:56 | 0.021527    0.020690    0.000000    0.038552    nan         nan         5.250204    nan         0.036152    nan         0.021527    nan         0.020690    nan         0.040953    nan         200         0.490196    9.213258    5.281970    0.063170    0.000000    0.000039    8.007211    0.274349    179.512715  5.851911   
+[36mINFO[0m 08/12 19:16:26 | 0.048399    0.046256    0.000000    0.114435    nan         nan         5.179439    nan         0.104473    nan         0.048399    nan         0.046256    nan         0.124396    nan         400         0.980392    10.720938   5.211873    0.058906    0.000000    0.000042    5.450118    0.178173    169.410629  6.040377   
+[36mINFO[0m 08/12 19:19:45 | 0.086355    0.084039    0.000000    0.220083    nan         nan         5.101653    nan         0.210478    nan         0.086355    nan         0.084039    nan         0.229688    nan         600         1.470588    9.478608    5.135772    0.059127    0.000000    0.000042    4.283667    0.134394    167.440809  6.223873   
+[36mINFO[0m 08/12 19:23:04 | 0.116232    0.113202    0.000000    0.313631    nan         nan         5.014655    nan         0.317096    nan         0.116232    nan         0.113202    nan         0.310167    nan         800         1.960784    8.742389    5.051705    0.059377    0.000000    0.000042    3.631265    0.132360    167.769206  6.405905   
+[36mINFO[0m 08/12 19:26:24 | 0.144273    0.141921    0.000000    0.386991    nan         nan         4.904824    nan         0.416054    nan         0.144273    nan         0.141921    nan         0.357927    nan         1000        2.450980    8.282725    4.952960    0.059625    0.000000    0.000042    3.270098    0.134788    168.207652  6.587082   
+[36mINFO[0m 08/12 19:29:44 | 0.155640    0.155123    0.000000    0.424825    nan         nan         4.816772    nan         0.461091    nan         0.155640    nan         0.155123    nan         0.388560    nan         1200        2.941176    7.931402    4.843716    0.059856    0.000000    0.000042    3.027789    0.132481    169.292862  6.771677   
+[36mINFO[0m 08/12 19:33:03 | 0.178276    0.180936    0.000000    0.459718    nan         nan         4.679232    nan         0.505515    nan         0.178276    nan         0.180936    nan         0.413922    nan         1400        3.431373    7.529108    4.708890    0.060064    0.000000    0.000043    2.760112    0.132201    167.931801  6.951023   
+[36mINFO[0m 08/12 19:36:22 | 0.183990    0.185320    0.000000    0.478986    nan         nan         4.535429    nan         0.531863    nan         0.183990    nan         0.185320    nan         0.426109    nan         1600        3.921569    7.278314    4.565266    0.060251    0.000000    0.000043    2.652755    0.132828    167.647726  6.952986   
+[36mINFO[0m 08/12 19:39:41 | 0.194778    0.197192    0.000000    0.504786    nan         nan         4.285515    nan         0.558211    nan         0.194778    nan         0.197192    nan         0.451361    nan         1800        4.411765    6.908540    4.372006    0.060400    0.000000    0.000043    2.476091    0.135279    167.286383  6.952986   
+[36mINFO[0m 08/12 19:43:00 | 0.209446    0.209212    0.000000    0.529977    nan         nan         4.146147    nan         0.587623    nan         0.209446    nan         0.209212    nan         0.472332    nan         2000        4.901961    6.629826    4.168486    0.060519    0.000000    0.000043    2.400778    0.134473    167.587717  6.952986   
+[36mINFO[0m 08/12 19:46:19 | 0.201650    0.205468    0.000000    0.538773    nan         nan         3.845008    nan         0.606311    nan         0.201650    nan         0.205468    nan         0.471234    nan         2200        5.392157    6.285454    3.924951    0.060616    0.000000    0.000043    2.299844    0.132848    167.471456  6.952986   
+[36mINFO[0m 08/12 19:49:37 | 0.224754    0.228374    0.000000    0.554639    nan         nan         3.552015    nan         0.612132    nan         0.224754    nan         0.228374    nan         0.497145    nan         2400        5.882353    5.982785    3.649565    0.060679    0.000000    0.000044    2.272498    0.133176    167.036174  6.952986   
+[36mINFO[0m 08/12 19:52:57 | 0.225517    0.227931    0.000000    0.574045    nan         nan         3.306634    nan         0.640625    nan         0.225517    nan         0.227931    nan         0.507466    nan         2600        6.372549    5.607655    3.361214    0.060719    0.000000    0.000044    2.185678    0.133246    168.034980  6.952986   
+[36mINFO[0m 08/12 19:56:16 | 0.244655    0.247537    0.000000    0.582602    nan         nan         2.892978    nan         0.645221    nan         0.244655    nan         0.247537    nan         0.519982    nan         2800        6.862745    5.203986    3.035549    0.060754    0.000000    0.000044    2.107639    0.132410    168.220994  6.952986   
+[36mINFO[0m 08/12 19:59:35 | 0.254803    0.257882    0.000000    0.604969    nan         nan         2.735856    nan         0.669424    nan         0.254803    nan         0.257882    nan         0.540514    nan         3000        7.352941    4.841136    2.712419    0.060777    0.000000    0.000044    2.067896    0.133618    167.715997  6.952986   
+[36mINFO[0m 08/12 20:02:53 | 0.265222    0.269951    0.000000    0.625290    nan         nan         2.411255    nan         0.689645    nan         0.265222    nan         0.269951    nan         0.560935    nan         3200        7.843137    4.452646    2.406499    0.060789    0.000000    0.000045    1.985313    0.132807    167.098943  6.952986   
+[36mINFO[0m 08/12 20:06:12 | 0.252180    0.256158    0.000000    0.645246    nan         nan         2.239208    nan         0.718137    nan         0.252180    nan         0.256158    nan         0.572354    nan         3400        8.333333    4.100382    2.119375    0.060789    0.000000    0.000045    1.920173    0.134097    167.335813  6.952986   
+[36mINFO[0m 08/12 20:10:14 | 0.253621    0.256256    0.000000    0.665821    nan         nan         1.985475    nan         0.737439    nan         0.253621    nan         0.256256    nan         0.594203    nan         3600        8.823529    3.785282    1.873673    0.060776    0.000000    0.000045    1.850788    0.133088    210.841858  6.952986   
+[36mINFO[0m 08/12 20:59:44 | 0.272574    0.273399    0.000000    0.673112    nan         nan         1.851381    nan         0.743566    nan         0.272574    nan         0.273399    nan         0.602657    nan         3800        9.313725    3.625559    1.681122    0.060756    0.000000    0.000046    1.883635    0.823941    2800.15768  6.952986   
+[36mINFO[0m 08/12 21:21:44 | 0.293892    0.293547    0.000000    0.690379    nan         nan         1.718147    nan         0.751532    nan         0.293892    nan         0.293547    nan         0.629227    nan         4000        9.803922    3.259830    1.469754    0.060726    0.000000    0.000046    1.729304    1.675022    978.001926  6.952986   
+[36mINFO[0m 08/12 21:34:02 | 0.287451    0.289360    0.000000    0.704699    nan         nan         1.572664    nan         0.769301    nan         0.287451    nan         0.289360    nan         0.640097    nan         4200        10.294118   3.141587    1.342543    0.060686    0.000000    0.000046    1.738312    1.230349    484.590107  6.954084   
+[36mINFO[0m 08/12 21:39:49 | 0.282365    0.283547    0.000000    0.700601    nan         nan         1.518744    nan         0.764400    nan         0.282365    nan         0.283547    nan         0.636803    nan         4400        10.784314   3.004649    1.233816    0.060638    0.000000    0.000047    1.710148    0.783777    183.721347  6.954084   
+[36mINFO[0m 08/12 21:44:37 | 0.270246    0.272906    0.000000    0.695998    nan         nan         1.464668    nan         0.759804    nan         0.270246    nan         0.272906    nan         0.632191    nan         4600        11.274510   2.778734    1.106620    0.060573    0.000000    0.000047    1.611494    0.499454    181.006942  6.956038   
+[36mINFO[0m 08/12 21:48:34 | 0.279865    0.281281    0.000000    0.709083    nan         nan         1.397756    nan         0.773897    nan         0.279865    nan         0.281281    nan         0.644269    nan         4800        11.764706   2.654013    1.024539    0.060503    0.000000    0.000047    1.568923    0.257575    178.080338  6.956038   
+[36mINFO[0m 08/12 21:52:30 | 0.289433    0.289261    0.000000    0.715672    nan         nan         1.361965    nan         0.779718    nan         0.289433    nan         0.289261    nan         0.651625    nan         5000        12.254902   2.576705    0.968082    0.060418    0.000000    0.000048    1.548158    0.253211    177.311025  6.956282   
+[36mINFO[0m 08/12 21:52:31 | ---
+[31mERROR[0m 08/12 21:52:31 | Requested final model, but model is not yet converged; return last model instead
+[33mWARNING[0m 08/12 21:52:31 | Evaluate SWAD ...
+[36mINFO[0m 08/12 21:55:30 | 0.311096    0.314286    0.000000    0.741413    nan         nan         1.233451    nan         0.801777    nan         0.311096    nan         0.314286    nan         0.681050    nan         [4801-5000]  (N=200)
+[36mINFO[0m 08/12 21:55:30 | oracle = 29.389%
+[36mINFO[0m 08/12 21:55:30 | iid = 28.943%
+[36mINFO[0m 08/12 21:55:30 | last = 28.943%
+[36mINFO[0m 08/12 21:55:30 | last (inD) = 71.567%
+[36mINFO[0m 08/12 21:55:30 | iid (inD) = 71.567%
+[36mINFO[0m 08/12 21:55:30 | SWAD = 31.110%
+[36mINFO[0m 08/12 21:55:30 | SWAD (inD) = 74.141%
+[36mINFO[0m 08/12 21:55:32 | 
+[36mINFO[0m 08/12 21:55:35 | Testenv name escaping te_sketch -> te_sketch
+[36mINFO[0m 08/12 21:55:35 | Test envs = [2], name = te_sketch
+[36mINFO[0m 08/12 21:55:35 | Batch sizes for each domain: [32, 32, 0] (total=64)
+[36mINFO[0m 08/12 21:55:35 | steps-per-epoch for each domain: 408.00, 2537.50 -> min = 408.00
+[36mINFO[0m 08/12 21:55:40 | # of params = 24335320
+[36mINFO[0m 08/12 21:57:43 | test_in     test_out    train_in    train_out   test_in_au  train_out_  tr_outloss  test_out_a  env0_out    env0_out_a  env1_out    env1_out_a  env2_in     env2_in_au  env2_out    env2_out_a  step        epoch       loss        inv_ce      l2          penalty     l1          cl          step_time   eval_time   mem_gb     
+[36mINFO[0m 08/12 21:57:43 | 0.001729    0.001976    0.000000    0.004799    nan         nan         5.313703    nan         0.003983    nan         0.005616    nan         0.001729    nan         0.001976    nan         0           0.000000    5.322011    5.310909    0.063129    0.000000    0.000039    0.051409    0.188616    122.622831  5.437932   
+[36mINFO[0m 08/12 22:00:26 | 0.018994    0.020641    0.000000    0.034383    nan         nan         5.259559    nan         0.043199    nan         0.025567    nan         0.018994    nan         0.020641    nan         200         0.490196    9.269229    5.288652    0.063123    0.000000    0.000039    8.596727    0.171558    121.893952  5.851911   
+[36mINFO[0m 08/12 22:03:07 | 0.053469    0.051054    0.000000    0.108062    nan         nan         5.186328    nan         0.121936    nan         0.094187    nan         0.053469    nan         0.051054    nan         400         0.980392    11.166503   5.222562    0.058846    0.000000    0.000042    5.885053    0.171678    120.923896  6.040377   
+[36mINFO[0m 08/12 22:05:46 | 0.077761    0.077624    0.000000    0.204264    nan         nan         5.105472    nan         0.238971    nan         0.169557    nan         0.077761    nan         0.077624    nan         600         1.470588    9.697666    5.146251    0.059057    0.000000    0.000042    4.492316    0.172352    118.353448  6.223873   
+[36mINFO[0m 08/12 22:08:28 | 0.116409    0.112868    0.000000    0.321547    nan         nan         5.015346    nan         0.364277    nan         0.278818    nan         0.116409    nan         0.112868    nan         800         1.960784    8.790725    5.056924    0.059310    0.000000    0.000042    3.674448    0.177039    118.963729  6.405905   
+[36mINFO[0m 08/12 22:11:09 | 0.147123    0.145696    0.000000    0.383186    nan         nan         4.907736    nan         0.439032    nan         0.327340    nan         0.147123    nan         0.145696    nan         1000        2.450980    8.285809    4.952986    0.059582    0.000000    0.000042    3.273199    0.166970    121.285337  6.587082   
+[36mINFO[0m 08/12 22:13:52 | 0.168643    0.172047    0.000000    0.443044    nan         nan         4.781783    nan         0.509191    nan         0.376897    nan         0.168643    nan         0.172047    nan         1200        2.941176    7.886743    4.836585    0.059858    0.000000    0.000043    2.990257    0.168506    122.677061  6.771677   
+[36mINFO[0m 08/12 22:16:32 | 0.195405    0.204106    0.000000    0.486461    nan         nan         4.626612    nan         0.549326    nan         0.423596    nan         0.195405    nan         0.204106    nan         1400        3.431373    7.521784    4.699569    0.060109    0.000000    0.000043    2.762063    0.168233    119.535286  6.951023   
+[36mINFO[0m 08/12 22:19:23 | 0.195707    0.196860    0.000000    0.515976    nan         nan         4.439971    nan         0.576287    nan         0.455665    nan         0.195707    nan         0.196860    nan         1600        3.921569    7.222566    4.539004    0.060333    0.000000    0.000043    2.623187    0.176010    128.128781  6.952986   
+[36mINFO[0m 08/12 22:22:50 | 0.187088    0.193456    0.000000    0.547407    nan         nan         4.232616    nan         0.612745    nan         0.482069    nan         0.187088    nan         0.193456    nan         1800        4.411765    6.895247    4.340490    0.060531    0.000000    0.000043    2.494182    0.259335    148.735147  6.952986   
+[36mINFO[0m 08/12 22:27:19 | 0.198260    0.204436    0.000000    0.563264    nan         nan         4.005688    nan         0.625000    nan         0.501527    nan         0.198260    nan         0.204436    nan         2000        4.901961    6.596506    4.106762    0.060691    0.000000    0.000043    2.429010    0.222333    217.690422  6.952986   
+[36mINFO[0m 08/12 22:31:24 | 0.227081    0.231335    0.000000    0.590971    nan         nan         3.734264    nan         0.655637    nan         0.526305    nan         0.227081    nan         0.231335    nan         2200        5.392157    6.245663    3.844758    0.060818    0.000000    0.000044    2.340043    0.463157    145.437312  6.952986   
+[36mINFO[0m 08/12 22:35:31 | 0.233449    0.239460    0.000000    0.604837    nan         nan         3.444775    nan         0.673713    nan         0.535961    nan         0.233449    nan         0.239460    nan         2400        5.882353    5.946159    3.555070    0.060912    0.000000    0.000044    2.330134    0.461720    147.577448  6.952986   
+[36mINFO[0m 08/12 22:39:28 | 0.225983    0.229798    0.000000    0.593760    nan         nan         3.159841    nan         0.665748    nan         0.521773    nan         0.225983    nan         0.229798    nan         2600        6.372549    5.580871    3.226110    0.060975    0.000000    0.000044    2.293741    0.498966    129.876104  6.952986   
+[36mINFO[0m 08/12 22:43:03 | 0.216019    0.221234    0.000000    0.623480    nan         nan         2.828754    nan         0.681985    nan         0.564975    nan         0.216019    nan         0.221234    nan         2800        6.862745    5.126123    2.878687    0.061011    0.000000    0.000044    2.186381    0.429875    122.042410  6.952986   
+[36mINFO[0m 08/12 22:46:19 | 0.222854    0.225516    0.000000    0.641737    nan         nan         2.501405    nan         0.704657    nan         0.578818    nan         0.222854    nan         0.225516    nan         3000        7.352941    4.731934    2.551385    0.061027    0.000000    0.000045    2.119477    0.343627    120.558667  6.952986   
+[36mINFO[0m 08/12 22:49:10 | 0.262187    0.267677    0.000000    0.657511    nan         nan         2.226634    nan         0.720588    nan         0.594433    nan         0.262187    nan         0.267677    nan         3200        7.843137    4.372097    2.242793    0.061023    0.000000    0.000045    2.068236    0.234423    117.354410  6.952986   
+[36mINFO[0m 08/12 22:52:04 | 0.254831    0.260101    0.000000    0.678056    nan         nan         1.977313    nan         0.741728    nan         0.614384    nan         0.254831    nan         0.260101    nan         3400        8.333333    4.121765    2.004381    0.061000    0.000000    0.000045    2.056338    0.234061    120.920489  6.952986   
+[36mINFO[0m 08/12 22:54:59 | 0.248490    0.252964    0.000000    0.688264    nan         nan         1.797868    nan         0.754902    nan         0.621626    nan         0.248490    nan         0.252964    nan         3600        8.823529    3.842997    1.784132    0.060960    0.000000    0.000046    1.997859    0.228043    122.017250  6.952986   
+[36mINFO[0m 08/12 22:57:39 | 0.275500    0.275253    0.000000    0.696295    nan         nan         1.613564    nan         0.759191    nan         0.633399    nan         0.275500    nan         0.275253    nan         3800        9.313725    3.654572    1.615404    0.060906    0.000000    0.000046    1.978216    0.180159    117.447762  6.952986   
+[36mINFO[0m 08/12 23:00:17 | 0.254556    0.256039    0.000000    0.693734    nan         nan         1.489605    nan         0.756434    nan         0.631034    nan         0.254556    nan         0.256039    nan         4000        9.803922    3.410539    1.445485    0.060839    0.000000    0.000046    1.904168    0.174640    116.169781  6.952986   
+[36mINFO[0m 08/12 23:03:01 | 0.242067    0.247255    0.000000    0.713512    nan         nan         1.391747    nan         0.781556    nan         0.645468    nan         0.242067    nan         0.247255    nan         4200        10.294118   3.223074    1.322426    0.060761    0.000000    0.000047    1.839840    0.175514    122.424536  6.954084   
+[36mINFO[0m 08/12 23:06:09 | 0.276652    0.279425    0.000000    0.718124    nan         nan         1.284729    nan         0.779105    nan         0.657143    nan         0.276652    nan         0.279425    nan         4400        10.784314   3.113401    1.232843    0.060675    0.000000    0.000047    1.819835    0.296358    122.429727  6.954084   
+[36mINFO[0m 08/12 23:08:48 | 0.255874    0.260540    0.000000    0.707003    nan         nan         1.338555    nan         0.774203    nan         0.639803    nan         0.255874    nan         0.260540    nan         4600        11.274510   2.973786    1.144618    0.060584    0.000000    0.000048    1.768536    0.175749    117.271961  6.956038   
+[36mINFO[0m 08/12 23:11:22 | 0.267375    0.269214    0.000000    0.722058    nan         nan         1.217340    nan         0.784314    nan         0.659803    nan         0.267375    nan         0.269214    nan         4800        11.764706   2.863470    1.074139    0.060483    0.000000    0.000048    1.728800    0.171786    113.726664  6.956038   
+[36mINFO[0m 08/12 23:14:02 | 0.241244    0.247255    0.000000    0.728800    nan         nan         1.179977    nan         0.789522    nan         0.668079    nan         0.241244    nan         0.247255    nan         5000        12.254902   2.731355    1.004677    0.060371    0.000000    0.000048    1.666258    0.179563    117.056093  6.956282   
+[36mINFO[0m 08/12 23:14:03 | ---
+[31mERROR[0m 08/12 23:14:03 | Requested final model, but model is not yet converged; return last model instead
+[33mWARNING[0m 08/12 23:14:03 | Evaluate SWAD ...
+[36mINFO[0m 08/12 23:16:00 | 0.286397    0.292161    0.000000    0.750265    nan         nan         1.120995    nan         0.812500    nan         0.688030    nan         0.286397    nan         0.292161    nan         [4801-5000]  (N=200)
+[36mINFO[0m 08/12 23:16:00 | oracle = 27.665%
+[36mINFO[0m 08/12 23:16:00 | iid = 24.124%
+[36mINFO[0m 08/12 23:16:00 | last = 24.124%
+[36mINFO[0m 08/12 23:16:00 | last (inD) = 72.880%
+[36mINFO[0m 08/12 23:16:00 | iid (inD) = 72.880%
+[36mINFO[0m 08/12 23:16:00 | SWAD = 28.640%
+[36mINFO[0m 08/12 23:16:00 | SWAD (inD) = 75.026%
+[36mINFO[0m 08/12 23:16:01 | === Summary ===
+[36mINFO[0m 08/12 23:16:01 | Command: /home/s21_yhr/lzh/new/DomainBed-new/train_all.py SKET_iDAG_SWAD_seed0 --dataset SKET --data_dir /home/s21_yhr/lzh/new/DomainBed-new/dataset --algorithm iDAG --steps 5000 --checkpoint_freq 200 --batch_size 32 --optimizer adam --lr 5e-5 --weight_decay 0 --resnet_dropout 0 --resnet18 False --pretrained True --freeze_bn True --swad LossValley --seed 0 --trial_seed 0 --deterministic --cache disk --prebuild_loader --image_size 224 --out_dim 256 --hidden_size 256 --num_hidden_layers 0 --dag_anneal_steps 200 --temperature 0.07 --ema_ratio 0.99 --lambda1 0.01 --lambda2 0.01 --rho 1.0 --alpha 1.0 --rho_max 100.0 --weight_mu 1.0 --weight_nu 1.0
+[36mINFO[0m 08/12 23:16:01 | Unique name: 260812_17-38-49_SKET_iDAG_SWAD_seed0
+[36mINFO[0m 08/12 23:16:01 | Out path: train_output/SKET/260812_17-38-49_SKET_iDAG_SWAD_seed0
+[36mINFO[0m 08/12 23:16:01 | Algorithm: iDAG
+[36mINFO[0m 08/12 23:16:01 | Dataset: SKET
++------------+----------+-----------+---------+---------+
+| Selection  | TUBerlin | quickdraw |  sketch |   Avg.  |
++------------+----------+-----------+---------+---------+
+|   oracle   | 55.484%  |  29.389%  | 27.665% | 37.513% |
+|    iid     | 54.373%  |  28.943%  | 24.124% | 35.814% |
+|    last    | 54.373%  |  28.943%  | 24.124% | 35.814% |
+| last (inD) | 61.946%  |  71.567%  | 72.880% | 68.798% |
+| iid (inD)  | 61.946%  |  71.567%  | 72.880% | 68.798% |
+|    SWAD    | 54.688%  |  31.110%  | 28.640% | 38.146% |
+| SWAD (inD) | 63.224%  |  74.141%  | 75.026% | 70.797% |
++------------+----------+-----------+---------+---------+
+================================================================================
+Starting iDAG_SWAD, seed=1, physical GPU=2
+/home/s21_yhr/miniconda3/envs/lzh_DG/bin/python /home/s21_yhr/lzh/new/DomainBed-new/train_all.py SKET_iDAG_SWAD_seed1 --dataset SKET --data_dir /home/s21_yhr/lzh/new/DomainBed-new/dataset --algorithm iDAG --steps 5000 --checkpoint_freq 200 --batch_size 32 --optimizer adam --lr 5e-5 --weight_decay 0 --resnet_dropout 0 --resnet18 False --pretrained True --freeze_bn True --swad LossValley --seed 1 --trial_seed 1 --deterministic --cache disk --prebuild_loader --image_size 224 --out_dim 256 --hidden_size 256 --num_hidden_layers 0 --dag_anneal_steps 200 --temperature 0.07 --ema_ratio 0.99 --lambda1 0.01 --lambda2 0.01 --rho 1.0 --alpha 1.0 --rho_max 100.0 --weight_mu 1.0 --weight_nu 1.0
+================================================================================
+/home/s21_yhr/miniconda3/envs/lzh_DG/lib/python3.9/site-packages/munch/__init__.py:24: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+[36mINFO[0m 08/12 23:16:10 | Command :: /home/s21_yhr/lzh/new/DomainBed-new/train_all.py SKET_iDAG_SWAD_seed1 --dataset SKET --data_dir /home/s21_yhr/lzh/new/DomainBed-new/dataset --algorithm iDAG --steps 5000 --checkpoint_freq 200 --batch_size 32 --optimizer adam --lr 5e-5 --weight_decay 0 --resnet_dropout 0 --resnet18 False --pretrained True --freeze_bn True --swad LossValley --seed 1 --trial_seed 1 --deterministic --cache disk --prebuild_loader --image_size 224 --out_dim 256 --hidden_size 256 --num_hidden_layers 0 --dag_anneal_steps 200 --temperature 0.07 --ema_ratio 0.99 --lambda1 0.01 --lambda2 0.01 --rho 1.0 --alpha 1.0 --rho_max 100.0 --weight_mu 1.0 --weight_nu 1.0
+Environment:
+	Python: 3.9.25
+	PyTorch: 2.7.0+cu128
+	Torchvision: 0.22.0+cu128
+	CUDA: 12.8
+	CUDNN: 90701
+	NumPy: 1.23.5
+	PIL: 8.1.0
+Args:
+	algorithm: iDAG
+	batch_size: 32
+	cache: disk
+	cache_root: cache
+	cache_size: None
+	checkpoint_freq: 200
+	configs: []
+	data_dir: /home/s21_yhr/lzh/new/DomainBed-new/dataset
+	dataset: SKET
+	debug: False
+	deterministic: True
+	end_step: 200
+	evalmode: fast
+	extra_search: n
+	extra_search_end: None
+	extra_search_start: None
+	gga_l_gamma: 0.001
+	grad_fn: sum
+	holdout_fraction: 0.2
+	model_save: None
+	name: SKET_iDAG_SWAD_seed1
+	neighborhoodSize: 1e-06
+	out_dir: train_output/SKET/260812_23-16-10_SKET_iDAG_SWAD_seed1
+	out_root: train_output/SKET
+	prebuild_loader: True
+	q_steps: 2000
+	quant: 0
+	resize_mode: stretch
+	saliency: False
+	saliency_cmap: jet
+	saliency_every: 0
+	saliency_noise: 0.15
+	saliency_num: 16
+	saliency_samples: 25
+	saliency_split: test_in
+	seed: 1
+	show: False
+	start_step: 100
+	steps: 5000
+	tb_freq: 10
+	test_envs: None
+	train_output: train_output
+	trial_seed: 1
+	unique_name: 260812_23-16-10_SKET_iDAG_SWAD_seed1
+	work_dir: .
+HParams:
+	data_augmentation: True
+	val_augment: False
+	[36mresnet18: False
+	[0m[36mresnet_dropout: 0
+	[0mclass_balanced: False
+	[36moptimizer: adam
+	[0m[36mfreeze_bn: True
+	[0m[36mpretrained: True
+	[0m[36mimage_size: 224
+	[0m[36mlr: 5e-05
+	[0mbatch_size: 32
+	[36mweight_decay: 0
+	[0m[36mhidden_size: 256
+	[0m[36mout_dim: 256
+	[0m[36mnum_hidden_layers: 0
+	[0m[36mdag_anneal_steps: 200
+	[0m[36mtemperature: 0.07
+	[0m[36mema_ratio: 0.99
+	[0m[36mlambda1: 0.01
+	[0m[36mlambda2: 0.01
+	[0m[36mrho_max: 100.0
+	[0m[36mrho: 1.0
+	[0m[36malpha: 1.0
+	[0m[36mweight_nu: 1.0
+	[0m[36mweight_mu: 1.0
+	[0m[36mswad: LossValley
+	[0mswad_kwargs: 
+	  n_converge: 3
+	  n_tolerance: 6
+	  tolerance_ratio: 0.3
+	test_batchsize: 128
+	indomain_test: False
+	grad_fn: sum
+	extra_search: n
+	logdir: train_output/SKET/260812_23-16-10_SKET_iDAG_SWAD_seed1
+	neighborhoodSize: 1e-06
+	start_step: 100
+	end_step: 200
+	extra_search_start: None
+	extra_search_end: None
+	gga_l_gamma: 0.001
+Dataset:
+	[SKET] #envs=3, #classes=203
+	env0: TUBerlin (#16320)
+	env1: quickdraw (#101500)
+	env2: sketch (#45540)
+
+[36mINFO[0m 08/12 23:16:15 | n_steps = 5000
+[36mINFO[0m 08/12 23:16:15 | checkpoint_freq = 200
+[36mINFO[0m 08/12 23:16:15 | n_steps is updated to 5000 => 5001 for checkpointing
+[36mINFO[0m 08/12 23:16:15 | Target test envs = [[0], [1], [2]]
+[36mINFO[0m 08/12 23:16:15 | 
+[36mINFO[0m 08/12 23:16:17 | Testenv name escaping te_TUBerlin -> te_TUBerlin
+[36mINFO[0m 08/12 23:16:17 | Test envs = [0], name = te_TUBerlin
+[36mINFO[0m 08/12 23:16:17 | Batch sizes for each domain: [0, 32, 32] (total=64)
+[36mINFO[0m 08/12 23:16:17 | steps-per-epoch for each domain: 2537.50, 1138.50 -> min = 1138.50
+/home/s21_yhr/miniconda3/envs/lzh_DG/lib/python3.9/site-packages/torchvision/models/_utils.py:208: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/home/s21_yhr/miniconda3/envs/lzh_DG/lib/python3.9/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=ResNet50_Weights.IMAGENET1K_V1`. You can also use `weights=ResNet50_Weights.DEFAULT` to get the most up-to-date weights.
+  warnings.warn(msg)
+[36mINFO[0m 08/12 23:16:22 | # of params = 24335320
+/home/s21_yhr/lzh/new/DomainBed-new/domainbed/algorithms/algorithms.py:161: UserWarning: The use of `x.T` on tensors of dimension other than 2 to reverse their shape is deprecated and it will throw an error in a future release. Consider `x.mT` to transpose batches of matrices or `x.permute(*torch.arange(x.ndim - 1, -1, -1))` to reverse the dimensions of a tensor. (Triggered internally at /pytorch/aten/src/ATen/native/TensorShape.cpp:4413.)
+  mask_neg = torch.not_equal(labels, labels.T)
+[36mINFO[0m 08/12 23:17:35 | test_in     test_out    train_in    train_out   test_in_au  test_out_a  train_out_  tr_outloss  env0_in     env0_in_au  env0_out    env0_out_a  env1_out    env1_out_a  env2_out    env2_out_a  step        epoch       loss        inv_ce      l2          penalty     l1          cl          step_time   eval_time   mem_gb     
+[36mINFO[0m 08/12 23:17:35 | 0.006740    0.007966    0.000000    0.005154    nan         nan         nan         5.314779    0.006740    nan         0.007966    nan         0.006355    nan         0.003953    nan         0           0.000000    5.322885    5.308070    0.063130    0.000000    0.000039    0.065902    4.211105    69.221913   5.439152   
+[36mINFO[0m 08/12 23:19:21 | 0.024127    0.027880    0.000000    0.030780    nan         nan         nan         5.268649    0.024127    nan         0.027880    nan         0.024778    nan         0.036781    nan         200         0.175670    9.589418    5.297187    0.063161    0.000000    0.000039    9.224591    0.170217    66.414458   5.853986   
+[36mINFO[0m 08/12 23:21:11 | 0.065411    0.069547    0.000000    0.075770    nan         nan         nan         5.212575    0.065411    nan         0.069547    nan         0.054483    nan         0.097058    nan         400         0.351339    12.216256   5.248438    0.058425    0.000000    0.000042    6.909350    0.172452    68.832315   6.038668   
+[36mINFO[0m 08/12 23:22:56 | 0.142004    0.150735    0.000000    0.156906    nan         nan         nan         5.156127    0.142004    nan         0.150735    nan         0.118818    nan         0.194993    nan         600         0.527009    10.941389   5.190641    0.058563    0.000000    0.000042    5.692143    0.172011    64.332780   6.226437   
+[36mINFO[0m 08/12 23:24:43 | 0.197993    0.199142    0.000000    0.221108    nan         nan         nan         5.096152    0.197993    nan         0.199142    nan         0.177833    nan         0.264383    nan         800         0.702679    10.115217   5.126488    0.058781    0.000000    0.000042    4.929906    0.164598    67.592735   6.407614   
+[36mINFO[0m 08/12 23:26:28 | 0.235371    0.224265    0.000000    0.268844    nan         nan         nan         5.002787    0.235371    nan         0.224265    nan         0.221921    nan         0.315766    nan         1000        0.878349    9.553081    5.051176    0.059015    0.000000    0.000042    4.442847    0.173283    63.574469   6.589523   
+[36mINFO[0m 08/12 23:31:02 | 0.274816    0.271446    0.000000    0.305379    nan         nan         nan         4.921495    0.274816    nan         0.271446    nan         0.266995    nan         0.343764    nan         1200        1.054018    9.237294    4.969391    0.059234    0.000000    0.000042    4.208627    0.169117    233.862052  6.770700   
+[36mINFO[0m 08/12 23:33:10 | 0.275276    0.274510    0.000000    0.342493    nan         nan         nan         4.824904    0.275276    nan         0.274510    nan         0.313005    nan         0.371981    nan         1400        1.229688    8.924151    4.877413    0.059429    0.000000    0.000043    3.987266    0.205580    79.596118   6.948582   
+[36mINFO[0m 08/12 23:34:55 | 0.330882    0.325980    0.000000    0.366645    nan         nan         nan         4.719205    0.330882    nan         0.325980    nan         0.338473    nan         0.394818    nan         1600        1.405358    8.658080    4.776104    0.059617    0.000000    0.000043    3.822315    0.192026    60.128126   6.948582   
+[36mINFO[0m 08/12 23:36:30 | 0.340839    0.337010    0.000000    0.383858    nan         nan         nan         4.582329    0.340839    nan         0.337010    nan         0.355222    nan         0.412495    nan         1800        1.581028    8.299968    4.638576    0.059791    0.000000    0.000043    3.601558    0.149109    60.425317   6.950788   
+[36mINFO[0m 08/12 23:38:22 | 0.354550    0.350184    0.000000    0.395591    nan         nan         nan         4.475793    0.354550    nan         0.350184    nan         0.368916    nan         0.422266    nan         2000        1.756697    8.111810    4.504534    0.059934    0.000000    0.000043    3.547299    0.229810    61.488990   6.950788   
+[36mINFO[0m 08/13 00:20:52 | 0.363128    0.360294    0.000000    0.412921    nan         nan         nan         4.205662    0.363128    nan         0.360294    nan         0.384581    nan         0.441260    nan         2200        1.932367    7.822865    4.331050    0.060070    0.000000    0.000044    3.431702    0.515312    2441.66400  6.950788   
+[36mINFO[0m 08/13 01:29:53 | 0.375383    0.371017    0.000000    0.428087    nan         nan         nan         4.034128    0.375383    nan         0.371017    nan         0.409754    nan         0.446421    nan         2400        2.108037    7.525631    4.140453    0.060177    0.000000    0.000044    3.324957    2.411364    3652.42989  6.950788   
+[36mINFO[0m 08/13 02:24:48 | 0.377068    0.375306    0.000000    0.430996    nan         nan         nan         3.867253    0.377068    nan         0.375306    nan         0.412167    nan         0.449824    nan         2600        2.283707    7.251879    3.935240    0.060255    0.000000    0.000044    3.256340    1.806360    2925.60473  6.951033   
+[36mINFO[0m 08/13 03:07:10 | 0.385110    0.381740    0.000000    0.453038    nan         nan         nan         3.612997    0.385110    nan         0.381740    nan         0.428473    nan         0.477602    nan         2800        2.459376    7.002796    3.714922    0.060307    0.000000    0.000044    3.227523    1.646837    2206.48354  6.954206   
+[36mINFO[0m 08/13 03:47:30 | 0.388557    0.386949    0.000000    0.466215    nan         nan         nan         3.390201    0.388557    nan         0.386949    nan         0.441872    nan         0.490558    nan         3000        2.635046    6.667145    3.474524    0.060340    0.000000    0.000045    3.132237    1.669056    2079.53314  6.954206   
+[36mINFO[0m 08/13 04:36:05 | 0.436504    0.432904    0.000000    0.496433    nan         nan         nan         3.166830    0.436504    nan         0.432904    nan         0.484631    nan         0.508235    nan         3200        2.810716    6.415894    3.241819    0.060376    0.000000    0.000045    3.113654    2.509205    2406.30541  6.954206   
+[36mINFO[0m 08/13 05:19:46 | 0.451823    0.451900    0.000000    0.511592    nan         nan         nan         2.884999    0.451823    nan         0.451900    nan         0.490246    nan         0.532938    nan         3400        2.986386    6.164163    3.006445    0.060399    0.000000    0.000045    3.097275    2.664589    2079.12958  6.954206   
+[36mINFO[0m 08/13 06:09:58 | 0.448223    0.441483    0.000000    0.521585    nan         nan         nan         2.710189    0.448223    nan         0.441483    nan         0.506059    nan         0.537110    nan         3600        3.162055    5.788866    2.760538    0.060413    0.000000    0.000045    2.967869    2.673958    2469.69820  6.954206   
+[36mINFO[0m 08/13 06:59:57 | 0.482613    0.489890    0.000000    0.544657    nan         nan         nan         2.522153    0.482613    nan         0.489890    nan         0.532660    nan         0.556653    nan         3800        3.337725    5.619434    2.562426    0.060432    0.000000    0.000046    2.996530    2.438033    2504.71237  6.954206   
+[36mINFO[0m 08/13 07:48:06 | 0.478860    0.474571    0.000000    0.552681    nan         nan         nan         2.382147    0.478860    nan         0.474571    nan         0.552660    nan         0.552701    nan         4000        3.513395    5.361440    2.387705    0.060442    0.000000    0.000046    2.913247    2.538601    2373.80632  6.954206   
+[36mINFO[0m 08/13 08:30:28 | 0.517157    0.511949    0.000000    0.581083    nan         nan         nan         2.187043    0.517157    nan         0.511949    nan         0.579163    nan         0.583004    nan         4200        3.689065    5.097905    2.206919    0.060442    0.000000    0.000046    2.830498    2.733915    1990.12655  6.954206   
+[36mINFO[0m 08/13 09:17:28 | 0.506204    0.500306    0.000000    0.596822    nan         nan         nan         2.107338    0.506204    nan         0.500306    nan         0.580887    nan         0.612758    nan         4400        3.864734    4.980894    2.075026    0.060440    0.000000    0.000047    2.845382    2.241924    2365.74908  6.954206   
+[36mINFO[0m 08/13 10:01:34 | 0.530178    0.523897    0.000000    0.598708    nan         nan         nan         1.952523    0.530178    nan         0.523897    nan         0.597833    nan         0.599583    nan         4600        4.040404    4.814863    1.939745    0.060433    0.000000    0.000047    2.814638    2.563818    2127.74710  6.954206   

@@ -1,0 +1,136 @@
+Algorithm: GGA
+Physical GPU: 3
+Seeds: [0, 1, 2, 3, 4]
+Dataset: /home/s21_yhr/lzh/new/DomainBed-new/dataset/SKET
+
+================================================================================
+Starting GGA, seed=0, physical GPU=3
+/home/s21_yhr/miniconda3/envs/lzh_DG/bin/python /home/s21_yhr/lzh/new/DomainBed-new/train_all.py SKET_GGA_seed0 --dataset SKET --data_dir /home/s21_yhr/lzh/new/DomainBed-new/dataset --algorithm ERM_GGA --steps 5000 --checkpoint_freq 200 --batch_size 32 --optimizer adam --lr 5e-5 --weight_decay 0 --resnet_dropout 0 --resnet18 False --pretrained True --freeze_bn True --swad LossValley --seed 0 --trial_seed 0 --deterministic --cache disk --prebuild_loader --image_size 224 --start_step 100 --end_step 200 --neighborhoodSize 1e-5
+================================================================================
+/home/s21_yhr/miniconda3/envs/lzh_DG/lib/python3.9/site-packages/munch/__init__.py:24: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+[36mINFO[0m 08/13 00:02:12 | Command :: /home/s21_yhr/lzh/new/DomainBed-new/train_all.py SKET_GGA_seed0 --dataset SKET --data_dir /home/s21_yhr/lzh/new/DomainBed-new/dataset --algorithm ERM_GGA --steps 5000 --checkpoint_freq 200 --batch_size 32 --optimizer adam --lr 5e-5 --weight_decay 0 --resnet_dropout 0 --resnet18 False --pretrained True --freeze_bn True --swad LossValley --seed 0 --trial_seed 0 --deterministic --cache disk --prebuild_loader --image_size 224 --start_step 100 --end_step 200 --neighborhoodSize 1e-5
+Environment:
+	Python: 3.9.25
+	PyTorch: 2.7.0+cu128
+	Torchvision: 0.22.0+cu128
+	CUDA: 12.8
+	CUDNN: 90701
+	NumPy: 1.23.5
+	PIL: 8.1.0
+Args:
+	algorithm: ERM_GGA
+	batch_size: 32
+	cache: disk
+	cache_root: cache
+	cache_size: None
+	checkpoint_freq: 200
+	configs: []
+	data_dir: /home/s21_yhr/lzh/new/DomainBed-new/dataset
+	dataset: SKET
+	debug: False
+	deterministic: True
+	end_step: 200
+	evalmode: fast
+	extra_search: n
+	extra_search_end: None
+	extra_search_start: None
+	gga_l_gamma: 0.001
+	grad_fn: sum
+	holdout_fraction: 0.2
+	model_save: None
+	name: SKET_GGA_seed0
+	neighborhoodSize: 1e-05
+	out_dir: train_output/SKET/260813_00-02-09_SKET_GGA_seed0
+	out_root: train_output/SKET
+	prebuild_loader: True
+	q_steps: 2000
+	quant: 0
+	resize_mode: stretch
+	saliency: False
+	saliency_cmap: jet
+	saliency_every: 0
+	saliency_noise: 0.15
+	saliency_num: 16
+	saliency_samples: 25
+	saliency_split: test_in
+	seed: 0
+	show: False
+	start_step: 100
+	steps: 5000
+	tb_freq: 10
+	test_envs: None
+	train_output: train_output
+	trial_seed: 0
+	unique_name: 260813_00-02-09_SKET_GGA_seed0
+	work_dir: .
+HParams:
+	data_augmentation: True
+	val_augment: False
+	[36mresnet18: False
+	[0m[36mresnet_dropout: 0
+	[0mclass_balanced: False
+	[36moptimizer: adam
+	[0m[36mfreeze_bn: True
+	[0m[36mpretrained: True
+	[0m[36mimage_size: 224
+	[0m[36mlr: 5e-05
+	[0mbatch_size: 32
+	[36mweight_decay: 0
+	[0m[36mswad: LossValley
+	[0mswad_kwargs: 
+	  n_converge: 3
+	  n_tolerance: 6
+	  tolerance_ratio: 0.3
+	test_batchsize: 128
+	indomain_test: False
+	grad_fn: sum
+	extra_search: n
+	logdir: train_output/SKET/260813_00-02-09_SKET_GGA_seed0
+	neighborhoodSize: 1e-05
+	start_step: 100
+	end_step: 200
+	extra_search_start: None
+	extra_search_end: None
+	gga_l_gamma: 0.001
+Dataset:
+	[SKET] #envs=3, #classes=203
+	env0: TUBerlin (#16320)
+	env1: quickdraw (#101500)
+	env2: sketch (#45540)
+
+[36mINFO[0m 08/13 00:02:45 | n_steps = 5000
+[36mINFO[0m 08/13 00:02:45 | checkpoint_freq = 200
+[36mINFO[0m 08/13 00:02:45 | n_steps is updated to 5000 => 5001 for checkpointing
+[36mINFO[0m 08/13 00:02:45 | Target test envs = [[0], [1], [2]]
+[36mINFO[0m 08/13 00:02:45 | 
+[36mINFO[0m 08/13 00:02:47 | Testenv name escaping te_TUBerlin -> te_TUBerlin
+[36mINFO[0m 08/13 00:02:47 | Test envs = [0], name = te_TUBerlin
+[36mINFO[0m 08/13 00:02:47 | Batch sizes for each domain: [0, 32, 32] (total=64)
+[36mINFO[0m 08/13 00:02:47 | steps-per-epoch for each domain: 2537.50, 1138.50 -> min = 1138.50
+/home/s21_yhr/miniconda3/envs/lzh_DG/lib/python3.9/site-packages/torchvision/models/_utils.py:208: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/home/s21_yhr/miniconda3/envs/lzh_DG/lib/python3.9/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=ResNet50_Weights.IMAGENET1K_V1`. You can also use `weights=ResNet50_Weights.DEFAULT` to get the most up-to-date weights.
+  warnings.warn(msg)
+[36mINFO[0m 08/13 00:02:58 | # of params = 23923979
+[36mINFO[0m 08/13 00:40:02 | test_in     test_out    train_in    train_out   test_in_au  test_out_a  train_out_  tr_outloss  env0_in     env0_in_au  env0_out    env0_out_a  env1_out    env1_out_a  env2_out    env2_out_a  step        epoch       loss        step_time   eval_time   mem_gb     
+[36mINFO[0m 08/13 00:40:05 | 0.006127    0.006740    0.000000    0.005162    nan         nan         nan         5.350328    0.006127    nan         0.006740    nan         0.004286    nan         0.006039    nan         0           0.000000    5.287320    1.978599    2222.58158  5.428750   
+[36mINFO[0m 08/13 02:11:39 | 0.196461    0.200368    0.000000    0.192139    nan         nan         nan         3.717066    0.196461    nan         0.200368    nan         0.160739    nan         0.223540    nan         200         0.175670    4.711787    15.628747   2362.87294  6.397289   
+[36mINFO[0m 08/13 02:54:45 | 0.385110    0.399510    0.000000    0.375222    nan         nan         nan         2.633656    0.385110    nan         0.399510    nan         0.359360    nan         0.391085    nan         400         0.351339    3.042011    1.687443    2237.69284  6.397289   
+[36mINFO[0m 08/13 03:39:18 | 0.452589    0.458946    0.000000    0.463421    nan         nan         nan         2.231630    0.452589    nan         0.458946    nan         0.458571    nan         0.468270    nan         600         0.527009    2.384118    1.317088    2404.62180  6.474589   
+[36mINFO[0m 08/13 04:33:45 | 0.505668    0.507047    0.000000    0.505977    nan         nan         nan         2.042445    0.505668    nan         0.507047    nan         0.511626    nan         0.500329    nan         800         0.702679    2.061148    1.735605    2904.78608  6.748151   
+[36mINFO[0m 08/13 05:18:36 | 0.530561    0.538603    0.000000    0.541107    nan         nan         nan         1.869488    0.530561    nan         0.538603    nan         0.549606    nan         0.532609    nan         1000        0.878349    1.906451    2.603995    2163.38505  7.008446   
+[36mINFO[0m 08/13 06:05:44 | 0.552083    0.563113    0.000000    0.534695    nan         nan         nan         1.878864    0.552083    nan         0.563113    nan         0.540296    nan         0.529095    nan         1200        1.054018    1.768598    2.643217    2288.29652  7.278860   
+[36mINFO[0m 08/13 06:56:18 | 0.555913    0.556373    0.000000    0.568805    nan         nan         nan         1.761008    0.555913    nan         0.556373    nan         0.570197    nan         0.567413    nan         1400        1.229688    1.655445    2.384129    2545.55586  7.543318   
+[36mINFO[0m 08/13 07:45:13 | 0.594975    0.602022    0.000000    0.587486    nan         nan         nan         1.661270    0.594975    nan         0.602022    nan         0.594384    nan         0.580588    nan         1600        1.405358    1.586442    2.215879    2475.07997  7.627235   
+[36mINFO[0m 08/13 08:25:33 | 0.584099    0.597733    0.000000    0.601788    nan         nan         nan         1.601436    0.584099    nan         0.597733    nan         0.612118    nan         0.591458    nan         1800        1.581028    1.505336    2.580865    1891.63274  7.627235   
+[36mINFO[0m 08/13 09:13:57 | 0.573070    0.583333    0.000000    0.602252    nan         nan         nan         1.597982    0.573070    nan         0.583333    nan         0.603054    nan         0.601449    nan         2000        1.756697    1.461713    1.714951    2551.60895  7.627235   
+[36mINFO[0m 08/13 09:57:49 | 0.590839    0.598039    0.000000    0.610883    nan         nan         nan         1.568509    0.590839    nan         0.598039    nan         0.627783    nan         0.593983    nan         2200        1.932367    1.409457    2.326912    2158.91150  7.627235   
+Traceback (most recent call last):
+  File "/home/s21_yhr/lzh/new/DomainBed-new/run_all.py", line 309, in <module>
+    main()
+  File "/home/s21_yhr/lzh/new/DomainBed-new/run_all.py", line 300, in main
+    subprocess.run(
+  File "/home/s21_yhr/miniconda3/envs/lzh_DG/lib/python3.9/subprocess.py", line 528, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/home/s21_yhr/miniconda3/envs/lzh_DG/bin/python', '/home/s21_yhr/lzh/new/DomainBed-new/train_all.py', 'SKET_GGA_seed0', '--dataset', 'SKET', '--data_dir', '/home/s21_yhr/lzh/new/DomainBed-new/dataset', '--algorithm', 'ERM_GGA', '--steps', '5000', '--checkpoint_freq', '200', '--batch_size', '32', '--optimizer', 'adam', '--lr', '5e-5', '--weight_decay', '0', '--resnet_dropout', '0', '--resnet18', 'False', '--pretrained', 'True', '--freeze_bn', 'True', '--swad', 'LossValley', '--seed', '0', '--trial_seed', '0', '--deterministic', '--cache', 'disk', '--prebuild_loader', '--image_size', '224', '--start_step', '100', '--end_step', '200', '--neighborhoodSize', '1e-5']' died with <Signals.SIGTERM: 15>.

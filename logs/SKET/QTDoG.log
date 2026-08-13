@@ -1,0 +1,893 @@
+Algorithm: QTDoG
+Physical GPU: 3
+Seeds: [0, 1, 2, 3, 4]
+Dataset: /home/s21_yhr/lzh/new/DomainBed-new/dataset/SKET
+
+================================================================================
+Starting QTDoG, seed=0, physical GPU=3
+/home/s21_yhr/miniconda3/envs/lzh_DG/bin/python /home/s21_yhr/lzh/new/DomainBed-new/train_all.py SKET_QTDoG_seed0 --dataset SKET --data_dir /home/s21_yhr/lzh/new/DomainBed-new/dataset --algorithm ERM --steps 5000 --checkpoint_freq 200 --batch_size 32 --optimizer adam --lr 5e-5 --weight_decay 0 --resnet_dropout 0 --resnet18 False --pretrained True --freeze_bn True --swad LossValley --seed 0 --trial_seed 0 --deterministic --cache disk --prebuild_loader --image_size 224 --quant 1 --q_steps 2000
+================================================================================
+/home/s21_yhr/miniconda3/envs/lzh_DG/lib/python3.9/site-packages/munch/__init__.py:24: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+[36mINFO[0m 08/12 17:39:54 | Command :: /home/s21_yhr/lzh/new/DomainBed-new/train_all.py SKET_QTDoG_seed0 --dataset SKET --data_dir /home/s21_yhr/lzh/new/DomainBed-new/dataset --algorithm ERM --steps 5000 --checkpoint_freq 200 --batch_size 32 --optimizer adam --lr 5e-5 --weight_decay 0 --resnet_dropout 0 --resnet18 False --pretrained True --freeze_bn True --swad LossValley --seed 0 --trial_seed 0 --deterministic --cache disk --prebuild_loader --image_size 224 --quant 1 --q_steps 2000
+Environment:
+	Python: 3.9.25
+	PyTorch: 2.7.0+cu128
+	Torchvision: 0.22.0+cu128
+	CUDA: 12.8
+	CUDNN: 90701
+	NumPy: 1.23.5
+	PIL: 8.1.0
+Args:
+	algorithm: ERM
+	batch_size: 32
+	cache: disk
+	cache_root: cache
+	cache_size: None
+	checkpoint_freq: 200
+	configs: []
+	data_dir: /home/s21_yhr/lzh/new/DomainBed-new/dataset
+	dataset: SKET
+	debug: False
+	deterministic: True
+	end_step: 200
+	evalmode: fast
+	extra_search: n
+	extra_search_end: None
+	extra_search_start: None
+	gga_l_gamma: 0.001
+	grad_fn: sum
+	holdout_fraction: 0.2
+	model_save: None
+	name: SKET_QTDoG_seed0
+	neighborhoodSize: 1e-06
+	out_dir: train_output/SKET/260812_17-39-54_SKET_QTDoG_seed0
+	out_root: train_output/SKET
+	prebuild_loader: True
+	q_steps: 2000
+	quant: 1
+	resize_mode: stretch
+	saliency: False
+	saliency_cmap: jet
+	saliency_every: 0
+	saliency_noise: 0.15
+	saliency_num: 16
+	saliency_samples: 25
+	saliency_split: test_in
+	seed: 0
+	show: False
+	start_step: 100
+	steps: 5000
+	tb_freq: 10
+	test_envs: None
+	train_output: train_output
+	trial_seed: 0
+	unique_name: 260812_17-39-54_SKET_QTDoG_seed0
+	work_dir: .
+HParams:
+	data_augmentation: True
+	val_augment: False
+	[36mresnet18: False
+	[0m[36mresnet_dropout: 0
+	[0mclass_balanced: False
+	[36moptimizer: adam
+	[0m[36mfreeze_bn: True
+	[0m[36mpretrained: True
+	[0m[36mimage_size: 224
+	[0m[36mlr: 5e-05
+	[0mbatch_size: 32
+	[36mweight_decay: 0
+	[0m[36mswad: LossValley
+	[0mswad_kwargs: 
+	  n_converge: 3
+	  n_tolerance: 6
+	  tolerance_ratio: 0.3
+	test_batchsize: 128
+	indomain_test: False
+	grad_fn: sum
+	extra_search: n
+	logdir: train_output/SKET/260812_17-39-54_SKET_QTDoG_seed0
+	neighborhoodSize: 1e-06
+	start_step: 100
+	end_step: 200
+	extra_search_start: None
+	extra_search_end: None
+	gga_l_gamma: 0.001
+[cache] 建缓存 full_a1cbcab369637f14: 56747 张
+[cache] 200/56747
+[cache] 400/56747
+[cache] 600/56747
+[cache] 800/56747
+[cache] 1000/56747
+[cache] 1200/56747
+[cache] 1400/56747
+[cache] 1600/56747
+[cache] 1800/56747
+[cache] 2000/56747
+[cache] 2200/56747
+[cache] 2400/56747
+[cache] 2600/56747
+[cache] 2800/56747
+[cache] 3000/56747
+[cache] 3200/56747
+[cache] 3400/56747
+[cache] 3600/56747
+[cache] 3800/56747
+[cache] 4000/56747
+[cache] 4200/56747
+[cache] 4400/56747
+[cache] 4600/56747
+[cache] 4800/56747
+[cache] 5000/56747
+[cache] 5200/56747
+[cache] 5400/56747
+[cache] 5600/56747
+[cache] 5800/56747
+[cache] 6000/56747
+[cache] 6200/56747
+[cache] 6400/56747
+[cache] 6600/56747
+[cache] 6800/56747
+[cache] 7000/56747
+[cache] 7200/56747
+[cache] 7400/56747
+[cache] 7600/56747
+[cache] 7800/56747
+[cache] 8000/56747
+[cache] 8200/56747
+[cache] 8400/56747
+[cache] 8600/56747
+[cache] 8800/56747
+[cache] 9000/56747
+[cache] 9200/56747
+[cache] 9400/56747
+[cache] 9600/56747
+[cache] 9800/56747
+[cache] 10000/56747
+[cache] 10200/56747
+[cache] 10400/56747
+[cache] 10600/56747
+[cache] 10800/56747
+[cache] 11000/56747
+[cache] 11200/56747
+[cache] 11400/56747
+[cache] 11600/56747
+[cache] 11800/56747
+[cache] 12000/56747
+[cache] 12200/56747
+[cache] 12400/56747
+[cache] 12600/56747
+[cache] 12800/56747
+[cache] 13000/56747
+[cache] 13200/56747
+[cache] 13400/56747
+[cache] 13600/56747
+[cache] 13800/56747
+[cache] 14000/56747
+[cache] 14200/56747
+[cache] 14400/56747
+[cache] 14600/56747
+[cache] 14800/56747
+[cache] 15000/56747
+[cache] 15200/56747
+[cache] 15400/56747
+[cache] 15600/56747
+[cache] 15800/56747
+[cache] 16000/56747
+[cache] 16200/56747
+[cache] 16400/56747
+[cache] 16600/56747
+[cache] 16800/56747
+[cache] 17000/56747
+[cache] 17200/56747
+[cache] 17400/56747
+[cache] 17600/56747
+[cache] 17800/56747
+[cache] 18000/56747
+[cache] 18200/56747
+[cache] 18400/56747
+[cache] 18600/56747
+[cache] 18800/56747
+[cache] 19000/56747
+[cache] 19200/56747
+[cache] 19400/56747
+[cache] 19600/56747
+[cache] 19800/56747
+[cache] 20000/56747
+[cache] 20200/56747
+[cache] 20400/56747
+[cache] 20600/56747
+[cache] 20800/56747
+[cache] 21000/56747
+[cache] 21200/56747
+[cache] 21400/56747
+[cache] 21600/56747
+[cache] 21800/56747
+[cache] 22000/56747
+[cache] 22200/56747
+[cache] 22400/56747
+[cache] 22600/56747
+[cache] 22800/56747
+[cache] 23000/56747
+[cache] 23200/56747
+[cache] 23400/56747
+[cache] 23600/56747
+[cache] 23800/56747
+[cache] 24000/56747
+[cache] 24200/56747
+[cache] 24400/56747
+[cache] 24600/56747
+[cache] 24800/56747
+[cache] 25000/56747
+[cache] 25200/56747
+[cache] 25400/56747
+[cache] 25600/56747
+[cache] 25800/56747
+[cache] 26000/56747
+[cache] 26200/56747
+[cache] 26400/56747
+[cache] 26600/56747
+[cache] 26800/56747
+[cache] 27000/56747
+[cache] 27200/56747
+[cache] 27400/56747
+[cache] 27600/56747
+[cache] 27800/56747
+[cache] 28000/56747
+[cache] 28200/56747
+[cache] 28400/56747
+[cache] 28600/56747
+[cache] 28800/56747
+[cache] 29000/56747
+[cache] 29200/56747
+[cache] 29400/56747
+[cache] 29600/56747
+[cache] 29800/56747
+[cache] 30000/56747
+[cache] 30200/56747
+[cache] 30400/56747
+[cache] 30600/56747
+[cache] 30800/56747
+[cache] 31000/56747
+[cache] 31200/56747
+[cache] 31400/56747
+[cache] 31600/56747
+[cache] 31800/56747
+[cache] 32000/56747
+[cache] 32200/56747
+[cache] 32400/56747
+[cache] 32600/56747
+[cache] 32800/56747
+[cache] 33000/56747
+[cache] 33200/56747
+[cache] 33400/56747
+[cache] 33600/56747
+[cache] 33800/56747
+[cache] 34000/56747
+[cache] 34200/56747
+[cache] 34400/56747
+[cache] 34600/56747
+[cache] 34800/56747
+[cache] 35000/56747
+[cache] 35200/56747
+[cache] 35400/56747
+[cache] 35600/56747
+[cache] 35800/56747
+[cache] 36000/56747
+[cache] 36200/56747
+[cache] 36400/56747
+[cache] 36600/56747
+[cache] 36800/56747
+[cache] 37000/56747
+[cache] 37200/56747
+[cache] 37400/56747
+[cache] 37600/56747
+[cache] 37800/56747
+[cache] 38000/56747
+[cache] 38200/56747
+[cache] 38400/56747
+[cache] 38600/56747
+[cache] 38800/56747
+[cache] 39000/56747
+[cache] 39200/56747
+[cache] 39400/56747
+[cache] 39600/56747
+[cache] 39800/56747
+[cache] 40000/56747
+[cache] 40200/56747
+[cache] 40400/56747
+[cache] 40600/56747
+[cache] 40800/56747
+[cache] 41000/56747
+[cache] 41200/56747
+[cache] 41400/56747
+[cache] 41600/56747
+[cache] 41800/56747
+[cache] 42000/56747
+[cache] 42200/56747
+[cache] 42400/56747
+[cache] 42600/56747
+[cache] 42800/56747
+[cache] 43000/56747
+[cache] 43200/56747
+[cache] 43400/56747
+[cache] 43600/56747
+[cache] 43800/56747
+[cache] 44000/56747
+[cache] 44200/56747
+[cache] 44400/56747
+[cache] 44600/56747
+[cache] 44800/56747
+[cache] 45000/56747
+[cache] 45200/56747
+[cache] 45400/56747
+[cache] 45600/56747
+[cache] 45800/56747
+[cache] 46000/56747
+[cache] 46200/56747
+[cache] 46400/56747
+[cache] 46600/56747
+[cache] 46800/56747
+[cache] 47000/56747
+[cache] 47200/56747
+[cache] 47400/56747
+[cache] 47600/56747
+[cache] 47800/56747
+[cache] 48000/56747
+[cache] 48200/56747
+[cache] 48400/56747
+[cache] 48600/56747
+[cache] 48800/56747
+[cache] 49000/56747
+[cache] 49200/56747
+[cache] 49400/56747
+[cache] 49600/56747
+[cache] 49800/56747
+[cache] 50000/56747
+[cache] 50200/56747
+[cache] 50400/56747
+[cache] 50600/56747
+[cache] 50800/56747
+[cache] 51000/56747
+[cache] 51200/56747
+[cache] 51400/56747
+[cache] 51600/56747
+[cache] 51800/56747
+[cache] 52000/56747
+[cache] 52200/56747
+[cache] 52400/56747
+[cache] 52600/56747
+[cache] 52800/56747
+[cache] 53000/56747
+[cache] 53200/56747
+[cache] 53400/56747
+[cache] 53600/56747
+[cache] 53800/56747
+[cache] 54000/56747
+[cache] 54200/56747
+[cache] 54400/56747
+[cache] 54600/56747
+[cache] 54800/56747
+[cache] 55000/56747
+[cache] 55200/56747
+[cache] 55400/56747
+[cache] 55600/56747
+[cache] 55800/56747
+[cache] 56000/56747
+[cache] 56200/56747
+[cache] 56400/56747
+[cache] 56600/56747
+[cache] 建缓存 full_a59be1f77e7dcaa4: 45540 张
+[cache] 200/45540
+[cache] 400/45540
+[cache] 600/45540
+[cache] 800/45540
+[cache] 1000/45540
+[cache] 1200/45540
+[cache] 1400/45540
+[cache] 1600/45540
+[cache] 1800/45540
+[cache] 2000/45540
+[cache] 2200/45540
+[cache] 2400/45540
+[cache] 2600/45540
+[cache] 2800/45540
+[cache] 3000/45540
+[cache] 3200/45540
+[cache] 3400/45540
+[cache] 3600/45540
+[cache] 3800/45540
+[cache] 4000/45540
+[cache] 4200/45540
+[cache] 4400/45540
+[cache] 4600/45540
+[cache] 4800/45540
+[cache] 5000/45540
+[cache] 5200/45540
+[cache] 5400/45540
+[cache] 5600/45540
+[cache] 5800/45540
+[cache] 6000/45540
+[cache] 6200/45540
+[cache] 6400/45540
+[cache] 6600/45540
+[cache] 6800/45540
+[cache] 7000/45540
+[cache] 7200/45540
+[cache] 7400/45540
+[cache] 7600/45540
+[cache] 7800/45540
+[cache] 8000/45540
+[cache] 8200/45540
+[cache] 8400/45540
+[cache] 8600/45540
+[cache] 8800/45540
+[cache] 9000/45540
+[cache] 9200/45540
+[cache] 9400/45540
+[cache] 9600/45540
+[cache] 9800/45540
+[cache] 10000/45540
+[cache] 10200/45540
+[cache] 10400/45540
+[cache] 10600/45540
+[cache] 10800/45540
+[cache] 11000/45540
+[cache] 11200/45540
+[cache] 11400/45540
+[cache] 11600/45540
+[cache] 11800/45540
+[cache] 12000/45540
+[cache] 12200/45540
+[cache] 12400/45540
+[cache] 12600/45540
+[cache] 12800/45540
+[cache] 13000/45540
+[cache] 13200/45540
+[cache] 13400/45540
+[cache] 13600/45540
+[cache] 13800/45540
+[cache] 14000/45540
+[cache] 14200/45540
+[cache] 14400/45540
+[cache] 14600/45540
+[cache] 14800/45540
+[cache] 15000/45540
+[cache] 15200/45540
+[cache] 15400/45540
+[cache] 15600/45540
+[cache] 15800/45540
+[cache] 16000/45540
+[cache] 16200/45540
+[cache] 16400/45540
+[cache] 16600/45540
+[cache] 16800/45540
+[cache] 17000/45540
+[cache] 17200/45540
+[cache] 17400/45540
+[cache] 17600/45540
+[cache] 17800/45540
+[cache] 18000/45540
+[cache] 18200/45540
+[cache] 18400/45540
+[cache] 18600/45540
+[cache] 18800/45540
+[cache] 19000/45540
+[cache] 19200/45540
+[cache] 19400/45540
+[cache] 19600/45540
+[cache] 19800/45540
+[cache] 20000/45540
+[cache] 20200/45540
+[cache] 20400/45540
+[cache] 20600/45540
+[cache] 20800/45540
+[cache] 21000/45540
+[cache] 21200/45540
+[cache] 21400/45540
+[cache] 21600/45540
+[cache] 21800/45540
+[cache] 22000/45540
+[cache] 22200/45540
+[cache] 22400/45540
+[cache] 22600/45540
+[cache] 22800/45540
+[cache] 23000/45540
+[cache] 23200/45540
+[cache] 23400/45540
+[cache] 23600/45540
+[cache] 23800/45540
+[cache] 24000/45540
+[cache] 24200/45540
+[cache] 24400/45540
+[cache] 24600/45540
+[cache] 24800/45540
+[cache] 25000/45540
+[cache] 25200/45540
+[cache] 25400/45540
+[cache] 25600/45540
+[cache] 25800/45540
+[cache] 26000/45540
+[cache] 26200/45540
+[cache] 26400/45540
+[cache] 26600/45540
+[cache] 26800/45540
+[cache] 27000/45540
+[cache] 27200/45540
+[cache] 27400/45540
+[cache] 27600/45540
+[cache] 27800/45540
+[cache] 28000/45540
+[cache] 28200/45540
+[cache] 28400/45540
+[cache] 28600/45540
+[cache] 28800/45540
+[cache] 29000/45540
+[cache] 29200/45540
+[cache] 29400/45540
+[cache] 29600/45540
+[cache] 29800/45540
+[cache] 30000/45540
+[cache] 30200/45540
+[cache] 30400/45540
+[cache] 30600/45540
+[cache] 30800/45540
+[cache] 31000/45540
+[cache] 31200/45540
+[cache] 31400/45540
+[cache] 31600/45540
+[cache] 31800/45540
+[cache] 32000/45540
+[cache] 32200/45540
+[cache] 32400/45540
+[cache] 32600/45540
+[cache] 32800/45540
+[cache] 33000/45540
+[cache] 33200/45540
+[cache] 33400/45540
+[cache] 33600/45540
+[cache] 33800/45540
+[cache] 34000/45540
+[cache] 34200/45540
+[cache] 34400/45540
+[cache] 34600/45540
+[cache] 34800/45540
+[cache] 35000/45540
+[cache] 35200/45540
+[cache] 35400/45540
+[cache] 35600/45540
+[cache] 35800/45540
+[cache] 36000/45540
+[cache] 36200/45540
+[cache] 36400/45540
+[cache] 36600/45540
+[cache] 36800/45540
+[cache] 37000/45540
+[cache] 37200/45540
+[cache] 37400/45540
+[cache] 37600/45540
+[cache] 37800/45540
+[cache] 38000/45540
+[cache] 38200/45540
+[cache] 38400/45540
+[cache] 38600/45540
+[cache] 38800/45540
+[cache] 39000/45540
+[cache] 39200/45540
+[cache] 39400/45540
+[cache] 39600/45540
+[cache] 39800/45540
+[cache] 40000/45540
+[cache] 40200/45540
+[cache] 40400/45540
+[cache] 40600/45540
+[cache] 40800/45540
+[cache] 41000/45540
+[cache] 41200/45540
+[cache] 41400/45540
+[cache] 41600/45540
+[cache] 41800/45540
+[cache] 42000/45540
+[cache] 42200/45540
+[cache] 42400/45540
+[cache] 42600/45540
+[cache] 42800/45540
+[cache] 43000/45540
+[cache] 43200/45540
+[cache] 43400/45540
+[cache] 43600/45540
+[cache] 43800/45540
+[cache] 44000/45540
+[cache] 44200/45540
+[cache] 44400/45540
+[cache] 44600/45540
+[cache] 44800/45540
+[cache] 45000/45540
+[cache] 45200/45540
+[cache] 45400/45540
+Dataset:
+	[SKET] #envs=3, #classes=203
+	env0: TUBerlin (#16320)
+	env1: quickdraw (#101500)
+	env2: sketch (#45540)
+
+[36mINFO[0m 08/12 17:56:38 | n_steps = 5000
+[36mINFO[0m 08/12 17:56:38 | checkpoint_freq = 200
+[36mINFO[0m 08/12 17:56:38 | n_steps is updated to 5000 => 5001 for checkpointing
+[36mINFO[0m 08/12 17:56:38 | Target test envs = [[0], [1], [2]]
+[36mINFO[0m 08/12 17:56:38 | 
+[36mINFO[0m 08/12 17:56:41 | Testenv name escaping te_TUBerlin -> te_TUBerlin
+[36mINFO[0m 08/12 17:56:41 | Test envs = [0], name = te_TUBerlin
+[36mINFO[0m 08/12 17:56:41 | Batch sizes for each domain: [0, 32, 32] (total=64)
+[36mINFO[0m 08/12 17:56:41 | steps-per-epoch for each domain: 2537.50, 1138.50 -> min = 1138.50
+/home/s21_yhr/miniconda3/envs/lzh_DG/lib/python3.9/site-packages/torchvision/models/_utils.py:208: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/home/s21_yhr/miniconda3/envs/lzh_DG/lib/python3.9/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=ResNet50_Weights.IMAGENET1K_V1`. You can also use `weights=ResNet50_Weights.DEFAULT` to get the most up-to-date weights.
+  warnings.warn(msg)
+[36mINFO[0m 08/12 17:56:45 | # of params = 23923979
+[36mINFO[0m 08/12 18:10:07 | test_in     test_out    train_in    train_out   test_in_au  test_out_a  train_out_  tr_outloss  env0_in     env0_in_au  env0_out    env0_out_a  env1_out    env1_out_a  env2_out    env2_out_a  step        epoch       loss        step_time   eval_time   mem_gb     
+[36mINFO[0m 08/12 18:10:07 | 0.006127    0.006740    0.000000    0.005162    nan         nan         nan         5.350328    0.006127    nan         0.006740    nan         0.004286    nan         0.006039    nan         0           0.000000    5.287320    11.404602   790.802845  5.428750   
+[36mINFO[0m 08/12 18:13:32 | 0.191559    0.197610    0.000000    0.193577    nan         nan         nan         3.704040    0.191559    nan         0.197610    nan         0.162956    nan         0.224199    nan         200         0.175670    4.711539    0.684661    62.316612   5.844267   
+[36mINFO[0m 08/12 18:16:46 | 0.384804    0.386336    0.000000    0.380479    nan         nan         nan         2.640972    0.384804    nan         0.386336    nan         0.366798    nan         0.394159    nan         400         0.351339    3.037222    0.635905    61.593042   6.024918   
+[36mINFO[0m 08/12 18:19:55 | 0.446768    0.448223    0.000000    0.459816    nan         nan         nan         2.235442    0.446768    nan         0.448223    nan         0.457291    nan         0.462341    nan         600         0.527009    2.382080    0.612395    61.730992   6.203249   
+[36mINFO[0m 08/12 18:22:43 | 0.507353    0.512255    0.000000    0.512258    nan         nan         nan         2.010268    0.507353    nan         0.512255    nan         0.522759    nan         0.501757    nan         800         0.702679    2.059732    0.509076    61.507695   6.382924   
+[36mINFO[0m 08/12 18:25:26 | 0.528416    0.533088    0.000000    0.537521    nan         nan         nan         1.884953    0.528416    nan         0.533088    nan         0.543202    nan         0.531840    nan         1000        0.878349    1.898534    0.482767    61.308933   6.561339   
+[36mINFO[0m 08/12 18:28:03 | 0.554917    0.560049    0.000000    0.546638    nan         nan         nan         1.829222    0.554917    nan         0.560049    nan         0.557044    nan         0.536232    nan         1200        1.054018    1.761035    0.451019    61.482628   6.740319   
+[36mINFO[0m 08/12 18:30:36 | 0.560968    0.564032    0.000000    0.575387    nan         nan         nan         1.741866    0.560968    nan         0.564032    nan         0.574138    nan         0.576636    nan         1400        1.229688    1.653948    0.432702    61.532345   6.918208   
+[36mINFO[0m 08/12 18:32:54 | 0.592984    0.602022    0.000000    0.582269    nan         nan         nan         1.678573    0.592984    nan         0.602022    nan         0.586256    nan         0.578283    nan         1600        1.405358    1.582372    0.358092    61.392289   6.919917   
+[36mINFO[0m 08/12 18:35:03 | 0.584865    0.599571    0.000000    0.599883    nan         nan         nan         1.612605    0.584865    nan         0.599571    nan         0.615665    nan         0.584102    nan         1800        1.581028    1.509033    0.313783    60.962334   6.919917   
+[36mINFO[0m 08/12 18:36:05 | Quantizing 53 modules at step 2000
+[36mINFO[0m 08/12 18:37:07 | 0.565487    0.579657    0.000000    0.600613    nan         nan         nan         1.590439    0.565487    nan         0.579657    nan         0.604828    nan         0.596399    nan         2000        1.756697    1.462128    0.284088    61.259017   6.924227   
+[36mINFO[0m 08/12 18:38:59 | 0.584942    0.587623    0.000000    0.607039    nan         nan         nan         1.577406    0.584942    nan         0.587623    nan         0.619655    nan         0.594422    nan         2200        1.932367    1.423961    0.211332    61.099996   6.924227   
+[36mINFO[0m 08/12 18:40:49 | 0.590993    0.601409    0.000000    0.616290    nan         nan         nan         1.548171    0.590993    nan         0.601409    nan         0.624433    nan         0.608147    nan         2400        2.108037    1.393747    0.206711    61.272995   6.924227   
+[36mINFO[0m 08/12 18:42:53 | 0.606158    0.609681    0.000000    0.622252    nan         nan         nan         1.529607    0.606158    nan         0.609681    nan         0.630099    nan         0.614405    nan         2600        2.283707    1.328790    0.277128    61.147274   6.924227   
+[36mINFO[0m 08/12 18:45:07 | 0.592371    0.603860    0.000000    0.629966    nan         nan         nan         1.467291    0.592371    nan         0.603860    nan         0.643990    nan         0.615942    nan         2800        2.459376    1.308824    0.328477    61.522372   6.924227   
+[36mINFO[0m 08/12 18:47:08 | 0.612056    0.621936    0.000000    0.638468    nan         nan         nan         1.450105    0.612056    nan         0.621936    nan         0.650345    nan         0.626592    nan         3000        2.635046    1.271019    0.259074    61.653579   7.017550   
+[36mINFO[0m 08/12 18:48:55 | 0.599341    0.610294    0.000000    0.631908    nan         nan         nan         1.474305    0.599341    nan         0.610294    nan         0.639310    nan         0.624506    nan         3200        2.810716    1.237275    0.192561    61.478575   7.192585   
+[36mINFO[0m 08/12 18:50:33 | 0.604550    0.614890    0.000000    0.644764    nan         nan         nan         1.442520    0.604550    nan         0.614890    nan         0.656897    nan         0.632631    nan         3400        2.986386    1.183736    0.143739    61.251752   7.196858   
+[36mINFO[0m 08/12 18:52:04 | 0.615119    0.625000    0.000000    0.646361    nan         nan         nan         1.433690    0.615119    nan         0.625000    nan         0.665911    nan         0.626812    nan         3600        3.162055    1.194379    0.112111    61.744526   7.201252   
+[36mINFO[0m 08/12 18:53:35 | 0.625153    0.626225    0.000000    0.643169    nan         nan         nan         1.477356    0.625153    nan         0.626225    nan         0.651182    nan         0.635156    nan         3800        3.337725    1.163618    0.109255    61.820488   7.201252   
+[36mINFO[0m 08/12 18:55:06 | 0.620481    0.626225    0.000000    0.661223    nan         nan         nan         1.369202    0.620481    nan         0.626225    nan         0.672906    nan         0.649539    nan         4000        3.513395    1.130168    0.108886    62.177248   7.201863   
+[36mINFO[0m 08/12 18:56:36 | 0.623162    0.632659    0.000000    0.649228    nan         nan         nan         1.398061    0.623162    nan         0.632659    nan         0.658030    nan         0.640426    nan         4200        3.689065    1.100336    0.109293    61.413869   7.201863   
+[36mINFO[0m 08/12 18:58:07 | 0.618873    0.623162    0.000000    0.650372    nan         nan         nan         1.412705    0.618873    nan         0.623162    nan         0.667783    nan         0.632960    nan         4400        3.864734    1.105563    0.109173    61.850487   7.202191   
+Model converged at step 4000, Start step = 3401; Threshold = 1.811319, 
+[36mINFO[0m 08/12 18:59:40 | 0.632353    0.641544    0.000000    0.653378    nan         nan         nan         1.411268    0.632353    nan         0.641544    nan         0.665123    nan         0.641634    nan         4600        4.040404    1.069334    0.109274    61.170233   7.380476   
+[36mINFO[0m 08/12 19:01:11 | 0.610600    0.626225    0.000000    0.660361    nan         nan         nan         1.399867    0.610600    nan         0.626225    nan         0.676453    nan         0.644269    nan         4800        4.216074    1.036785    0.108498    61.867948   7.385771   
+[36mINFO[0m 08/12 19:02:40 | 0.626302    0.631434    0.000000    0.654438    nan         nan         nan         1.384806    0.626302    nan         0.631434    nan         0.664828    nan         0.644049    nan         5000        4.391744    1.038286    0.108357    60.928362   7.386908   
+[36mINFO[0m 08/12 19:02:42 | ---
+[33mWARNING[0m 08/12 19:02:50 | Evaluate SWAD ...
+[36mINFO[0m 08/12 19:03:51 | 0.679075    0.691789    0.000000    0.720547    nan         nan         nan         1.125225    0.679075    nan         0.691789    nan         0.732266    nan         0.708827    nan         [3401-5000]  (N=9)
+[36mINFO[0m 08/12 19:03:51 | oracle = 63.235%
+[36mINFO[0m 08/12 19:03:51 | iid = 62.048%
+[36mINFO[0m 08/12 19:03:51 | last = 62.630%
+[36mINFO[0m 08/12 19:03:51 | last (inD) = 65.444%
+[36mINFO[0m 08/12 19:03:51 | iid (inD) = 66.122%
+[36mINFO[0m 08/12 19:03:51 | SWAD = 67.907%
+[36mINFO[0m 08/12 19:03:51 | SWAD (inD) = 72.055%
+[36mINFO[0m 08/12 19:03:53 | 
+[36mINFO[0m 08/12 19:03:55 | Testenv name escaping te_quickdraw -> te_quickdraw
+[36mINFO[0m 08/12 19:03:55 | Test envs = [1], name = te_quickdraw
+[36mINFO[0m 08/12 19:03:55 | Batch sizes for each domain: [32, 0, 32] (total=64)
+[36mINFO[0m 08/12 19:03:55 | steps-per-epoch for each domain: 408.00, 1138.50 -> min = 408.00
+[36mINFO[0m 08/12 19:03:59 | # of params = 23923979
+[36mINFO[0m 08/12 19:08:57 | test_in     test_out    train_in    train_out   test_in_au  train_out_  tr_outloss  test_out_a  env0_out    env0_out_a  env1_in     env1_in_au  env1_out    env1_out_a  env2_out    env2_out_a  step        epoch       loss        step_time   eval_time   mem_gb     
+[36mINFO[0m 08/12 19:08:57 | 0.005764    0.006108    0.000000    0.006470    nan         nan         5.339403    nan         0.004596    nan         0.005764    nan         0.006108    nan         0.008344    nan         0           0.000000    5.369534    0.110187    297.551716  5.430130   
+[36mINFO[0m 08/12 19:12:57 | 0.144224    0.144384    0.000000    0.415615    nan         nan         2.505431    nan         0.466605    nan         0.144224    nan         0.144384    nan         0.364625    nan         200         0.490196    3.956876    0.283298    178.721327  5.839346   
+[36mINFO[0m 08/12 19:16:23 | 0.197759    0.198867    0.000000    0.531046    nan         nan         1.964006    nan         0.604473    nan         0.197759    nan         0.198867    nan         0.457620    nan         400         0.980392    2.072051    0.162263    168.670931  6.022965   
+[36mINFO[0m 08/12 19:19:38 | 0.251170    0.251281    0.000000    0.584705    nan         nan         1.754697    nan         0.660846    nan         0.251170    nan         0.251281    nan         0.508564    nan         600         1.470588    1.634959    0.111727    168.240783  6.204592   
+[36mINFO[0m 08/12 19:22:52 | 0.257007    0.263350    0.000000    0.626542    nan         nan         1.548217    nan         0.708946    nan         0.257007    nan         0.263350    nan         0.544137    nan         800         1.960784    1.435716    0.107105    168.170378  6.382321   
+[36mINFO[0m 08/12 19:26:05 | 0.288461    0.290591    0.000000    0.636471    nan         nan         1.498251    nan         0.719363    nan         0.288461    nan         0.290591    nan         0.553579    nan         1000        2.450980    1.274917    0.104982    167.392301  6.563620   
+[36mINFO[0m 08/12 19:29:17 | 0.282906    0.286946    0.000000    0.660980    nan         nan         1.410128    nan         0.730392    nan         0.282906    nan         0.286946    nan         0.591568    nan         1200        2.941176    1.224844    0.104851    166.749296  6.743058   
+[36mINFO[0m 08/12 19:32:31 | 0.302574    0.303941    0.000000    0.670035    nan         nan         1.365188    nan         0.745098    nan         0.302574    nan         0.303941    nan         0.594971    nan         1400        3.431373    1.084717    0.103774    168.260128  6.922686   
+[36mINFO[0m 08/12 19:35:46 | 0.293522    0.295468    0.000000    0.678430    nan         nan         1.321759    nan         0.753983    nan         0.293522    nan         0.295468    nan         0.602877    nan         1600        3.921569    1.049286    0.103723    169.687145  6.922686   
+[36mINFO[0m 08/12 19:38:58 | 0.285086    0.290000    0.000000    0.671819    nan         nan         1.357530    nan         0.735600    nan         0.285086    nan         0.290000    nan         0.608037    nan         1800        4.411765    1.001825    0.104556    167.025716  6.922976   
+[36mINFO[0m 08/12 19:39:24 | Quantizing 53 modules at step 2000
+[36mINFO[0m 08/12 19:42:12 | 0.277562    0.277340    0.000000    0.674395    nan         nan         1.340604    nan         0.744485    nan         0.277562    nan         0.277340    nan         0.604304    nan         2000        4.901961    0.920849    0.104797    167.765066  6.922976   
+[36mINFO[0m 08/12 19:45:28 | 0.305148    0.312414    0.000000    0.696591    nan         nan         1.280281    nan         0.765931    nan         0.305148    nan         0.312414    nan         0.627251    nan         2200        5.392157    0.887939    0.109630    166.743995  6.922976   
+[36mINFO[0m 08/12 19:48:44 | 0.289163    0.291527    0.000000    0.693273    nan         nan         1.325965    nan         0.760723    nan         0.289163    nan         0.291527    nan         0.625823    nan         2400        5.882353    0.841698    0.110026    167.037406  6.922976   
+[36mINFO[0m 08/12 19:51:59 | 0.304741    0.306158    0.000000    0.697081    nan         nan         1.264124    nan         0.774816    nan         0.304741    nan         0.306158    nan         0.619346    nan         2600        6.372549    0.826762    0.109744    166.066805  6.922976   
+[36mINFO[0m 08/12 19:55:14 | 0.279052    0.282709    0.000000    0.706367    nan         nan         1.311475    nan         0.776042    nan         0.279052    nan         0.282709    nan         0.636693    nan         2800        6.862745    0.795788    0.109664    166.703843  6.922976   
+[36mINFO[0m 08/12 19:58:29 | 0.313608    0.315271    0.000000    0.711396    nan         nan         1.236685    nan         0.782475    nan         0.313608    nan         0.315271    nan         0.640316    nan         3000        7.352941    0.728877    0.109759    166.318728  7.012141   
+[36mINFO[0m 08/12 20:01:44 | 0.308892    0.309409    0.000000    0.714727    nan         nan         1.239326    nan         0.780025    nan         0.308892    nan         0.309409    nan         0.649429    nan         3200        7.843137    0.701731    0.109609    166.410779  7.194172   
+[36mINFO[0m 08/12 20:05:00 | 0.303461    0.305369    0.000000    0.705206    nan         nan         1.260028    nan         0.761642    nan         0.303461    nan         0.305369    nan         0.648770    nan         3400        8.333333    0.701915    0.109333    166.535633  7.194172   
+Model converged at step 3000, Start step = 2401; Threshold = 1.618950, 
+[36mINFO[0m 08/12 20:08:19 | 0.312303    0.315862    0.000000    0.711853    nan         nan         1.245928    nan         0.771752    nan         0.312303    nan         0.315862    nan         0.651954    nan         3600        8.823529    0.685569    0.109085    166.886364  7.371817   
+[36mINFO[0m 08/12 20:59:45 | 0.278165    0.277586    0.000000    0.706558    nan         nan         1.312958    nan         0.760723    nan         0.278165    nan         0.277586    nan         0.652394    nan         3800        9.313725    0.664594    0.109049    3056.80735  7.378363   
+[36mINFO[0m 08/12 21:21:45 | 0.304421    0.302808    0.000000    0.722193    nan         nan         1.176828    nan         0.780025    nan         0.304421    nan         0.302808    nan         0.664361    nan         4000        9.803922    0.635508    1.451258    967.619832  7.378363   
+[36mINFO[0m 08/12 21:34:02 | 0.309298    0.309951    0.000000    0.721562    nan         nan         1.236812    nan         0.789522    nan         0.309298    nan         0.309951    nan         0.653601    nan         4200        10.294118   0.626712    1.016832    473.307915  7.379790   
+[36mINFO[0m 08/12 21:39:53 | 0.321835    0.323990    0.000000    0.720837    nan         nan         1.207261    nan         0.776654    nan         0.321835    nan         0.323990    nan         0.665020    nan         4400        10.784314   0.607173    0.520546    185.418792  7.381705   
+[36mINFO[0m 08/12 21:45:00 | 0.295567    0.297488    0.000000    0.706296    nan         nan         1.289042    nan         0.766238    nan         0.295567    nan         0.297488    nan         0.646355    nan         4600        11.274510   0.554905    0.305625    186.100323  7.384474   
+[36mINFO[0m 08/12 21:49:58 | 0.326823    0.331084    0.000000    0.726243    nan         nan         1.246845    nan         0.793505    nan         0.326823    nan         0.331084    nan         0.658981    nan         4800        11.764706   0.580429    0.228776    191.824939  7.384474   
+[36mINFO[0m 08/12 21:54:43 | 0.292869    0.293842    0.000000    0.715912    nan         nan         1.330104    nan         0.780637    nan         0.292869    nan         0.293842    nan         0.651186    nan         5000        12.254902   0.541552    0.231637    180.605909  7.391226   
+[36mINFO[0m 08/12 21:54:46 | ---
+[33mWARNING[0m 08/12 21:54:54 | Evaluate SWAD ...
+[36mINFO[0m 08/12 21:58:00 | 0.361589    0.369064    0.000000    0.776484    nan         nan         0.970323    nan         0.838542    nan         0.361589    nan         0.369064    nan         0.714427    nan         [2401-5000]  (N=14)
+[36mINFO[0m 08/12 21:58:00 | oracle = 32.682%
+[36mINFO[0m 08/12 21:58:00 | iid = 32.682%
+[36mINFO[0m 08/12 21:58:00 | last = 29.287%
+[36mINFO[0m 08/12 21:58:00 | last (inD) = 71.591%
+[36mINFO[0m 08/12 21:58:00 | iid (inD) = 72.624%
+[36mINFO[0m 08/12 21:58:00 | SWAD = 36.159%
+[36mINFO[0m 08/12 21:58:00 | SWAD (inD) = 77.648%
+[36mINFO[0m 08/12 21:58:03 | 
+[36mINFO[0m 08/12 21:58:06 | Testenv name escaping te_sketch -> te_sketch
+[36mINFO[0m 08/12 21:58:06 | Test envs = [2], name = te_sketch
+[36mINFO[0m 08/12 21:58:06 | Batch sizes for each domain: [32, 32, 0] (total=64)
+[36mINFO[0m 08/12 21:58:06 | steps-per-epoch for each domain: 408.00, 2537.50 -> min = 408.00
+[36mINFO[0m 08/12 21:58:11 | # of params = 23923979
+[36mINFO[0m 08/12 22:00:15 | test_in     test_out    train_in    train_out   test_in_au  train_out_  tr_outloss  test_out_a  env0_out    env0_out_a  env1_out    env1_out_a  env2_in     env2_in_au  env2_out    env2_out_a  step        epoch       loss        step_time   eval_time   mem_gb     
+[36mINFO[0m 08/12 22:00:15 | 0.004502    0.004721    0.000000    0.004594    nan         nan         5.330881    nan         0.002145    nan         0.007044    nan         0.004502    nan         0.004721    nan         0           0.000000    5.400612    0.240875    124.108184  5.430130   
+[36mINFO[0m 08/12 22:03:40 | 0.125247    0.125714    0.000000    0.376064    nan         nan         2.552566    nan         0.417892    nan         0.334236    nan         0.125247    nan         0.125714    nan         200         0.490196    4.105082    0.214777    124.892634  5.839346   
+[36mINFO[0m 08/12 22:07:03 | 0.158048    0.165130    0.000000    0.528787    nan         nan         1.802210    nan         0.597426    nan         0.460148    nan         0.158048    nan         0.165130    nan         400         0.980392    2.090631    0.214649    122.331846  6.022965   
+[36mINFO[0m 08/12 22:10:26 | 0.182175    0.185332    0.000000    0.569711    nan         nan         1.632688    nan         0.637255    nan         0.502167    nan         0.182175    nan         0.185332    nan         600         1.470588    1.641891    0.213496    123.587353  6.204592   
+[36mINFO[0m 08/12 22:13:47 | 0.210502    0.210913    0.000000    0.629714    nan         nan         1.401520    nan         0.686275    nan         0.573153    nan         0.210502    nan         0.210913    nan         800         1.960784    1.394999    0.213381    123.175435  6.382321   
+[36mINFO[0m 08/12 22:17:10 | 0.215827    0.219697    0.000000    0.643134    nan         nan         1.356324    nan         0.712623    nan         0.573645    nan         0.215827    nan         0.219697    nan         1000        2.450980    1.258421    0.213968    122.603056  6.563620   
+[36mINFO[0m 08/12 22:20:39 | 0.210337    0.216293    0.000000    0.660428    nan         nan         1.284063    nan         0.721201    nan         0.599655    nan         0.210337    nan         0.216293    nan         1200        2.941176    1.170378    0.177079    148.735962  6.743058   
+[36mINFO[0m 08/12 22:24:14 | 0.220877    0.223869    0.000000    0.674166    nan         nan         1.242239    nan         0.736213    nan         0.612118    nan         0.220877    nan         0.223869    nan         1400        3.431373    1.080814    0.220101    155.871284  6.922686   
+[36mINFO[0m 08/12 22:31:24 | 0.229935    0.235068    0.000000    0.676193    nan         nan         1.195699    nan         0.738051    nan         0.614335    nan         0.229935    nan         0.235068    nan         1600        3.921569    1.012688    0.280035    360.180904  6.922686   
+[36mINFO[0m 08/12 22:35:36 | 0.233998    0.240448    0.000000    0.692277    nan         nan         1.174991    nan         0.750613    nan         0.633941    nan         0.233998    nan         0.240448    nan         1800        4.411765    0.954999    0.436061    150.049115  6.922976   
+[36mINFO[0m 08/12 22:37:25 | Quantizing 53 modules at step 2000
+[36mINFO[0m 08/12 22:39:36 | 0.228014    0.233092    0.000000    0.708559    nan         nan         1.090714    nan         0.767463    nan         0.649655    nan         0.228014    nan         0.233092    nan         2000        4.901961    0.927651    0.470278    130.026981  6.922976   
+[36mINFO[0m 08/12 22:43:20 | 0.248161    0.249671    0.000000    0.702779    nan         nan         1.134151    nan         0.756740    nan         0.648818    nan         0.248161    nan         0.249671    nan         2200        5.392157    0.897857    0.227674    121.859715  6.922976   
+[36mINFO[0m 08/12 22:47:06 | 0.249533    0.254941    0.000000    0.703398    nan         nan         1.096693    nan         0.755515    nan         0.651281    nan         0.249533    nan         0.254941    nan         2400        5.882353    0.871593    0.227691    122.953759  6.922976   
+Model converged at step 2000, Start step = 2001; Threshold = 1.439342, 
+[36mINFO[0m 08/12 22:50:55 | 0.232955    0.233860    0.000000    0.710784    nan         nan         1.099477    nan         0.766544    nan         0.655025    nan         0.232955    nan         0.233860    nan         2600        6.372549    0.855267    0.231056    124.008718  6.922976   
+[36mINFO[0m 08/12 22:54:43 | 0.242644    0.245828    0.000000    0.707319    nan         nan         1.100220    nan         0.771140    nan         0.643498    nan         0.242644    nan         0.245828    nan         2800        6.862745    0.819668    0.228939    124.862154  7.015604   
+[36mINFO[0m 08/12 22:58:30 | 0.219889    0.227163    0.000000    0.715426    nan         nan         1.061733    nan         0.764400    nan         0.666453    nan         0.219889    nan         0.227163    nan         3000        7.352941    0.782120    0.229594    120.637876  7.196171   
+[36mINFO[0m 08/12 23:02:18 | 0.213823    0.219807    0.000000    0.716454    nan         nan         1.086518    nan         0.769608    nan         0.663300    nan         0.213823    nan         0.219807    nan         3200        7.843137    0.752910    0.231508    123.838037  7.369788   
+[36mINFO[0m 08/12 23:06:06 | 0.242918    0.251647    0.000000    0.733936    nan         nan         1.027456    nan         0.794424    nan         0.673448    nan         0.242918    nan         0.251647    nan         3400        8.333333    0.751530    0.230107    122.964604  7.373564   
+[36mINFO[0m 08/12 23:09:55 | 0.240283    0.247585    0.000000    0.720598    nan         nan         1.081430    nan         0.769914    nan         0.671281    nan         0.240283    nan         0.247585    nan         3600        8.823529    0.719734    0.230539    124.602092  7.376814   
+[36mINFO[0m 08/12 23:13:38 | 0.214811    0.220246    0.000000    0.721442    nan         nan         1.049357    nan         0.774510    nan         0.668374    nan         0.214811    nan         0.220246    nan         3800        9.313725    0.701150    0.229107    118.453760  7.376814   
+[36mINFO[0m 08/12 23:17:26 | 0.228810    0.238252    0.000000    0.728655    nan         nan         1.076042    nan         0.781250    nan         0.676059    nan         0.228810    nan         0.238252    nan         4000        9.803922    0.697599    0.230130    123.863406  7.377913   
+[36mINFO[0m 08/12 23:21:16 | 0.231610    0.239021    0.000000    0.735088    nan         nan         1.026347    nan         0.784314    nan         0.685862    nan         0.231610    nan         0.239021    nan         4200        10.294118   0.664367    0.229418    126.194683  7.377913   
+[36mINFO[0m 08/12 23:25:06 | 0.230814    0.234409    0.000000    0.734545    nan         nan         1.064112    nan         0.787071    nan         0.682020    nan         0.230814    nan         0.234409    nan         4400        10.784314   0.657036    0.229691    125.507133  7.378363   
+[36mINFO[0m 08/12 23:35:00 | 0.226669    0.235617    0.000000    0.747592    nan         nan         0.998168    nan         0.795037    nan         0.700148    nan         0.226669    nan         0.235617    nan         4600        11.274510   0.631857    0.229954    489.843457  7.383246   
+[36mINFO[0m 08/13 00:40:02 | 0.224116    0.229798    0.000000    0.730204    nan         nan         1.059361    nan         0.779718    nan         0.680690    nan         0.224116    nan         0.229798    nan         4800        11.764706   0.606846    0.294172    3834.27018  7.383246   
+[36mINFO[0m 08/13 01:48:56 | 0.230978    0.236715    0.000000    0.732549    nan         nan         1.028161    nan         0.782782    nan         0.682315    nan         0.230978    nan         0.236715    nan         5000        12.254902   0.617091    1.487514    3800.16001  7.383246   
+[36mINFO[0m 08/13 01:49:01 | ---
+[33mWARNING[0m 08/13 01:49:03 | Evaluate SWAD ...
+[36mINFO[0m 08/13 02:54:45 | 0.273084    0.279315    0.000000    0.782865    nan         nan         0.805122    nan         0.834252    nan         0.731478    nan         0.273084    nan         0.279315    nan         [2001-5000]  (N=20)
+[36mINFO[0m 08/13 02:54:46 | oracle = 24.953%
+[36mINFO[0m 08/13 02:54:46 | iid = 22.667%
+[36mINFO[0m 08/13 02:54:46 | last = 23.098%
+[36mINFO[0m 08/13 02:54:46 | last (inD) = 73.255%
+[36mINFO[0m 08/13 02:54:46 | iid (inD) = 74.759%
+[36mINFO[0m 08/13 02:54:46 | SWAD = 27.308%
+[36mINFO[0m 08/13 02:54:46 | SWAD (inD) = 78.287%
+[36mINFO[0m 08/13 02:55:08 | === Summary ===
+[36mINFO[0m 08/13 02:55:08 | Command: /home/s21_yhr/lzh/new/DomainBed-new/train_all.py SKET_QTDoG_seed0 --dataset SKET --data_dir /home/s21_yhr/lzh/new/DomainBed-new/dataset --algorithm ERM --steps 5000 --checkpoint_freq 200 --batch_size 32 --optimizer adam --lr 5e-5 --weight_decay 0 --resnet_dropout 0 --resnet18 False --pretrained True --freeze_bn True --swad LossValley --seed 0 --trial_seed 0 --deterministic --cache disk --prebuild_loader --image_size 224 --quant 1 --q_steps 2000
+[36mINFO[0m 08/13 02:55:08 | Unique name: 260812_17-39-54_SKET_QTDoG_seed0
+[36mINFO[0m 08/13 02:55:08 | Out path: train_output/SKET/260812_17-39-54_SKET_QTDoG_seed0
+[36mINFO[0m 08/13 02:55:08 | Algorithm: ERM
+[36mINFO[0m 08/13 02:55:08 | Dataset: SKET
++------------+----------+-----------+---------+---------+
+| Selection  | TUBerlin | quickdraw |  sketch |   Avg.  |
++------------+----------+-----------+---------+---------+
+|   oracle   | 63.235%  |  32.682%  | 24.953% | 40.290% |
+|    iid     | 62.048%  |  32.682%  | 22.667% | 39.132% |
+|    last    | 62.630%  |  29.287%  | 23.098% | 38.338% |
+| last (inD) | 65.444%  |  71.591%  | 73.255% | 70.097% |
+| iid (inD)  | 66.122%  |  72.624%  | 74.759% | 71.169% |
+|    SWAD    | 67.907%  |  36.159%  | 27.308% | 43.792% |
+| SWAD (inD) | 72.055%  |  77.648%  | 78.287% | 75.997% |
++------------+----------+-----------+---------+---------+
+================================================================================
+Starting QTDoG, seed=1, physical GPU=3
+/home/s21_yhr/miniconda3/envs/lzh_DG/bin/python /home/s21_yhr/lzh/new/DomainBed-new/train_all.py SKET_QTDoG_seed1 --dataset SKET --data_dir /home/s21_yhr/lzh/new/DomainBed-new/dataset --algorithm ERM --steps 5000 --checkpoint_freq 200 --batch_size 32 --optimizer adam --lr 5e-5 --weight_decay 0 --resnet_dropout 0 --resnet18 False --pretrained True --freeze_bn True --swad LossValley --seed 1 --trial_seed 1 --deterministic --cache disk --prebuild_loader --image_size 224 --quant 1 --q_steps 2000
+================================================================================
+/home/s21_yhr/miniconda3/envs/lzh_DG/lib/python3.9/site-packages/munch/__init__.py:24: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+[36mINFO[0m 08/13 03:16:45 | Command :: /home/s21_yhr/lzh/new/DomainBed-new/train_all.py SKET_QTDoG_seed1 --dataset SKET --data_dir /home/s21_yhr/lzh/new/DomainBed-new/dataset --algorithm ERM --steps 5000 --checkpoint_freq 200 --batch_size 32 --optimizer adam --lr 5e-5 --weight_decay 0 --resnet_dropout 0 --resnet18 False --pretrained True --freeze_bn True --swad LossValley --seed 1 --trial_seed 1 --deterministic --cache disk --prebuild_loader --image_size 224 --quant 1 --q_steps 2000
+Environment:
+	Python: 3.9.25
+	PyTorch: 2.7.0+cu128
+	Torchvision: 0.22.0+cu128
+	CUDA: 12.8
+	CUDNN: 90701
+	NumPy: 1.23.5
+	PIL: 8.1.0
+Args:
+	algorithm: ERM
+	batch_size: 32
+	cache: disk
+	cache_root: cache
+	cache_size: None
+	checkpoint_freq: 200
+	configs: []
+	data_dir: /home/s21_yhr/lzh/new/DomainBed-new/dataset
+	dataset: SKET
+	debug: False
+	deterministic: True
+	end_step: 200
+	evalmode: fast
+	extra_search: n
+	extra_search_end: None
+	extra_search_start: None
+	gga_l_gamma: 0.001
+	grad_fn: sum
+	holdout_fraction: 0.2
+	model_save: None
+	name: SKET_QTDoG_seed1
+	neighborhoodSize: 1e-06
+	out_dir: train_output/SKET/260813_03-16-40_SKET_QTDoG_seed1
+	out_root: train_output/SKET
+	prebuild_loader: True
+	q_steps: 2000
+	quant: 1
+	resize_mode: stretch
+	saliency: False
+	saliency_cmap: jet
+	saliency_every: 0
+	saliency_noise: 0.15
+	saliency_num: 16
+	saliency_samples: 25
+	saliency_split: test_in
+	seed: 1
+	show: False
+	start_step: 100
+	steps: 5000
+	tb_freq: 10
+	test_envs: None
+	train_output: train_output
+	trial_seed: 1
+	unique_name: 260813_03-16-40_SKET_QTDoG_seed1
+	work_dir: .
+HParams:
+	data_augmentation: True
+	val_augment: False
+	[36mresnet18: False
+	[0m[36mresnet_dropout: 0
+	[0mclass_balanced: False
+	[36moptimizer: adam
+	[0m[36mfreeze_bn: True
+	[0m[36mpretrained: True
+	[0m[36mimage_size: 224
+	[0m[36mlr: 5e-05
+	[0mbatch_size: 32
+	[36mweight_decay: 0
+	[0m[36mswad: LossValley
+	[0mswad_kwargs: 
+	  n_converge: 3
+	  n_tolerance: 6
+	  tolerance_ratio: 0.3
+	test_batchsize: 128
+	indomain_test: False
+	grad_fn: sum
+	extra_search: n
+	logdir: train_output/SKET/260813_03-16-40_SKET_QTDoG_seed1
+	neighborhoodSize: 1e-06
+	start_step: 100
+	end_step: 200
+	extra_search_start: None
+	extra_search_end: None
+	gga_l_gamma: 0.001
+Dataset:
+	[SKET] #envs=3, #classes=203
+	env0: TUBerlin (#16320)
+	env1: quickdraw (#101500)
+	env2: sketch (#45540)
+
+[36mINFO[0m 08/13 03:17:47 | n_steps = 5000
+[36mINFO[0m 08/13 03:17:47 | checkpoint_freq = 200
+[36mINFO[0m 08/13 03:17:47 | n_steps is updated to 5000 => 5001 for checkpointing
+[36mINFO[0m 08/13 03:17:47 | Target test envs = [[0], [1], [2]]
+[36mINFO[0m 08/13 03:17:47 | 
+[36mINFO[0m 08/13 03:17:49 | Testenv name escaping te_TUBerlin -> te_TUBerlin
+[36mINFO[0m 08/13 03:17:49 | Test envs = [0], name = te_TUBerlin
+[36mINFO[0m 08/13 03:17:49 | Batch sizes for each domain: [0, 32, 32] (total=64)
+[36mINFO[0m 08/13 03:17:49 | steps-per-epoch for each domain: 2537.50, 1138.50 -> min = 1138.50
+/home/s21_yhr/miniconda3/envs/lzh_DG/lib/python3.9/site-packages/torchvision/models/_utils.py:208: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/home/s21_yhr/miniconda3/envs/lzh_DG/lib/python3.9/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=ResNet50_Weights.IMAGENET1K_V1`. You can also use `weights=ResNet50_Weights.DEFAULT` to get the most up-to-date weights.
+  warnings.warn(msg)
+[36mINFO[0m 08/13 03:18:15 | # of params = 23923979
+[36mINFO[0m 08/13 03:47:30 | test_in     test_out    train_in    train_out   test_in_au  test_out_a  train_out_  tr_outloss  env0_in     env0_in_au  env0_out    env0_out_a  env1_out    env1_out_a  env2_out    env2_out_a  step        epoch       loss        step_time   eval_time   mem_gb     
+[36mINFO[0m 08/13 03:47:31 | 0.004902    0.004596    0.000000    0.007014    nan         nan         nan         5.350675    0.004902    nan         0.004596    nan         0.005025    nan         0.009003    nan         0           0.000000    5.331805    22.866887   1732.64484  5.428750   
+[36mINFO[0m 08/13 04:36:05 | 0.263404    0.260723    0.000000    0.257251    nan         nan         nan         3.371164    0.263404    nan         0.260723    nan         0.222562    nan         0.291941    nan         200         0.175670    4.594689    2.332931    2442.27369  5.844267   
+[36mINFO[0m 08/13 05:19:46 | 0.442862    0.439645    0.000000    0.432162    nan         nan         nan         2.404971    0.442862    nan         0.439645    nan         0.425369    nan         0.438955    nan         400         0.351339    2.838780    2.657644    2081.07294  6.024918   
+[36mINFO[0m 08/13 06:09:58 | 0.471584    0.485907    0.000000    0.481452    nan         nan         nan         2.141809    0.471584    nan         0.485907    nan         0.478276    nan         0.484629    nan         600         0.527009    2.266759    2.652920    2473.82471  6.203249   
+[36mINFO[0m 08/13 06:59:57 | 0.533778    0.527574    0.000000    0.526786    nan         nan         nan         1.964032    0.533778    nan         0.527574    nan         0.526453    nan         0.527119    nan         800         0.702679    1.983131    2.390322    2515.44429  6.382924   
+[36mINFO[0m 08/13 07:48:06 | 0.546492    0.542892    0.000000    0.547127    nan         nan         nan         1.822055    0.546492    nan         0.542892    nan         0.553300    nan         0.540953    nan         1000        0.878349    1.807870    2.588567    2365.39065  6.561339   
+[36mINFO[0m 08/13 08:30:28 | 0.565028    0.558211    0.000000    0.574608    nan         nan         nan         1.733480    0.565028    nan         0.558211    nan         0.581034    nan         0.568182    nan         1200        1.054018    1.707184    2.685509    1999.52383  6.740319   
+[36mINFO[0m 08/13 09:17:28 | 0.574985    0.565870    0.000000    0.584851    nan         nan         nan         1.668313    0.574985    nan         0.565870    nan         0.594384    nan         0.575318    nan         1400        1.229688    1.624491    2.056883    2402.50263  6.918208   
+[36mINFO[0m 08/13 10:01:34 | 0.583793    0.575368    0.000000    0.587047    nan         nan         nan         1.661080    0.583793    nan         0.575368    nan         0.603498    nan         0.570597    nan         1600        1.405358    1.556961    2.536080    2132.77116  6.919917   

@@ -4,7 +4,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 from domainbed.lib.fast_data_loader import FastDataLoader
 import numpy as np
-from sklearn.metrics import roc_auc_score
+from sklearn.metrics import precision_recall_fscore_support
 
 if torch.cuda.is_available():
     device = "cuda"
@@ -17,7 +17,7 @@ def accuracy_from_loader(algorithm, loader, weights, debug=False):
     total = 0
     losssum = 0.0
     weights_offset = 0
-    scores, labels = [], []
+    predictions, labels = [], []
 
     algorithm.eval()
 
@@ -29,9 +29,13 @@ def accuracy_from_loader(algorithm, loader, weights, debug=False):
             logits = algorithm.predict(x)
             loss = F.cross_entropy(logits, y).item()
 
-        if logits.size(1) == 2:                       # 二分类，取正类概率当打分
-            scores.append(torch.softmax(logits, 1)[:, 1].cpu().numpy())
-            labels.append(y.cpu().numpy())
+        if logits.size(1) == 1:
+            pred = logits.gt(0).long().squeeze(1)
+        else:
+            pred = logits.argmax(dim=1)
+
+        predictions.append(pred.cpu().numpy())
+        labels.append(y.cpu().numpy())
 
         B = len(x)
         losssum += loss * B
@@ -56,12 +60,26 @@ def accuracy_from_loader(algorithm, loader, weights, debug=False):
     acc = correct / total
     loss = losssum / total
 
-    auc = float("nan")
-    if scores:
-        s, l = np.concatenate(scores), np.concatenate(labels)
-        if len(np.unique(l)) == 2:
-            auc = float(roc_auc_score(l, s))
-    return acc, loss, auc
+    precision = float("nan")
+    recall = float("nan")
+    f1 = float("nan")
+
+    if predictions:
+        pred = np.concatenate(predictions)
+        label = np.concatenate(labels)
+
+        precision, recall, f1, _ = precision_recall_fscore_support(
+            label,
+            pred,
+            average="macro",
+            zero_division=0,
+        )
+
+        precision = float(precision)
+        recall = float(recall)
+        f1 = float(f1)
+
+    return acc, loss, precision, recall, f1
 
 
 def accuracy(algorithm, loader_kwargs, weights, **kwargs):
@@ -119,19 +137,28 @@ class Evaluator:
                 continue
 
             is_test = env_num in self.test_envs
-            acc, loss, auc = accuracy(algorithm, loader_kwargs, weights, debug=self.debug)
+            acc, loss, precision, recall, f1 = accuracy(
+                algorithm, loader_kwargs, weights, debug=self.debug
+            )
+
             accuracies[name] = acc
-            accuracies[name + "_auc"] = auc
+            accuracies[name + "_precision"] = precision
+            accuracies[name + "_recall"] = recall
+            accuracies[name + "_f1"] = f1
             losses[name] = loss
 
             if env_num in self.train_envs:
                 summaries["train_" + inout] += acc / n_train_envs
-                summaries["train_" + inout + "_auc"] += auc / n_train_envs
+                summaries["train_" + inout + "_precision"] += precision / n_train_envs
+                summaries["train_" + inout + "_recall"] += recall / n_train_envs
+                summaries["train_" + inout + "_f1"] += f1 / n_train_env
                 if inout == "out":
                     summaries["tr_" + inout + "loss"] += loss / n_train_envs
             elif is_test:
                 summaries["test_" + inout] += acc / n_test_envs
-                summaries["test_" + inout + "_auc"] += auc / n_test_envs
+                summaries["test_" + inout + "_precision"] += precision / n_test_envs
+                summaries["test_" + inout + "_recall"] += recall / n_test_envs
+                summaries["test_" + inout + "_f1"] += f1 / n_test_envs
 
         if ret_losses:
             return accuracies, summaries, losses

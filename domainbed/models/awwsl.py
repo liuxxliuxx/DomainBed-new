@@ -15,7 +15,7 @@ PERTURB_TARGET = "complex"
 
 
 
-class ALOFT(nn.Module):
+class AWWSL(nn.Module):
     """特征图 (B, C, H, W) 上的频域扰动，无可学习参数，eval 时是恒等映射。
 
     forward 严格对应论文 3.3 节：
@@ -89,7 +89,7 @@ class ALOFT(nn.Module):
         sigma = (f.var(dim=0, unbiased=False, keepdim=True) + self.eps).sqrt()
         # Eq.(7)：F_l_hat = F_l + eps * Sigma(F_l)，eps ~ N(0, alpha)
         noise = torch.randn_like(f) * self.alpha * sigma
-        return torch.where(m, f + noise, f)     # 掩码外即 Eq.(4) 的高频，原样保留
+        return torch.where(m, f / 2 + noise, f)     # 掩码外即 Eq.(4) 的高频，原样保留
 
     def _by_statistic(self, f, m):
         """ALOFT-S，论文 Eq.(8)-(14)。"""
@@ -110,7 +110,7 @@ class ALOFT(nn.Module):
         return torch.where(m, new, f)
 
 
-def resnet_aloft(network, positions=("layer1", "layer2", "layer3"), **kwargs):
+def resnet_awwsl(network, positions=("layer1", "layer2", "layer3"), **kwargs):
     """把 ALOFT 挂到 torchvision ResNet 指定 stage 的输出上。
 
     必须在预训练权重加载完之后调用，否则 nn.Sequential 会给权重键名多插一层 ".0."。
@@ -118,7 +118,7 @@ def resnet_aloft(network, positions=("layer1", "layer2", "layer3"), **kwargs):
     """
     for name in positions:
         stage = getattr(network, name)
-        if isinstance(stage, nn.Sequential) and len(stage) and isinstance(stage[-1], ALOFT):
-            raise RuntimeError(f"{name} already wrapped with ALOFT; resnet_aloft is not idempotent")
-        setattr(network, name, nn.Sequential(stage, ALOFT(**kwargs)))
+        if isinstance(stage, nn.Sequential) and len(stage) and isinstance(stage[-1], AWWSL):
+            raise RuntimeError(f"{name} already wrapped with AWWSL; resnet_aloft is not idempotent")
+        setattr(network, name, nn.Sequential(stage, AWWSL(**kwargs)))
     return network

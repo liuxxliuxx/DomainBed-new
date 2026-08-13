@@ -1,0 +1,1040 @@
+设备 cuda | arch resnet50 | scope per_env | image_size [224] | seeds [0, 1, 2, 3, 4]
+[cache] 建缓存 640s_9ad98189bab20159: 16320 张
+[cache] 200/16320
+[cache] 400/16320
+[cache] 600/16320
+[cache] 800/16320
+[cache] 1000/16320
+[cache] 1200/16320
+[cache] 1400/16320
+[cache] 1600/16320
+[cache] 1800/16320
+[cache] 2000/16320
+[cache] 2200/16320
+[cache] 2400/16320
+[cache] 2600/16320
+[cache] 2800/16320
+[cache] 3000/16320
+[cache] 3200/16320
+[cache] 3400/16320
+[cache] 3600/16320
+[cache] 3800/16320
+[cache] 4000/16320
+[cache] 4200/16320
+[cache] 4400/16320
+[cache] 4600/16320
+[cache] 4800/16320
+[cache] 5000/16320
+[cache] 5200/16320
+[cache] 5400/16320
+[cache] 5600/16320
+[cache] 5800/16320
+[cache] 6000/16320
+[cache] 6200/16320
+[cache] 6400/16320
+[cache] 6600/16320
+[cache] 6800/16320
+[cache] 7000/16320
+[cache] 7200/16320
+[cache] 7400/16320
+[cache] 7600/16320
+[cache] 7800/16320
+[cache] 8000/16320
+[cache] 8200/16320
+[cache] 8400/16320
+[cache] 8600/16320
+[cache] 8800/16320
+[cache] 9000/16320
+[cache] 9200/16320
+[cache] 9400/16320
+[cache] 9600/16320
+[cache] 9800/16320
+[cache] 10000/16320
+[cache] 10200/16320
+[cache] 10400/16320
+[cache] 10600/16320
+[cache] 10800/16320
+[cache] 11000/16320
+[cache] 11200/16320
+[cache] 11400/16320
+[cache] 11600/16320
+[cache] 11800/16320
+[cache] 12000/16320
+[cache] 12200/16320
+[cache] 12400/16320
+[cache] 12600/16320
+[cache] 12800/16320
+[cache] 13000/16320
+[cache] 13200/16320
+[cache] 13400/16320
+[cache] 13600/16320
+[cache] 13800/16320
+[cache] 14000/16320
+[cache] 14200/16320
+[cache] 14400/16320
+[cache] 14600/16320
+[cache] 14800/16320
+[cache] 15000/16320
+[cache] 15200/16320
+[cache] 15400/16320
+[cache] 15600/16320
+[cache] 15800/16320
+[cache] 16000/16320
+[cache] 16200/16320
+[cache] 建缓存 640s_de9aaebabe4151ef: 101500 张
+[cache] 200/101500
+[cache] 400/101500
+[cache] 600/101500
+[cache] 800/101500
+[cache] 1000/101500
+[cache] 1200/101500
+[cache] 1400/101500
+[cache] 1600/101500
+[cache] 1800/101500
+[cache] 2000/101500
+[cache] 2200/101500
+[cache] 2400/101500
+[cache] 2600/101500
+[cache] 2800/101500
+[cache] 3000/101500
+[cache] 3200/101500
+[cache] 3400/101500
+[cache] 3600/101500
+[cache] 3800/101500
+[cache] 4000/101500
+[cache] 4200/101500
+[cache] 4400/101500
+[cache] 4600/101500
+[cache] 4800/101500
+[cache] 5000/101500
+[cache] 5200/101500
+[cache] 5400/101500
+[cache] 5600/101500
+[cache] 5800/101500
+[cache] 6000/101500
+[cache] 6200/101500
+[cache] 6400/101500
+[cache] 6600/101500
+[cache] 6800/101500
+[cache] 7000/101500
+[cache] 7200/101500
+[cache] 7400/101500
+[cache] 7600/101500
+[cache] 7800/101500
+[cache] 8000/101500
+[cache] 8200/101500
+[cache] 8400/101500
+[cache] 8600/101500
+[cache] 8800/101500
+[cache] 9000/101500
+[cache] 9200/101500
+[cache] 9400/101500
+[cache] 9600/101500
+[cache] 9800/101500
+[cache] 10000/101500
+[cache] 10200/101500
+[cache] 10400/101500
+[cache] 10600/101500
+[cache] 10800/101500
+[cache] 11000/101500
+[cache] 11200/101500
+[cache] 11400/101500
+[cache] 11600/101500
+[cache] 11800/101500
+[cache] 12000/101500
+[cache] 12200/101500
+[cache] 12400/101500
+[cache] 12600/101500
+[cache] 12800/101500
+[cache] 13000/101500
+[cache] 13200/101500
+[cache] 13400/101500
+[cache] 13600/101500
+[cache] 13800/101500
+[cache] 14000/101500
+[cache] 14200/101500
+[cache] 14400/101500
+[cache] 14600/101500
+[cache] 14800/101500
+[cache] 15000/101500
+[cache] 15200/101500
+[cache] 15400/101500
+[cache] 15600/101500
+[cache] 15800/101500
+[cache] 16000/101500
+[cache] 16200/101500
+[cache] 16400/101500
+[cache] 16600/101500
+[cache] 16800/101500
+[cache] 17000/101500
+[cache] 17200/101500
+[cache] 17400/101500
+[cache] 17600/101500
+[cache] 17800/101500
+[cache] 18000/101500
+[cache] 18200/101500
+[cache] 18400/101500
+[cache] 18600/101500
+[cache] 18800/101500
+[cache] 19000/101500
+[cache] 19200/101500
+[cache] 19400/101500
+[cache] 19600/101500
+[cache] 19800/101500
+[cache] 20000/101500
+[cache] 20200/101500
+[cache] 20400/101500
+[cache] 20600/101500
+[cache] 20800/101500
+[cache] 21000/101500
+[cache] 21200/101500
+[cache] 21400/101500
+[cache] 21600/101500
+[cache] 21800/101500
+[cache] 22000/101500
+[cache] 22200/101500
+[cache] 22400/101500
+[cache] 22600/101500
+[cache] 22800/101500
+[cache] 23000/101500
+[cache] 23200/101500
+[cache] 23400/101500
+[cache] 23600/101500
+[cache] 23800/101500
+[cache] 24000/101500
+[cache] 24200/101500
+[cache] 24400/101500
+[cache] 24600/101500
+[cache] 24800/101500
+[cache] 25000/101500
+[cache] 25200/101500
+[cache] 25400/101500
+[cache] 25600/101500
+[cache] 25800/101500
+[cache] 26000/101500
+[cache] 26200/101500
+[cache] 26400/101500
+[cache] 26600/101500
+[cache] 26800/101500
+[cache] 27000/101500
+[cache] 27200/101500
+[cache] 27400/101500
+[cache] 27600/101500
+[cache] 27800/101500
+[cache] 28000/101500
+[cache] 28200/101500
+[cache] 28400/101500
+[cache] 28600/101500
+[cache] 28800/101500
+[cache] 29000/101500
+[cache] 29200/101500
+[cache] 29400/101500
+[cache] 29600/101500
+[cache] 29800/101500
+[cache] 30000/101500
+[cache] 30200/101500
+[cache] 30400/101500
+[cache] 30600/101500
+[cache] 30800/101500
+[cache] 31000/101500
+[cache] 31200/101500
+[cache] 31400/101500
+[cache] 31600/101500
+[cache] 31800/101500
+[cache] 32000/101500
+[cache] 32200/101500
+[cache] 32400/101500
+[cache] 32600/101500
+[cache] 32800/101500
+[cache] 33000/101500
+[cache] 33200/101500
+[cache] 33400/101500
+[cache] 33600/101500
+[cache] 33800/101500
+[cache] 34000/101500
+[cache] 34200/101500
+[cache] 34400/101500
+[cache] 34600/101500
+[cache] 34800/101500
+[cache] 35000/101500
+[cache] 35200/101500
+[cache] 35400/101500
+[cache] 35600/101500
+[cache] 35800/101500
+[cache] 36000/101500
+[cache] 36200/101500
+[cache] 36400/101500
+[cache] 36600/101500
+[cache] 36800/101500
+[cache] 37000/101500
+[cache] 37200/101500
+[cache] 37400/101500
+[cache] 37600/101500
+[cache] 37800/101500
+[cache] 38000/101500
+[cache] 38200/101500
+[cache] 38400/101500
+[cache] 38600/101500
+[cache] 38800/101500
+[cache] 39000/101500
+[cache] 39200/101500
+[cache] 39400/101500
+[cache] 39600/101500
+[cache] 39800/101500
+[cache] 40000/101500
+[cache] 40200/101500
+[cache] 40400/101500
+[cache] 40600/101500
+[cache] 40800/101500
+[cache] 41000/101500
+[cache] 41200/101500
+[cache] 41400/101500
+[cache] 41600/101500
+[cache] 41800/101500
+[cache] 42000/101500
+[cache] 42200/101500
+[cache] 42400/101500
+[cache] 42600/101500
+[cache] 42800/101500
+[cache] 43000/101500
+[cache] 43200/101500
+[cache] 43400/101500
+[cache] 43600/101500
+[cache] 43800/101500
+[cache] 44000/101500
+[cache] 44200/101500
+[cache] 44400/101500
+[cache] 44600/101500
+[cache] 44800/101500
+[cache] 45000/101500
+[cache] 45200/101500
+[cache] 45400/101500
+[cache] 45600/101500
+[cache] 45800/101500
+[cache] 46000/101500
+[cache] 46200/101500
+[cache] 46400/101500
+[cache] 46600/101500
+[cache] 46800/101500
+[cache] 47000/101500
+[cache] 47200/101500
+[cache] 47400/101500
+[cache] 47600/101500
+[cache] 47800/101500
+[cache] 48000/101500
+[cache] 48200/101500
+[cache] 48400/101500
+[cache] 48600/101500
+[cache] 48800/101500
+[cache] 49000/101500
+[cache] 49200/101500
+[cache] 49400/101500
+[cache] 49600/101500
+[cache] 49800/101500
+[cache] 50000/101500
+[cache] 50200/101500
+[cache] 50400/101500
+[cache] 50600/101500
+[cache] 50800/101500
+[cache] 51000/101500
+[cache] 51200/101500
+[cache] 51400/101500
+[cache] 51600/101500
+[cache] 51800/101500
+[cache] 52000/101500
+[cache] 52200/101500
+[cache] 52400/101500
+[cache] 52600/101500
+[cache] 52800/101500
+[cache] 53000/101500
+[cache] 53200/101500
+[cache] 53400/101500
+[cache] 53600/101500
+[cache] 53800/101500
+[cache] 54000/101500
+[cache] 54200/101500
+[cache] 54400/101500
+[cache] 54600/101500
+[cache] 54800/101500
+[cache] 55000/101500
+[cache] 55200/101500
+[cache] 55400/101500
+[cache] 55600/101500
+[cache] 55800/101500
+[cache] 56000/101500
+[cache] 56200/101500
+[cache] 56400/101500
+[cache] 56600/101500
+[cache] 56800/101500
+[cache] 57000/101500
+[cache] 57200/101500
+[cache] 57400/101500
+[cache] 57600/101500
+[cache] 57800/101500
+[cache] 58000/101500
+[cache] 58200/101500
+[cache] 58400/101500
+[cache] 58600/101500
+[cache] 58800/101500
+[cache] 59000/101500
+[cache] 59200/101500
+[cache] 59400/101500
+[cache] 59600/101500
+[cache] 59800/101500
+[cache] 60000/101500
+[cache] 60200/101500
+[cache] 60400/101500
+[cache] 60600/101500
+[cache] 60800/101500
+[cache] 61000/101500
+[cache] 61200/101500
+[cache] 61400/101500
+[cache] 61600/101500
+[cache] 61800/101500
+[cache] 62000/101500
+[cache] 62200/101500
+[cache] 62400/101500
+[cache] 62600/101500
+[cache] 62800/101500
+[cache] 63000/101500
+[cache] 63200/101500
+[cache] 63400/101500
+[cache] 63600/101500
+[cache] 63800/101500
+[cache] 64000/101500
+[cache] 64200/101500
+[cache] 64400/101500
+[cache] 64600/101500
+[cache] 64800/101500
+[cache] 65000/101500
+[cache] 65200/101500
+[cache] 65400/101500
+[cache] 65600/101500
+[cache] 65800/101500
+[cache] 66000/101500
+[cache] 66200/101500
+[cache] 66400/101500
+[cache] 66600/101500
+[cache] 66800/101500
+[cache] 67000/101500
+[cache] 67200/101500
+[cache] 67400/101500
+[cache] 67600/101500
+[cache] 67800/101500
+[cache] 68000/101500
+[cache] 68200/101500
+[cache] 68400/101500
+[cache] 68600/101500
+[cache] 68800/101500
+[cache] 69000/101500
+[cache] 69200/101500
+[cache] 69400/101500
+[cache] 69600/101500
+[cache] 69800/101500
+[cache] 70000/101500
+[cache] 70200/101500
+[cache] 70400/101500
+[cache] 70600/101500
+[cache] 70800/101500
+[cache] 71000/101500
+[cache] 71200/101500
+[cache] 71400/101500
+[cache] 71600/101500
+[cache] 71800/101500
+[cache] 72000/101500
+[cache] 72200/101500
+[cache] 72400/101500
+[cache] 72600/101500
+[cache] 72800/101500
+[cache] 73000/101500
+[cache] 73200/101500
+[cache] 73400/101500
+[cache] 73600/101500
+[cache] 73800/101500
+[cache] 74000/101500
+[cache] 74200/101500
+[cache] 74400/101500
+[cache] 74600/101500
+[cache] 74800/101500
+[cache] 75000/101500
+[cache] 75200/101500
+[cache] 75400/101500
+[cache] 75600/101500
+[cache] 75800/101500
+[cache] 76000/101500
+[cache] 76200/101500
+[cache] 76400/101500
+[cache] 76600/101500
+[cache] 76800/101500
+[cache] 77000/101500
+[cache] 77200/101500
+[cache] 77400/101500
+[cache] 77600/101500
+[cache] 77800/101500
+[cache] 78000/101500
+[cache] 78200/101500
+[cache] 78400/101500
+[cache] 78600/101500
+[cache] 78800/101500
+[cache] 79000/101500
+[cache] 79200/101500
+[cache] 79400/101500
+[cache] 79600/101500
+[cache] 79800/101500
+[cache] 80000/101500
+[cache] 80200/101500
+[cache] 80400/101500
+[cache] 80600/101500
+[cache] 80800/101500
+[cache] 81000/101500
+[cache] 81200/101500
+[cache] 81400/101500
+[cache] 81600/101500
+[cache] 81800/101500
+[cache] 82000/101500
+[cache] 82200/101500
+[cache] 82400/101500
+[cache] 82600/101500
+[cache] 82800/101500
+[cache] 83000/101500
+[cache] 83200/101500
+[cache] 83400/101500
+[cache] 83600/101500
+[cache] 83800/101500
+[cache] 84000/101500
+[cache] 84200/101500
+[cache] 84400/101500
+[cache] 84600/101500
+[cache] 84800/101500
+[cache] 85000/101500
+[cache] 85200/101500
+[cache] 85400/101500
+[cache] 85600/101500
+[cache] 85800/101500
+[cache] 86000/101500
+[cache] 86200/101500
+[cache] 86400/101500
+[cache] 86600/101500
+[cache] 86800/101500
+[cache] 87000/101500
+[cache] 87200/101500
+[cache] 87400/101500
+[cache] 87600/101500
+[cache] 87800/101500
+[cache] 88000/101500
+[cache] 88200/101500
+[cache] 88400/101500
+[cache] 88600/101500
+[cache] 88800/101500
+[cache] 89000/101500
+[cache] 89200/101500
+[cache] 89400/101500
+[cache] 89600/101500
+[cache] 89800/101500
+[cache] 90000/101500
+[cache] 90200/101500
+[cache] 90400/101500
+[cache] 90600/101500
+[cache] 90800/101500
+[cache] 91000/101500
+[cache] 91200/101500
+[cache] 91400/101500
+[cache] 91600/101500
+[cache] 91800/101500
+[cache] 92000/101500
+[cache] 92200/101500
+[cache] 92400/101500
+[cache] 92600/101500
+[cache] 92800/101500
+[cache] 93000/101500
+[cache] 93200/101500
+[cache] 93400/101500
+[cache] 93600/101500
+[cache] 93800/101500
+[cache] 94000/101500
+[cache] 94200/101500
+[cache] 94400/101500
+[cache] 94600/101500
+[cache] 94800/101500
+[cache] 95000/101500
+[cache] 95200/101500
+[cache] 95400/101500
+[cache] 95600/101500
+[cache] 95800/101500
+[cache] 96000/101500
+[cache] 96200/101500
+[cache] 96400/101500
+[cache] 96600/101500
+[cache] 96800/101500
+[cache] 97000/101500
+[cache] 97200/101500
+[cache] 97400/101500
+[cache] 97600/101500
+[cache] 97800/101500
+[cache] 98000/101500
+[cache] 98200/101500
+[cache] 98400/101500
+[cache] 98600/101500
+[cache] 98800/101500
+[cache] 99000/101500
+[cache] 99200/101500
+[cache] 99400/101500
+[cache] 99600/101500
+[cache] 99800/101500
+[cache] 100000/101500
+[cache] 100200/101500
+[cache] 100400/101500
+[cache] 100600/101500
+[cache] 100800/101500
+[cache] 101000/101500
+[cache] 101200/101500
+[cache] 101400/101500
+[cache] 建缓存 640s_1a1e578bc2739d6a: 45540 张
+[cache] 200/45540
+[cache] 400/45540
+[cache] 600/45540
+[cache] 800/45540
+[cache] 1000/45540
+[cache] 1200/45540
+[cache] 1400/45540
+[cache] 1600/45540
+[cache] 1800/45540
+[cache] 2000/45540
+[cache] 2200/45540
+[cache] 2400/45540
+[cache] 2600/45540
+[cache] 2800/45540
+[cache] 3000/45540
+[cache] 3200/45540
+[cache] 3400/45540
+[cache] 3600/45540
+[cache] 3800/45540
+[cache] 4000/45540
+[cache] 4200/45540
+[cache] 4400/45540
+[cache] 4600/45540
+[cache] 4800/45540
+[cache] 5000/45540
+[cache] 5200/45540
+[cache] 5400/45540
+[cache] 5600/45540
+[cache] 5800/45540
+[cache] 6000/45540
+[cache] 6200/45540
+[cache] 6400/45540
+[cache] 6600/45540
+[cache] 6800/45540
+[cache] 7000/45540
+[cache] 7200/45540
+[cache] 7400/45540
+[cache] 7600/45540
+[cache] 7800/45540
+[cache] 8000/45540
+[cache] 8200/45540
+[cache] 8400/45540
+[cache] 8600/45540
+[cache] 8800/45540
+[cache] 9000/45540
+[cache] 9200/45540
+[cache] 9400/45540
+[cache] 9600/45540
+[cache] 9800/45540
+[cache] 10000/45540
+[cache] 10200/45540
+[cache] 10400/45540
+[cache] 10600/45540
+[cache] 10800/45540
+[cache] 11000/45540
+[cache] 11200/45540
+[cache] 11400/45540
+[cache] 11600/45540
+[cache] 11800/45540
+[cache] 12000/45540
+[cache] 12200/45540
+[cache] 12400/45540
+[cache] 12600/45540
+[cache] 12800/45540
+[cache] 13000/45540
+[cache] 13200/45540
+[cache] 13400/45540
+[cache] 13600/45540
+[cache] 13800/45540
+[cache] 14000/45540
+[cache] 14200/45540
+[cache] 14400/45540
+[cache] 14600/45540
+[cache] 14800/45540
+[cache] 15000/45540
+[cache] 15200/45540
+[cache] 15400/45540
+[cache] 15600/45540
+[cache] 15800/45540
+[cache] 16000/45540
+[cache] 16200/45540
+[cache] 16400/45540
+[cache] 16600/45540
+[cache] 16800/45540
+[cache] 17000/45540
+[cache] 17200/45540
+[cache] 17400/45540
+[cache] 17600/45540
+[cache] 17800/45540
+[cache] 18000/45540
+[cache] 18200/45540
+[cache] 18400/45540
+[cache] 18600/45540
+[cache] 18800/45540
+[cache] 19000/45540
+[cache] 19200/45540
+[cache] 19400/45540
+[cache] 19600/45540
+[cache] 19800/45540
+[cache] 20000/45540
+[cache] 20200/45540
+[cache] 20400/45540
+[cache] 20600/45540
+[cache] 20800/45540
+[cache] 21000/45540
+[cache] 21200/45540
+[cache] 21400/45540
+[cache] 21600/45540
+[cache] 21800/45540
+[cache] 22000/45540
+[cache] 22200/45540
+[cache] 22400/45540
+[cache] 22600/45540
+[cache] 22800/45540
+[cache] 23000/45540
+[cache] 23200/45540
+[cache] 23400/45540
+[cache] 23600/45540
+[cache] 23800/45540
+[cache] 24000/45540
+[cache] 24200/45540
+[cache] 24400/45540
+[cache] 24600/45540
+[cache] 24800/45540
+[cache] 25000/45540
+[cache] 25200/45540
+[cache] 25400/45540
+[cache] 25600/45540
+[cache] 25800/45540
+[cache] 26000/45540
+[cache] 26200/45540
+[cache] 26400/45540
+[cache] 26600/45540
+[cache] 26800/45540
+[cache] 27000/45540
+[cache] 27200/45540
+[cache] 27400/45540
+[cache] 27600/45540
+[cache] 27800/45540
+[cache] 28000/45540
+[cache] 28200/45540
+[cache] 28400/45540
+[cache] 28600/45540
+[cache] 28800/45540
+[cache] 29000/45540
+[cache] 29200/45540
+[cache] 29400/45540
+[cache] 29600/45540
+[cache] 29800/45540
+[cache] 30000/45540
+[cache] 30200/45540
+[cache] 30400/45540
+[cache] 30600/45540
+[cache] 30800/45540
+[cache] 31000/45540
+[cache] 31200/45540
+[cache] 31400/45540
+[cache] 31600/45540
+[cache] 31800/45540
+[cache] 32000/45540
+[cache] 32200/45540
+[cache] 32400/45540
+[cache] 32600/45540
+[cache] 32800/45540
+[cache] 33000/45540
+[cache] 33200/45540
+[cache] 33400/45540
+[cache] 33600/45540
+[cache] 33800/45540
+[cache] 34000/45540
+[cache] 34200/45540
+[cache] 34400/45540
+[cache] 34600/45540
+[cache] 34800/45540
+[cache] 35000/45540
+[cache] 35200/45540
+[cache] 35400/45540
+[cache] 35600/45540
+[cache] 35800/45540
+[cache] 36000/45540
+[cache] 36200/45540
+[cache] 36400/45540
+[cache] 36600/45540
+[cache] 36800/45540
+[cache] 37000/45540
+[cache] 37200/45540
+[cache] 37400/45540
+[cache] 37600/45540
+[cache] 37800/45540
+[cache] 38000/45540
+[cache] 38200/45540
+[cache] 38400/45540
+[cache] 38600/45540
+[cache] 38800/45540
+[cache] 39000/45540
+[cache] 39200/45540
+[cache] 39400/45540
+[cache] 39600/45540
+[cache] 39800/45540
+[cache] 40000/45540
+[cache] 40200/45540
+[cache] 40400/45540
+[cache] 40600/45540
+[cache] 40800/45540
+[cache] 41000/45540
+[cache] 41200/45540
+[cache] 41400/45540
+[cache] 41600/45540
+[cache] 41800/45540
+[cache] 42000/45540
+[cache] 42200/45540
+[cache] 42400/45540
+[cache] 42600/45540
+[cache] 42800/45540
+[cache] 43000/45540
+[cache] 43200/45540
+[cache] 43400/45540
+[cache] 43600/45540
+[cache] 43800/45540
+[cache] 44000/45540
+[cache] 44200/45540
+[cache] 44400/45540
+[cache] 44600/45540
+[cache] 44800/45540
+[cache] 45000/45540
+[cache] 45200/45540
+[cache] 45400/45540
+数据集：3 个域，203 个类 ['airplane', 'alarm_clock', 'angel', 'ant', 'apple', 'arm', 'axe', 'backpack', 'banana', 'barn', 'baseball_bat', 'basket', 'bathtub', 'bear', 'bed', 'bee', 'bench', 'bicycle', 'binoculars', 'bird', 'book', 'boomerang', 'brain', 'bread', 'bridge', 'bulldozer', 'bus', 'bush', 'butterfly', 'cactus', 'cake', 'calculator', 'camel', 'camera', 'candle', 'cannon', 'canoe', 'car', 'carrot', 'castle', 'cat', 'cell_phone', 'chair', 'chandelier', 'church', 'cloud', 'coffee_cup', 'computer', 'couch', 'cow', 'crab', 'crocodile', 'crown', 'cruise_ship', 'cup', 'diamond', 'dog', 'dolphin', 'donut', 'door', 'dragon', 'duck', 'ear', 'elephant', 'envelope', 'eye', 'eyeglasses', 'face', 'fan', 'feather', 'fire_hydrant', 'fish', 'flashlight', 'floor_lamp', 'flower', 'flying_saucer', 'foot', 'fork', 'frog', 'frying_pan', 'giraffe', 'grapes', 'guitar', 'hamburger', 'hammer', 'hand', 'harp', 'hat', 'headphones', 'hedgehog', 'helicopter', 'helmet', 'horse', 'hot_air_balloon', 'hot_dog', 'hourglass', 'house', 'house_plant', 'ice_cream', 'kangaroo', 'key', 'keyboard', 'knife', 'ladder', 'laptop', 'leaf', 'light_bulb', 'lighter', 'lion', 'lobster', 'mailbox', 'megaphone', 'mermaid', 'microphone', 'monkey', 'moon', 'mosquito', 'motorbike', 'mouse', 'mouth', 'mug', 'mushroom', 'nose', 'octopus', 'owl', 'palm_tree', 'panda', 'pants', 'paper_clip', 'parachute', 'parrot', 'pear', 'penguin', 'piano', 'pickup_truck', 'pig', 'pineapple', 'pizza', 'power_outlet', 'purse', 'rabbit', 'radio', 'rainbow', 'rifle', 'rollerskates', 'sailboat', 'saxophone', 'scissors', 'scorpion', 'screwdriver', 'sea_turtle', 'shark', 'sheep', 'shoe', 'shovel', 'skateboard', 'skull', 'skyscraper', 'snail', 'snake', 'snowman', 'sock', 'speedboat', 'spider', 'spoon', 'squirrel', 'strawberry', 'streetlight', 'submarine', 'suitcase', 'sun', 'swan', 'sword', 'syringe', 't-shirt', 'table', 'teapot', 'teddy-bear', 'telephone', 'television', 'tennis_racquet', 'tent', 'tiger', 'toilet', 'tooth', 'toothbrush', 'tractor', 'traffic_light', 'train', 'tree', 'trombone', 'truck', 'trumpet', 'umbrella', 'van', 'vase', 'violin', 'wheel', 'windmill', 'wine_bottle', 'wine_glass', 'wristwatch', 'zebra']
+  域 TUBerlin: 共 16320 张   airplane:80  alarm_clock:80  angel:80  ant:80  apple:80  arm:80  axe:80  backpack:80  banana:80  barn:80  baseball_bat:80  basket:80  bathtub:80  bear:80  bed:80  bee:80  bench:80  bicycle:80  binoculars:80  bird:160  book:80  boomerang:80  brain:80  bread:80  bridge:80  bulldozer:80  bus:80  bush:80  butterfly:80  cactus:80  cake:80  calculator:80  camel:80  camera:80  candle:80  cannon:80  canoe:80  car:80  carrot:80  castle:80  cat:80  cell_phone:80  chair:80  chandelier:80  church:80  cloud:80  coffee_cup:80  computer:80  couch:80  cow:80  crab:80  crocodile:80  crown:80  cruise_ship:80  cup:80  diamond:80  dog:80  dolphin:80  donut:80  door:80  dragon:80  duck:80  ear:80  elephant:80  envelope:80  eye:80  eyeglasses:80  face:80  fan:80  feather:80  fire_hydrant:80  fish:80  flashlight:80  floor_lamp:80  flower:80  flying_saucer:80  foot:80  fork:80  frog:80  frying_pan:80  giraffe:80  grapes:80  guitar:80  hamburger:80  hammer:80  hand:80  harp:80  hat:80  headphones:80  hedgehog:80  helicopter:80  helmet:80  horse:80  hot_air_balloon:80  hot_dog:80  hourglass:80  house:80  house_plant:80  ice_cream:80  kangaroo:80  key:80  keyboard:80  knife:80  ladder:80  laptop:80  leaf:80  light_bulb:80  lighter:80  lion:80  lobster:80  mailbox:80  megaphone:80  mermaid:80  microphone:80  monkey:80  moon:80  mosquito:80  motorbike:80  mouse:80  mouth:80  mug:80  mushroom:80  nose:80  octopus:80  owl:80  palm_tree:80  panda:80  pants:80  paper_clip:80  parachute:80  parrot:80  pear:80  penguin:80  piano:80  pickup_truck:80  pig:80  pineapple:80  pizza:80  power_outlet:80  purse:80  rabbit:80  radio:80  rainbow:80  rifle:80  rollerskates:80  sailboat:80  saxophone:80  scissors:80  scorpion:80  screwdriver:80  sea_turtle:80  shark:80  sheep:80  shoe:80  shovel:80  skateboard:80  skull:80  skyscraper:80  snail:80  snake:80  snowman:80  sock:80  speedboat:80  spider:80  spoon:80  squirrel:80  strawberry:80  streetlight:80  submarine:80  suitcase:80  sun:80  swan:80  sword:80  syringe:80  t-shirt:80  table:80  teapot:80  teddy-bear:80  telephone:80  television:80  tennis_racquet:80  tent:80  tiger:80  toilet:80  tooth:80  toothbrush:80  tractor:80  traffic_light:80  train:80  tree:80  trombone:80  truck:80  trumpet:80  umbrella:80  van:80  vase:80  violin:80  wheel:80  windmill:80  wine_bottle:80  wine_glass:80  wristwatch:80  zebra:80   多数类基线 0.010
+  域 quickdraw: 共 101500 张   airplane:500  alarm_clock:500  angel:500  ant:500  apple:500  arm:500  axe:500  backpack:500  banana:500  barn:500  baseball_bat:500  basket:500  bathtub:500  bear:500  bed:500  bee:500  bench:500  bicycle:500  binoculars:500  bird:500  book:500  boomerang:500  brain:500  bread:500  bridge:500  bulldozer:500  bus:500  bush:500  butterfly:500  cactus:500  cake:500  calculator:500  camel:500  camera:500  candle:500  cannon:500  canoe:500  car:500  carrot:500  castle:500  cat:500  cell_phone:500  chair:500  chandelier:500  church:500  cloud:500  coffee_cup:500  computer:500  couch:500  cow:500  crab:500  crocodile:500  crown:500  cruise_ship:500  cup:500  diamond:500  dog:500  dolphin:500  donut:500  door:500  dragon:500  duck:500  ear:500  elephant:500  envelope:500  eye:500  eyeglasses:500  face:500  fan:500  feather:500  fire_hydrant:500  fish:500  flashlight:500  floor_lamp:500  flower:500  flying_saucer:500  foot:500  fork:500  frog:500  frying_pan:500  giraffe:500  grapes:500  guitar:500  hamburger:500  hammer:500  hand:500  harp:500  hat:500  headphones:500  hedgehog:500  helicopter:500  helmet:500  horse:500  hot_air_balloon:500  hot_dog:500  hourglass:500  house:500  house_plant:500  ice_cream:500  kangaroo:500  key:500  keyboard:500  knife:500  ladder:500  laptop:500  leaf:500  light_bulb:500  lighter:500  lion:500  lobster:500  mailbox:500  megaphone:500  mermaid:500  microphone:500  monkey:500  moon:500  mosquito:500  motorbike:500  mouse:500  mouth:500  mug:500  mushroom:500  nose:500  octopus:500  owl:500  palm_tree:500  panda:500  pants:500  paper_clip:500  parachute:500  parrot:500  pear:500  penguin:500  piano:500  pickup_truck:500  pig:500  pineapple:500  pizza:500  power_outlet:500  purse:500  rabbit:500  radio:500  rainbow:500  rifle:500  rollerskates:500  sailboat:500  saxophone:500  scissors:500  scorpion:500  screwdriver:500  sea_turtle:500  shark:500  sheep:500  shoe:500  shovel:500  skateboard:500  skull:500  skyscraper:500  snail:500  snake:500  snowman:500  sock:500  speedboat:500  spider:500  spoon:500  squirrel:500  strawberry:500  streetlight:500  submarine:500  suitcase:500  sun:500  swan:500  sword:500  syringe:500  t-shirt:500  table:500  teapot:500  teddy-bear:500  telephone:500  television:500  tennis_racquet:500  tent:500  tiger:500  toilet:500  tooth:500  toothbrush:500  tractor:500  traffic_light:500  train:500  tree:500  trombone:500  truck:500  trumpet:500  umbrella:500  van:500  vase:500  violin:500  wheel:500  windmill:500  wine_bottle:500  wine_glass:500  wristwatch:500  zebra:500   多数类基线 0.005
+  域 sketch: 共 45540 张   airplane:331  alarm_clock:202  angel:299  ant:111  apple:181  arm:249  axe:219  backpack:220  banana:204  barn:201  baseball_bat:196  basket:192  bathtub:210  bear:178  bed:188  bee:144  bench:290  bicycle:343  binoculars:266  bird:306  book:146  boomerang:120  brain:270  bread:276  bridge:335  bulldozer:199  bus:233  bush:626  butterfly:249  cactus:61  cake:77  calculator:69  camel:130  camera:109  candle:77  cannon:93  canoe:129  car:145  carrot:34  castle:56  cat:130  cell_phone:23  chair:96  chandelier:34  church:35  cloud:100  coffee_cup:33  computer:31  couch:60  cow:17  crab:152  crocodile:161  crown:176  cruise_ship:158  cup:396  diamond:117  dog:311  dolphin:85  donut:127  door:361  dragon:196  duck:276  ear:199  elephant:266  envelope:183  eye:489  eyeglasses:219  face:452  fan:66  feather:336  fire_hydrant:148  fish:373  flashlight:95  floor_lamp:278  flower:336  flying_saucer:137  foot:261  fork:176  frog:203  frying_pan:132  giraffe:186  grapes:287  guitar:183  hamburger:185  hammer:71  hand:264  harp:45  hat:77  headphones:188  hedgehog:109  helicopter:200  helmet:210  horse:103  hot_air_balloon:170  hot_dog:143  hourglass:134  house:144  house_plant:156  ice_cream:184  kangaroo:122  key:137  keyboard:64  knife:129  ladder:244  laptop:319  leaf:378  light_bulb:405  lighter:118  lion:330  lobster:174  mailbox:151  megaphone:189  mermaid:228  microphone:156  monkey:166  moon:155  mosquito:144  motorbike:209  mouse:127  mouth:172  mug:186  mushroom:252  nose:103  octopus:149  owl:202  palm_tree:166  panda:79  pants:136  paper_clip:119  parachute:233  parrot:266  pear:183  penguin:209  piano:119  pickup_truck:188  pig:227  pineapple:131  pizza:202  power_outlet:95  purse:228  rabbit:94  radio:165  rainbow:46  rifle:122  rollerskates:141  sailboat:361  saxophone:310  scissors:437  scorpion:455  screwdriver:373  sea_turtle:254  shark:532  sheep:475  shoe:645  shovel:630  skateboard:419  skull:600  skyscraper:466  snail:405  snake:470  snowman:712  sock:453  speedboat:487  spider:645  spoon:406  squirrel:389  strawberry:198  streetlight:268  submarine:207  suitcase:309  sun:258  swan:236  sword:384  syringe:222  t-shirt:155  table:300  teapot:327  teddy-bear:238  telephone:255  television:127  tennis_racquet:202  tent:339  tiger:386  toilet:118  tooth:181  toothbrush:235  tractor:263  traffic_light:127  train:240  tree:555  trombone:191  truck:265  trumpet:188  umbrella:297  van:138  vase:187  violin:203  wheel:166  windmill:245  wine_bottle:274  wine_glass:245  wristwatch:224  zebra:278   多数类基线 0.016
+  合计   : 共 163360 张   多数类基线 0.008
+
+[seed=0 size=224 env=TUBerlin] 训练 13056 张 / 测试 3264 张 / 每 epoch 408 个 batch
+ epoch       loss      acc      auc       秒
+     1     3.7191    0.567    0.989   617.7
+     2     1.7149    0.693    0.995    44.3
+     3     1.0561    0.739    0.996    45.8
+     4     0.7536    0.758    0.996    45.9
+     5     0.5755    0.779    0.996    46.2
+     6     0.4385    0.784    0.997    46.2
+     7     0.3475    0.793    0.997    47.3
+     8     0.2766    0.798    0.997    48.5
+     9     0.2367    0.801    0.997    45.4
+    10     0.1992    0.786    0.997    45.2
+    11     0.1638    0.797    0.997    45.3
+    12     0.1327    0.802    0.997    46.4
+    13     0.1200    0.796    0.997    44.9
+    14     0.1196    0.793    0.996    45.4
+    15     0.1103    0.797    0.996    46.0
+    16     0.0949    0.786    0.996    45.6
+    17     0.0946    0.811    0.996    46.0
+    18     0.0917    0.799    0.997    45.6
+    19     0.0828    0.793    0.996    45.8
+    20     0.0907    0.791    0.996    45.3
+    21     0.0774    0.781    0.996    46.1
+    22     0.0722    0.786    0.996    45.5
+    23     0.0798    0.803    0.996    46.0
+    24     0.0623    0.796    0.996   125.4
+    25     0.0688    0.794    0.996    46.1
+    26     0.0527    0.796    0.996    45.4
+    27     0.0613    0.794    0.995    45.2
+    28     0.0714    0.785    0.995    46.1
+    29     0.0625    0.802    0.996    45.7
+    30     0.0483    0.804    0.996    45.1
+    31     0.0476    0.794    0.996    45.3
+    32     0.0498    0.795    0.996    44.8
+    33     0.0533    0.798    0.996    44.4
+    34     0.0554    0.796    0.995    45.8
+    35     0.0546    0.788    0.995    45.1
+    36     0.0527    0.804    0.996    45.1
+    37     0.0397    0.796    0.996    46.2
+    38     0.0512    0.795    0.995    45.8
+    39     0.0584    0.803    0.995    46.6
+    40     0.0330    0.810    0.995    47.3
+    41     0.0467    0.800    0.996    47.1
+    42     0.0401    0.794    0.996    45.9
+    43     0.0485    0.793    0.996    46.2
+    44     0.0376    0.793    0.995    46.4
+    45     0.0429    0.801    0.995    45.3
+    46     0.0349    0.806    0.996    46.6
+    47     0.0458    0.808    0.996    46.8
+    48     0.0420    0.794    0.995    45.8
+    49     0.0424    0.793    0.995    46.9
+    50     0.0343    0.804    0.996    45.5
+    51     0.0325    0.804    0.995    45.1
+    52     0.0351    0.803    0.995    46.3
+    53     0.0432    0.791    0.995    69.2
+    54     0.0385    0.797    0.995    99.1
+    55     0.0383    0.792    0.996    73.9
+    56     0.0374    0.769    0.995    70.8
+    57     0.0362    0.794    0.995    46.7
+    58     0.0272    0.802    0.995    47.3
+    59     0.0408    0.798    0.995    49.1
+    60     0.0320    0.800    0.995    47.2
+    61     0.0231    0.801    0.995    47.8
+    62     0.0343    0.813    0.995    50.2
+    63     0.0377    0.800    0.995    46.1
+    64     0.0205    0.809    0.996    45.3
+    65     0.0300    0.797    0.995    46.1
+    66     0.0406    0.784    0.995    48.3
+    67     0.0458    0.801    0.995    49.5
+    68     0.0278    0.802    0.996    51.2
+    69     0.0227    0.807    0.995    52.6
+    70     0.0185    0.801    0.995    48.7
+    71     0.0259    0.795    0.994    46.1
+    72     0.0479    0.795    0.995    49.5
+    73     0.0292    0.793    0.995    51.5
+    74     0.0333    0.801    0.995    49.8
+    75     0.0270    0.798    0.995    52.4
+    76     0.0287    0.799    0.995    49.1
+    77     0.0253    0.798    0.995    48.2
+    78     0.0264    0.797    0.995    50.2
+    79     0.0308    0.798    0.995    52.2
+    80     0.0289    0.798    0.995    50.4
+    81     0.0194    0.801    0.995    49.6
+    82     0.0240    0.800    0.995    52.5
+    83     0.0261    0.799    0.995    49.4
+    84     0.0386    0.797    0.995    51.6
+    85     0.0242    0.812    0.995    50.2
+    86     0.0269    0.801    0.995    48.6
+    87     0.0410    0.799    0.996    50.5
+    88     0.0235    0.798    0.995    50.8
+    89     0.0275    0.790    0.994    53.3
+    90     0.0172    0.799    0.995    50.2
+    91     0.0215    0.814    0.996    51.2
+    92     0.0197    0.797    0.995    52.9
+    93     0.0335    0.804    0.995    53.1
+    94     0.0310    0.802    0.995    50.2
+    95     0.0169    0.807    0.996    49.1
+    96     0.0180    0.802    0.995    49.6
+    97     0.0268    0.792    0.994    53.6
+    98     0.0272    0.805    0.995    50.1
+    99     0.0243    0.801    0.994    48.9
+   100     0.0276    0.805    0.995    49.5
+   101     0.0279    0.798    0.995    50.4
+   102     0.0314    0.803    0.994    49.8
+   103     0.0213    0.802    0.994    48.5
+   104     0.0209    0.809    0.995    50.0
+   105     0.0181    0.800    0.995    49.9
+   106     0.0223    0.804    0.995    50.6
+   107     0.0273    0.810    0.995    48.5
+   108     0.0176    0.810    0.995    48.4
+   109     0.0192    0.798    0.995    49.5
+   110     0.0205    0.802    0.994    52.4
+   111     0.0242    0.805    0.995    48.0
+   112     0.0168    0.797    0.994    50.6
+   113     0.0273    0.794    0.995    50.4
+   114     0.0217    0.803    0.995    50.5
+   115     0.0208    0.800    0.995    49.4
+   116     0.0234    0.798    0.995    73.1
+   117     0.0250    0.803    0.995    56.3
+   118     0.0170    0.796    0.995    62.6
+   119     0.0268    0.801    0.995    65.6
+   120     0.0220    0.800    0.995    65.6
+   121     0.0164    0.801    0.995    65.0
+   122     0.0185    0.797    0.994   123.2
+   123     0.0192    0.810    0.995    76.6
+   124     0.0203    0.793    0.995    47.7
+   125     0.0251    0.805    0.995    56.0
+   126     0.0165    0.808    0.995    64.5
+   127     0.0231    0.806    0.995    56.3
+   128     0.0139    0.803    0.995    47.2
+   129     0.0235    0.797    0.994    53.1
+   130     0.0163    0.806    0.995    62.6
+   131     0.0120    0.806    0.995    63.2
+   132     0.0102    0.804    0.995    50.1
+   133     0.0157    0.790    0.995    47.5
+   134     0.0334    0.794    0.994    58.9
+   135     0.0346    0.815    0.996    51.7
+   136     0.0184    0.802    0.995    50.0
+   137     0.0183    0.799    0.995    46.0
+   138     0.0123    0.810    0.995    48.5
+   139     0.0166    0.795    0.995    51.6
+   140     0.0204    0.789    0.994    52.7
+   141     0.0180    0.806    0.995    47.1
+   142     0.0151    0.804    0.995    47.4
+   143     0.0192    0.805    0.995    50.6
+   144     0.0181    0.799    0.996    52.9
+   145     0.0172    0.789    0.995    51.0
+   146     0.0201    0.791    0.994    49.4
+   147     0.0174    0.797    0.994    48.7
+   148     0.0210    0.802    0.995    50.1
+   149     0.0165    0.806    0.995    52.7
+   150     0.0230    0.799    0.994    51.4
+   151     0.0194    0.805    0.995    49.2
+   152     0.0132    0.805    0.995    52.0
+   153     0.0160    0.803    0.994    52.3
+   154     0.0175    0.803    0.995    51.9
+   155     0.0188    0.797    0.995    48.9
+   156     0.0153    0.805    0.994    49.2
+   157     0.0183    0.800    0.994    51.7
+   158     0.0194    0.798    0.994    50.6
+   159     0.0160    0.802    0.995    51.0
+   160     0.0168    0.801    0.995    48.3
+   161     0.0184    0.787    0.994    50.3
+   162     0.0252    0.805    0.995    50.8
+   163     0.0171    0.801    0.995    53.6
+   164     0.0132    0.810    0.995    48.4
+   165     0.0120    0.804    0.995    47.0
+   166     0.0163    0.801    0.995    51.2
+   167     0.0197    0.801    0.995    51.4
+   168     0.0184    0.802    0.995    50.7
+   169     0.0173    0.811    0.995    48.5
+   170     0.0151    0.808    0.995    50.6
+   171     0.0096    0.803    0.995    52.5
+   172     0.0196    0.803    0.995    53.6
+   173     0.0134    0.802    0.995    49.0
+   174     0.0144    0.808    0.995    47.8
+   175     0.0147    0.802    0.995    50.1
+   176     0.0170    0.810    0.995    50.4
+   177     0.0192    0.811    0.995    50.4
+   178     0.0105    0.814    0.995    48.3
+   179     0.0108    0.808    0.995    49.2
+   180     0.0182    0.794    0.995    52.1
+   181     0.0157    0.802    0.995    52.1
+   182     0.0127    0.803    0.995    49.3
+   183     0.0096    0.806    0.995    50.7
+   184     0.0136    0.806    0.995    52.7
+   185     0.0254    0.796    0.995    52.1
+   186     0.0196    0.794    0.995    51.8
+   187     0.0152    0.816    0.995    49.2
+   188     0.0118    0.805    0.995    51.2
+   189     0.0154    0.798    0.995    53.2
+   190     0.0267    0.794    0.994    52.1
+   191     0.0125    0.804    0.994    48.8
+   192     0.0160    0.804    0.995    49.8
+   193     0.0159    0.805    0.995    66.7
+   194     0.0098    0.806    0.995    71.6
+   195     0.0206    0.799    0.995    55.0
+   196     0.0160    0.806    0.995    48.3
+   197     0.0122    0.803    0.995    46.2
+   198     0.0130    0.809    0.995    46.5
+   199     0.0151    0.807    0.995    48.1
+   200     0.0203    0.805    0.995    46.7
+[seed=0 size=224 env=TUBerlin] 末轮 acc 0.805（记进汇总的是这个）   最好 epoch acc 0.816（挑了测试集上最好的一轮，只能参考，不能当结果报）
+
+[seed=0 size=224 env=quickdraw] 训练 81200 张 / 测试 20300 张 / 每 epoch 2537 个 batch
+ epoch       loss      acc      auc       秒
+     1     2.2408    0.674    0.994  5469.1
+     2     1.1886    0.723    0.996  4546.0
+     3     0.9830    0.744    0.996  3970.2
+     4     0.8616    0.753    0.997  3883.1
+     5     0.7767    0.763    0.997  4256.9
+     6     0.7078    0.765    0.997  3743.7
+     7     0.6453    0.762    0.997  4427.0
+     8     0.5978    0.768    0.997  3648.0
+     9     0.5510    0.769    0.997  4575.8

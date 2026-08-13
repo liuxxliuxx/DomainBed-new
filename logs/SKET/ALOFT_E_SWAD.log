@@ -1,0 +1,1730 @@
+Algorithm: ALOFT_E
+Physical GPU: 1
+Seeds: [0, 1, 2, 3, 4]
+Dataset: /data/home/kxrgzn/lzh/new/DomainBed-new/dataset/SKET
+
+================================================================================
+Starting ALOFT_E, seed=0, physical GPU=1
+/home/kxrgzn/anaconda3/envs/lzh_DG/bin/python /data/home/kxrgzn/lzh/new/DomainBed-new/train_all.py SKET_ALOFT_E_seed0 --dataset SKET --data_dir /data/home/kxrgzn/lzh/new/DomainBed-new/dataset --algorithm ALOFT_E --steps 5000 --checkpoint_freq 100 --batch_size 32 --optimizer adam --lr 5e-5 --weight_decay 0 --resnet_dropout 0 --resnet18 False --pretrained True --freeze_bn True --swad LossValley --seed 0 --trial_seed 0 --deterministic --cache disk --prebuild_loader --image_size 224 --aloft_alpha 1.0 --aloft_mask_ratio 0.5 --aloft_perturb_prob 1.0
+================================================================================
+/home/kxrgzn/anaconda3/envs/lzh_DG/lib/python3.9/site-packages/munch/__init__.py:24: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+[36mINFO[0m 08/12 23:17:23 | Command :: /data/home/kxrgzn/lzh/new/DomainBed-new/train_all.py SKET_ALOFT_E_seed0 --dataset SKET --data_dir /data/home/kxrgzn/lzh/new/DomainBed-new/dataset --algorithm ALOFT_E --steps 5000 --checkpoint_freq 100 --batch_size 32 --optimizer adam --lr 5e-5 --weight_decay 0 --resnet_dropout 0 --resnet18 False --pretrained True --freeze_bn True --swad LossValley --seed 0 --trial_seed 0 --deterministic --cache disk --prebuild_loader --image_size 224 --aloft_alpha 1.0 --aloft_mask_ratio 0.5 --aloft_perturb_prob 1.0
+Environment:
+	Python: 3.9.23
+	PyTorch: 2.6.0+cu124
+	Torchvision: 0.21.0+cu124
+	CUDA: 12.4
+	CUDNN: 90100
+	NumPy: 1.23.5
+	PIL: 8.1.0
+Args:
+	algorithm: ALOFT_E
+	batch_size: 32
+	cache: disk
+	cache_root: cache
+	cache_size: None
+	checkpoint_freq: 100
+	configs: []
+	data_dir: /data/home/kxrgzn/lzh/new/DomainBed-new/dataset
+	dataset: SKET
+	debug: False
+	deterministic: True
+	end_step: 200
+	evalmode: fast
+	extra_search: n
+	extra_search_end: None
+	extra_search_start: None
+	gga_l_gamma: 0.001
+	grad_fn: sum
+	holdout_fraction: 0.2
+	model_save: None
+	name: SKET_ALOFT_E_seed0
+	neighborhoodSize: 1e-06
+	out_dir: train_output/SKET/260812_23-17-23_SKET_ALOFT_E_seed0
+	out_root: train_output/SKET
+	prebuild_loader: True
+	q_steps: 2000
+	quant: 0
+	resize_mode: stretch
+	saliency: False
+	saliency_cmap: jet
+	saliency_every: 0
+	saliency_noise: 0.15
+	saliency_num: 16
+	saliency_samples: 25
+	saliency_split: test_in
+	seed: 0
+	show: False
+	start_step: 100
+	steps: 5000
+	tb_freq: 10
+	test_envs: None
+	train_output: train_output
+	trial_seed: 0
+	unique_name: 260812_23-17-23_SKET_ALOFT_E_seed0
+	work_dir: .
+HParams:
+	data_augmentation: True
+	val_augment: False
+	[36mresnet18: False
+	[0m[36mresnet_dropout: 0
+	[0mclass_balanced: False
+	[36moptimizer: adam
+	[0m[36mfreeze_bn: True
+	[0m[36mpretrained: True
+	[0m[36mimage_size: 224
+	[0m[36mlr: 5e-05
+	[0mbatch_size: 32
+	[36mweight_decay: 0
+	[0m[36maloft_alpha: 1.0
+	[0m[36maloft_mask_ratio: 0.5
+	[0m[36maloft_perturb_prob: 1.0
+	[0maloft_positions: 
+	  - layer1
+	  - layer2
+	  - layer3
+	[36mswad: LossValley
+	[0mswad_kwargs: 
+	  n_converge: 3
+	  n_tolerance: 6
+	  tolerance_ratio: 0.3
+	test_batchsize: 128
+	indomain_test: False
+	grad_fn: sum
+	extra_search: n
+	logdir: train_output/SKET/260812_23-17-23_SKET_ALOFT_E_seed0
+	neighborhoodSize: 1e-06
+	start_step: 100
+	end_step: 200
+	extra_search_start: None
+	extra_search_end: None
+	gga_l_gamma: 0.001
+Dataset:
+	[SKET] #envs=3, #classes=203
+	env0: TUBerlin (#16320)
+	env1: quickdraw (#101500)
+	env2: sketch (#45540)
+
+[36mINFO[0m 08/12 23:17:25 | n_steps = 5000
+[36mINFO[0m 08/12 23:17:25 | checkpoint_freq = 100
+[36mINFO[0m 08/12 23:17:25 | n_steps is updated to 5000 => 5001 for checkpointing
+[36mINFO[0m 08/12 23:17:25 | Target test envs = [[0], [1], [2]]
+[36mINFO[0m 08/12 23:17:25 | 
+[36mINFO[0m 08/12 23:17:28 | Testenv name escaping te_TUBerlin -> te_TUBerlin
+[36mINFO[0m 08/12 23:17:28 | Test envs = [0], name = te_TUBerlin
+[36mINFO[0m 08/12 23:17:28 | Batch sizes for each domain: [0, 32, 32] (total=64)
+[36mINFO[0m 08/12 23:17:28 | steps-per-epoch for each domain: 2537.50, 1138.50 -> min = 1138.50
+/home/kxrgzn/anaconda3/envs/lzh_DG/lib/python3.9/site-packages/torchvision/models/_utils.py:208: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/home/kxrgzn/anaconda3/envs/lzh_DG/lib/python3.9/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=ResNet50_Weights.IMAGENET1K_V1`. You can also use `weights=ResNet50_Weights.DEFAULT` to get the most up-to-date weights.
+  warnings.warn(msg)
+[36mINFO[0m 08/12 23:17:31 | # of params = 23923979
+[36mINFO[0m 08/12 23:19:14 | test_in     test_out    train_in    train_out   test_in_au  test_out_a  train_out_  tr_outloss  env0_in     env0_in_au  env0_out    env0_out_a  env1_out    env1_out_a  env2_out    env2_out_a  step        epoch       loss        step_time   eval_time   mem_gb     
+[36mINFO[0m 08/12 23:19:14 | 0.006434    0.005515    0.000000    0.004919    nan         nan         nan         5.351252    0.006434    nan         0.005515    nan         0.005665    nan         0.004172    nan         0           0.000000    5.306439    1.062917    101.670821  9.680035   
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/12 23:21:56 | 0.024050    0.022365    0.000000    0.039515    nan         nan         nan         5.044371    0.024050    nan         0.022365    nan         0.023695    nan         0.055336    nan         100         0.087835    5.239969    0.588404    98.758928   10.041303  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/12 23:24:39 | 0.121936    0.125919    0.000000    0.139639    nan         nan         nan         4.078028    0.121936    nan         0.125919    nan         0.112611    nan         0.166667    nan         200         0.175670    4.656739    0.581717    98.612296   10.221546  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/12 23:27:26 | 0.215227    0.215686    0.000000    0.230186    nan         nan         nan         3.401607    0.215227    nan         0.215686    nan         0.210591    nan         0.249780    nan         300         0.263505    3.801788    0.580040    103.575860  10.400310  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/12 23:30:13 | 0.310355    0.320466    0.000000    0.338179    nan         nan         nan         2.856313    0.310355    nan         0.320466    nan         0.330837    nan         0.345520    nan         400         0.351339    3.196608    0.564009    104.527768  10.577593  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/12 23:33:01 | 0.376302    0.380515    0.000000    0.382114    nan         nan         nan         2.607281    0.376302    nan         0.380515    nan         0.378522    nan         0.385705    nan         500         0.439174    2.821873    0.588774    104.563770  10.757920  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/12 23:35:46 | 0.427926    0.445159    0.000000    0.430902    nan         nan         nan         2.373215    0.427926    nan         0.445159    nan         0.440197    nan         0.421607    nan         600         0.527009    2.563576    0.584143    102.293578  10.935616  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/12 23:38:38 | 0.454044    0.468444    0.000000    0.469544    nan         nan         nan         2.214053    0.454044    nan         0.468444    nan         0.484433    nan         0.454655    nan         700         0.614844    2.375832    0.580156    108.997507  11.114852  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/12 23:41:23 | 0.469822    0.478554    0.000000    0.477716    nan         nan         nan         2.172168    0.469822    nan         0.478554    nan         0.495616    nan         0.459816    nan         800         0.702679    2.265555    0.568674    101.007009  11.115905  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/12 23:44:15 | 0.500996    0.513174    0.000000    0.501555    nan         nan         nan         2.044795    0.500996    nan         0.513174    nan         0.523202    nan         0.479908    nan         900         0.790514    2.180211    0.599723    108.277356  11.115905  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/12 23:47:03 | 0.507047    0.512255    0.000000    0.510083    nan         nan         nan         2.010316    0.507047    nan         0.512255    nan         0.527192    nan         0.492973    nan         1000        0.878349    2.089218    0.587481    105.221153  11.115905  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/12 23:49:48 | 0.524510    0.530944    0.000000    0.522609    nan         nan         nan         1.955505    0.524510    nan         0.530944    nan         0.535665    nan         0.509552    nan         1100        0.966184    1.989771    0.587943    101.682643  11.117881  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/12 23:52:34 | 0.525046    0.530637    0.000000    0.524914    nan         nan         nan         1.932975    0.525046    nan         0.530637    nan         0.543350    nan         0.506478    nan         1200        1.054018    1.957833    0.589847    102.906512  11.123733  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/12 23:55:16 | 0.516085    0.523897    0.000000    0.538095    nan         nan         nan         1.898672    0.516085    nan         0.523897    nan         0.552365    nan         0.523825    nan         1300        1.141853    1.874401    0.592114    99.046954   11.124091  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/12 23:57:59 | 0.546339    0.548713    0.000000    0.544431    nan         nan         nan         1.854309    0.546339    nan         0.548713    nan         0.561084    nan         0.527778    nan         1400        1.229688    1.832296    0.589026    99.978800   11.124091  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 00:00:41 | 0.573759    0.581495    0.000000    0.582829    nan         nan         nan         1.706854    0.573759    nan         0.581495    nan         0.601429    nan         0.564229    nan         1500        1.317523    1.798294    0.588873    99.094094   11.125129  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 00:03:27 | 0.569087    0.571078    0.000000    0.574385    nan         nan         nan         1.722526    0.569087    nan         0.571078    nan         0.594532    nan         0.554238    nan         1600        1.405358    1.761123    0.587709    102.974185  11.125991  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 00:06:13 | 0.559283    0.549939    0.000000    0.569611    nan         nan         nan         1.728805    0.559283    nan         0.549939    nan         0.582020    nan         0.557202    nan         1700        1.493193    1.721151    0.589520    102.492762  11.125991  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+Model converged at step 1500, Start step = 1201; Threshold = 2.235214, 
+[36mINFO[0m 08/13 00:09:01 | 0.583410    0.593137    0.000000    0.591139    nan         nan         nan         1.651052    0.583410    nan         0.593137    nan         0.613547    nan         0.568731    nan         1800        1.581028    1.678729    0.600888    101.917609  11.307775  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 00:11:47 | 0.582031    0.580270    0.000000    0.590848    nan         nan         nan         1.645871    0.582031    nan         0.580270    nan         0.611429    nan         0.570268    nan         1900        1.668863    1.695770    0.584539    102.385628  11.308477  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 00:14:30 | 0.584559    0.581495    0.000000    0.600021    nan         nan         nan         1.606398    0.584559    nan         0.581495    nan         0.613744    nan         0.586298    nan         2000        1.756697    1.621517    0.575741    100.054989  11.309416  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 00:17:18 | 0.565181    0.570466    0.000000    0.584496    nan         nan         nan         1.664473    0.565181    nan         0.570466    nan         0.608276    nan         0.560716    nan         2100        1.844532    1.625814    0.579469    103.994320  11.309416  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 00:20:06 | 0.600643    0.606618    0.000000    0.602388    nan         nan         nan         1.602256    0.600643    nan         0.606618    nan         0.625616    nan         0.579161    nan         2200        1.932367    1.574183    0.593333    104.386820  11.309416  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 00:22:52 | 0.586550    0.588542    0.000000    0.610514    nan         nan         nan         1.563435    0.586550    nan         0.588542    nan         0.627044    nan         0.593983    nan         2300        2.020202    1.591246    0.581616    101.675404  11.309416  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 00:25:40 | 0.590993    0.594975    0.000000    0.604684    nan         nan         nan         1.599738    0.590993    nan         0.594975    nan         0.619557    nan         0.589811    nan         2400        2.108037    1.515879    0.580149    101.732315  11.309416  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 00:28:27 | 0.575061    0.575061    0.000000    0.598807    nan         nan         nan         1.604930    0.575061    nan         0.575061    nan         0.612414    nan         0.585200    nan         2500        2.195872    1.523314    0.575831    102.233357  11.309416  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 00:31:13 | 0.589154    0.588542    0.000000    0.617057    nan         nan         nan         1.542129    0.589154    nan         0.588542    nan         0.636946    nan         0.597167    nan         2600        2.283707    1.494553    0.579858    102.143572  11.311033  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 00:34:03 | 0.594056    0.593444    0.000000    0.615824    nan         nan         nan         1.540978    0.594056    nan         0.593444    nan         0.633054    nan         0.598595    nan         2700        2.371542    1.473820    0.597274    105.274973  11.318930  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 00:36:51 | 0.585938    0.585172    0.000000    0.617928    nan         nan         nan         1.533663    0.585938    nan         0.585172    nan         0.634187    nan         0.601669    nan         2800        2.459376    1.479821    0.579863    104.642813  11.318930  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 00:39:39 | 0.610294    0.609375    0.000000    0.625532    nan         nan         nan         1.506259    0.610294    nan         0.609375    nan         0.646650    nan         0.604414    nan         2900        2.547211    1.435837    0.587920    104.988171  11.319662  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 00:42:26 | 0.595129    0.605699    0.000000    0.616776    nan         nan         nan         1.556430    0.595129    nan         0.605699    nan         0.639458    nan         0.594093    nan         3000        2.635046    1.391832    0.576699    102.819541  11.319662  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 00:45:14 | 0.610218    0.607843    0.000000    0.630462    nan         nan         nan         1.479858    0.610218    nan         0.607843    nan         0.648276    nan         0.612648    nan         3100        2.722881    1.415858    0.583551    103.968572  11.319662  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 00:47:59 | 0.595665    0.597426    0.000000    0.631675    nan         nan         nan         1.476176    0.595665    nan         0.597426    nan         0.648177    nan         0.615173    nan         3200        2.810716    1.390612    0.588887    101.631681  11.319662  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 00:50:44 | 0.632123    0.637255    0.000000    0.625336    nan         nan         nan         1.503379    0.632123    nan         0.637255    nan         0.649113    nan         0.601559    nan         3300        2.898551    1.424344    0.573314    100.628969  11.319662  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 00:53:33 | 0.624464    0.629902    0.000000    0.630393    nan         nan         nan         1.503999    0.624464    nan         0.629902    nan         0.654286    nan         0.606500    nan         3400        2.986386    1.343344    0.566292    104.848662  11.319662  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 00:56:16 | 0.606158    0.615809    0.000000    0.644192    nan         nan         nan         1.433732    0.606158    nan         0.615809    nan         0.661133    nan         0.627251    nan         3500        3.074220    1.393398    0.559683    99.415495   11.319662  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 00:59:06 | 0.616345    0.624387    0.000000    0.643996    nan         nan         nan         1.433389    0.616345    nan         0.624387    nan         0.658325    nan         0.629666    nan         3600        3.162055    1.334688    0.601555    103.088814  11.319662  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 01:01:51 | 0.620711    0.628370    0.000000    0.636510    nan         nan         nan         1.445365    0.620711    nan         0.628370    nan         0.656749    nan         0.616271    nan         3700        3.249890    1.379243    0.559976    102.007123  11.319662  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 01:04:34 | 0.630055    0.628676    0.000000    0.643058    nan         nan         nan         1.416527    0.630055    nan         0.628676    nan         0.661281    nan         0.624835    nan         3800        3.337725    1.302411    0.580274    99.671671   11.319662  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 01:07:22 | 0.609835    0.612745    0.000000    0.648383    nan         nan         nan         1.412726    0.609835    nan         0.612745    nan         0.668966    nan         0.627800    nan         3900        3.425560    1.296417    0.557923    103.694154  11.319662  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 01:10:05 | 0.604167    0.612745    0.000000    0.647253    nan         nan         nan         1.404468    0.604167    nan         0.612745    nan         0.666158    nan         0.628349    nan         4000        3.513395    1.280547    0.593624    98.092184   11.319662  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 01:12:52 | 0.622013    0.619179    0.000000    0.643448    nan         nan         nan         1.422346    0.622013    nan         0.619179    nan         0.668867    nan         0.618028    nan         4100        3.601230    1.282612    0.563159    102.323872  11.319662  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 01:15:35 | 0.600414    0.603860    0.000000    0.647186    nan         nan         nan         1.423753    0.600414    nan         0.603860    nan         0.664926    nan         0.629447    nan         4200        3.689065    1.281137    0.586407    100.492595  11.321295  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 01:18:17 | 0.631664    0.631740    0.000000    0.652454    nan         nan         nan         1.403799    0.631664    nan         0.631740    nan         0.668325    nan         0.636583    nan         4300        3.776899    1.245893    0.575763    99.081568   11.321295  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 01:21:01 | 0.617570    0.614583    0.000000    0.650909    nan         nan         nan         1.413678    0.617570    nan         0.614583    nan         0.667980    nan         0.633838    nan         4400        3.864734    1.212693    0.582178    100.636450  11.321295  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 01:23:47 | 0.636259    0.640625    0.000000    0.652297    nan         nan         nan         1.382698    0.636259    nan         0.640625    nan         0.676355    nan         0.628239    nan         4500        3.952569    1.241961    0.584064    103.175644  11.321295  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 01:26:30 | 0.623928    0.629596    0.000000    0.654701    nan         nan         nan         1.392298    0.623928    nan         0.629596    nan         0.671281    nan         0.638120    nan         4600        4.040404    1.196129    0.572862    100.331335  11.321295  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 01:29:11 | 0.652803    0.645833    0.000000    0.659340    nan         nan         nan         1.367459    0.652803    nan         0.645833    nan         0.679901    nan         0.638779    nan         4700        4.128239    1.224356    0.576454    98.144205   11.321295  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 01:31:54 | 0.645297    0.650735    0.000000    0.669122    nan         nan         nan         1.329273    0.645297    nan         0.650735    nan         0.684532    nan         0.653711    nan         4800        4.216074    1.180790    0.586674    99.368644   11.321295  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 01:34:38 | 0.638557    0.650735    0.000000    0.656433    nan         nan         nan         1.374264    0.638557    nan         0.650735    nan         0.672660    nan         0.640206    nan         4900        4.303909    1.173398    0.581371    100.804506  11.324018  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 01:37:21 | 0.635570    0.639706    0.000000    0.660151    nan         nan         nan         1.355628    0.635570    nan         0.639706    nan         0.677241    nan         0.643061    nan         5000        4.391744    1.155824    0.582179    99.910686   11.326300  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 01:37:21 | ---
+[33mWARNING[0m 08/13 01:37:22 | Evaluate SWAD ...
+[36mINFO[0m 08/13 01:39:01 | 0.674709    0.672181    0.000000    0.693654    nan         nan         nan         1.241230    0.674709    nan         0.672181    nan         0.712956    nan         0.674352    nan         [1201-5000]  (N=39)
+[36mINFO[0m 08/13 01:39:01 | oracle = 64.530%
+[36mINFO[0m 08/13 01:39:01 | iid = 64.530%
+[36mINFO[0m 08/13 01:39:01 | last = 63.557%
+[36mINFO[0m 08/13 01:39:01 | last (inD) = 66.015%
+[36mINFO[0m 08/13 01:39:01 | iid (inD) = 66.912%
+[36mINFO[0m 08/13 01:39:01 | SWAD = 67.471%
+[36mINFO[0m 08/13 01:39:01 | SWAD (inD) = 69.365%
+[36mINFO[0m 08/13 01:39:03 | 
+[36mINFO[0m 08/13 01:39:05 | Testenv name escaping te_quickdraw -> te_quickdraw
+[36mINFO[0m 08/13 01:39:05 | Test envs = [1], name = te_quickdraw
+[36mINFO[0m 08/13 01:39:05 | Batch sizes for each domain: [32, 0, 32] (total=64)
+[36mINFO[0m 08/13 01:39:05 | steps-per-epoch for each domain: 408.00, 1138.50 -> min = 408.00
+[36mINFO[0m 08/13 01:39:09 | # of params = 23923979
+[36mINFO[0m 08/13 01:43:18 | test_in     test_out    train_in    train_out   test_in_au  train_out_  tr_outloss  test_out_a  env0_out    env0_out_a  env1_in     env1_in_au  env1_out    env1_out_a  env2_out    env2_out_a  step        epoch       loss        step_time   eval_time   mem_gb     
+[36mINFO[0m 08/13 01:43:18 | 0.005530    0.005616    0.000000    0.004869    nan         nan         5.342625    nan         0.003370    nan         0.005530    nan         0.005616    nan         0.006368    nan         0           0.000000    5.355189    0.490205    248.805354  9.683208   
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 01:48:29 | 0.015308    0.015665    0.000000    0.052034    nan         nan         4.950041    nan         0.036765    nan         0.015308    nan         0.015665    nan         0.067303    nan         100         0.245098    5.201794    0.587806    247.382358  10.041951  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 01:53:41 | 0.072599    0.074975    0.000000    0.245028    nan         nan         3.414057    nan         0.268382    nan         0.072599    nan         0.074975    nan         0.221673    nan         200         0.490196    4.192100    0.565290    249.260858  10.216396  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 01:58:56 | 0.151059    0.155961    0.000000    0.374516    nan         nan         2.682290    nan         0.423713    nan         0.151059    nan         0.155961    nan         0.325318    nan         300         0.735294    2.982146    0.579162    252.126765  10.393573  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 02:04:12 | 0.207131    0.205961    0.000000    0.485691    nan         nan         2.144639    nan         0.559436    nan         0.207131    nan         0.205961    nan         0.411946    nan         400         0.980392    2.401005    0.580945    252.389257  10.575617  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 02:09:27 | 0.222672    0.224581    0.000000    0.527285    nan         nan         1.949238    nan         0.608150    nan         0.222672    nan         0.224581    nan         0.446421    nan         500         1.225490    2.052472    0.586919    252.010695  10.759141  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 02:14:43 | 0.199926    0.198522    0.000000    0.552497    nan         nan         1.858376    nan         0.625306    nan         0.199926    nan         0.198522    nan         0.479688    nan         600         1.470588    1.861206    0.591284    251.636557  10.937492  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 02:20:04 | 0.227118    0.229261    0.000000    0.583115    nan         nan         1.731998    nan         0.659314    nan         0.227118    nan         0.229261    nan         0.506917    nan         700         1.715686    1.753565    0.590413    257.853100  11.114532  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 02:25:19 | 0.267266    0.270000    0.000000    0.595353    nan         nan         1.683545    nan         0.681373    nan         0.267266    nan         0.270000    nan         0.509332    nan         800         1.960784    1.588292    0.585097    251.448282  11.115653  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 02:30:30 | 0.287660    0.289951    0.000000    0.625764    nan         nan         1.544618    nan         0.707721    nan         0.287660    nan         0.289951    nan         0.543808    nan         900         2.205882    1.533972    0.587280    248.293296  11.117835  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 02:35:43 | 0.278054    0.278227    0.000000    0.621573    nan         nan         1.554112    nan         0.699449    nan         0.278054    nan         0.278227    nan         0.543698    nan         1000        2.450980    1.469879    0.588944    250.268635  11.119376  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 02:40:56 | 0.277414    0.277488    0.000000    0.627853    nan         nan         1.555802    nan         0.706189    nan         0.277414    nan         0.277488    nan         0.549517    nan         1100        2.696078    1.380073    0.575794    249.028855  11.121619  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+Model converged at step 900, Start step = 601; Threshold = 2.016964, 
+[36mINFO[0m 08/13 02:46:08 | 0.282894    0.284828    0.000000    0.635733    nan         nan         1.471665    nan         0.714154    nan         0.282894    nan         0.284828    nan         0.557312    nan         1200        2.941176    1.387198    0.580740    248.148149  11.302671  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 02:51:22 | 0.280259    0.282266    0.000000    0.642913    nan         nan         1.456290    nan         0.727635    nan         0.280259    nan         0.282266    nan         0.558191    nan         1300        3.186275    1.340975    0.572723    251.105160  11.303549  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 02:56:36 | 0.310579    0.315419    0.000000    0.647342    nan         nan         1.451156    nan         0.725184    nan         0.310579    nan         0.315419    nan         0.569499    nan         1400        3.431373    1.294569    0.567993    250.902555  11.304708  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 03:01:48 | 0.273448    0.273695    0.000000    0.657570    nan         nan         1.399231    nan         0.727635    nan         0.273448    nan         0.273695    nan         0.587505    nan         1500        3.676471    1.268339    0.579904    248.818215  11.304708  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 03:07:03 | 0.285591    0.288818    0.000000    0.664758    nan         nan         1.366042    nan         0.742341    nan         0.285591    nan         0.288818    nan         0.587176    nan         1600        3.921569    1.187363    0.584186    251.723037  11.306646  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 03:12:17 | 0.294803    0.295665    0.000000    0.666267    nan         nan         1.366666    nan         0.746017    nan         0.294803    nan         0.295665    nan         0.586517    nan         1700        4.166667    1.164681    0.575021    251.792213  11.306646  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 03:17:24 | 0.302746    0.307192    0.000000    0.668149    nan         nan         1.358045    nan         0.750000    nan         0.302746    nan         0.307192    nan         0.586298    nan         1800        4.411765    1.143928    0.582567    244.266595  11.308455  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 03:22:35 | 0.292709    0.293892    0.000000    0.679607    nan         nan         1.327490    nan         0.759191    nan         0.292709    nan         0.293892    nan         0.600022    nan         1900        4.656863    1.122515    0.572653    248.281015  11.308455  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 03:27:47 | 0.322796    0.325961    0.000000    0.680513    nan         nan         1.324268    nan         0.755515    nan         0.322796    nan         0.325961    nan         0.605512    nan         2000        4.901961    1.097611    0.568825    248.911864  11.308455  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 03:33:10 | 0.319261    0.319704    0.000000    0.685507    nan         nan         1.284982    nan         0.762868    nan         0.319261    nan         0.319704    nan         0.608147    nan         2100        5.147059    1.056297    0.576232    259.578845  11.308455  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 03:38:49 | 0.301207    0.302512    0.000000    0.679898    nan         nan         1.354883    nan         0.755821    nan         0.301207    nan         0.302512    nan         0.603975    nan         2200        5.392157    0.988141    0.542978    275.119383  11.308455  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 03:44:01 | 0.319766    0.323498    0.000000    0.697555    nan         nan         1.268463    nan         0.773897    nan         0.319766    nan         0.323498    nan         0.621212    nan         2300        5.637255    1.035823    0.542104    248.881351  11.309301  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 03:49:17 | 0.320628    0.328522    0.000000    0.689154    nan         nan         1.277414    nan         0.768076    nan         0.320628    nan         0.328522    nan         0.610233    nan         2400        5.882353    1.009292    0.579140    251.823195  11.309301  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 03:54:31 | 0.302180    0.307833    0.000000    0.677738    nan         nan         1.307277    nan         0.747549    nan         0.302180    nan         0.307833    nan         0.607927    nan         2500        6.127451    0.981338    0.584552    248.712231  11.312559  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 03:59:48 | 0.304126    0.307143    0.000000    0.690068    nan         nan         1.250888    nan         0.753983    nan         0.304126    nan         0.307143    nan         0.626153    nan         2600        6.372549    0.968298    0.581613    251.395126  11.314840  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 04:05:03 | 0.331613    0.334828    0.000000    0.706523    nan         nan         1.213806    nan         0.774816    nan         0.331613    nan         0.334828    nan         0.638230    nan         2700        6.617647    0.983351    0.569938    251.110590  11.316343  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 04:10:17 | 0.324175    0.329458    0.000000    0.696612    nan         nan         1.279839    nan         0.772672    nan         0.324175    nan         0.329458    nan         0.620553    nan         2800        6.862745    0.936478    0.586268    249.464046  11.317541  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 04:15:21 | 0.324421    0.326946    0.000000    0.705428    nan         nan         1.221508    nan         0.773284    nan         0.324421    nan         0.326946    nan         0.637571    nan         2900        7.107843    0.885696    0.593481    240.896230  11.318663  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 04:20:24 | 0.315037    0.316502    0.000000    0.699039    nan         nan         1.290500    nan         0.772365    nan         0.315037    nan         0.316502    nan         0.625714    nan         3000        7.352941    0.890557    0.581285    240.645117  11.322119  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 04:25:46 | 0.316638    0.318374    0.000000    0.694397    nan         nan         1.266537    nan         0.758578    nan         0.316638    nan         0.318374    nan         0.630215    nan         3100        7.598039    0.880206    0.588649    259.404149  11.322325  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 04:31:04 | 0.339249    0.343645    0.000000    0.704041    nan         nan         1.275136    nan         0.775123    nan         0.339249    nan         0.343645    nan         0.632960    nan         3200        7.843137    0.880481    0.579548    255.667126  11.322325  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 04:36:19 | 0.322845    0.321626    0.000000    0.706379    nan         nan         1.234063    nan         0.775735    nan         0.322845    nan         0.321626    nan         0.637022    nan         3300        8.088235    0.868693    0.580374    251.706847  11.323263  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 04:41:30 | 0.341429    0.340690    0.000000    0.705056    nan         nan         1.264678    nan         0.778799    nan         0.341429    nan         0.340690    nan         0.631313    nan         3400        8.333333    0.906243    0.588549    248.842661  11.326803  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 04:46:43 | 0.333892    0.337783    0.000000    0.710242    nan         nan         1.239405    nan         0.776654    nan         0.333892    nan         0.337783    nan         0.643830    nan         3500        8.578431    0.806196    0.585694    250.559669  11.326803  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 04:51:58 | 0.326158    0.331724    0.000000    0.706552    nan         nan         1.226379    nan         0.776961    nan         0.326158    nan         0.331724    nan         0.636144    nan         3600        8.823529    0.828199    0.585374    251.909775  11.326803  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 04:57:18 | 0.323485    0.323005    0.000000    0.698682    nan         nan         1.277454    nan         0.762868    nan         0.323485    nan         0.323005    nan         0.634497    nan         3700        9.068627    0.791306    0.590855    257.271327  11.326803  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 05:02:30 | 0.332278    0.337241    0.000000    0.708190    nan         nan         1.216502    nan         0.775735    nan         0.332278    nan         0.337241    nan         0.640646    nan         3800        9.313725    0.802630    0.587531    249.795271  11.326803  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 05:07:40 | 0.316219    0.319655    0.000000    0.721839    nan         nan         1.174764    nan         0.787990    nan         0.316219    nan         0.319655    nan         0.655687    nan         3900        9.558824    0.795871    0.594187    246.230626  11.326803  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 05:12:50 | 0.293103    0.298966    0.000000    0.712559    nan         nan         1.233992    nan         0.776348    nan         0.293103    nan         0.298966    nan         0.648770    nan         4000        9.803922    0.783966    0.587335    247.627794  11.326803  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 05:18:00 | 0.311650    0.312463    0.000000    0.711182    nan         nan         1.244731    nan         0.779412    nan         0.311650    nan         0.312463    nan         0.642951    nan         4100        10.049020   0.778061    0.593383    247.404989  11.327536  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 05:23:11 | 0.330246    0.333645    0.000000    0.709991    nan         nan         1.243951    nan         0.776042    nan         0.330246    nan         0.333645    nan         0.643939    nan         4200        10.294118   0.774501    0.589062    248.009434  11.327536  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 05:28:19 | 0.306305    0.305961    0.000000    0.713993    nan         nan         1.209977    nan         0.779105    nan         0.306305    nan         0.305961    nan         0.648880    nan         4300        10.539216   0.745560    0.594970    245.357239  11.331137  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 05:33:29 | 0.338707    0.343005    0.000000    0.717373    nan         nan         1.217810    nan         0.779718    nan         0.338707    nan         0.343005    nan         0.655029    nan         4400        10.784314   0.766873    0.588734    247.331713  11.331137  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 05:38:49 | 0.317315    0.317438    0.000000    0.720868    nan         nan         1.201335    nan         0.790441    nan         0.317315    nan         0.317438    nan         0.651296    nan         4500        11.029412   0.777077    0.589868    257.343314  11.331137  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 05:44:10 | 0.311798    0.313645    0.000000    0.716773    nan         nan         1.232122    nan         0.784007    nan         0.311798    nan         0.313645    nan         0.649539    nan         4600        11.274510   0.707449    0.588762    257.910884  11.331137  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 05:49:25 | 0.331823    0.330493    0.000000    0.725282    nan         nan         1.174613    nan         0.797181    nan         0.331823    nan         0.330493    nan         0.653382    nan         4700        11.519608   0.713406    0.582650    252.214773  11.331137  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 05:54:34 | 0.334470    0.338916    0.000000    0.726835    nan         nan         1.176938    nan         0.793811    nan         0.334470    nan         0.338916    nan         0.659859    nan         4800        11.764706   0.699213    0.579502    246.366949  11.331137  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 05:59:54 | 0.345333    0.345567    0.000000    0.725437    nan         nan         1.176211    nan         0.795956    nan         0.345333    nan         0.345567    nan         0.654919    nan         4900        12.009804   0.674148    0.577871    257.686771  11.331137  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 06:05:03 | 0.297414    0.300788    0.000000    0.722616    nan         nan         1.180152    nan         0.789216    nan         0.297414    nan         0.300788    nan         0.656017    nan         5000        12.254902   0.708384    0.564467    246.738874  11.331137  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 06:05:04 | ---
+[33mWARNING[0m 08/13 06:05:04 | Evaluate SWAD ...
+[36mINFO[0m 08/13 06:09:20 | 0.375702    0.379015    0.000000    0.754849    nan         nan         1.006103    nan         0.822610    nan         0.375702    nan         0.379015    nan         0.687088    nan         [601-5000]  (N=45)
+[36mINFO[0m 08/13 06:09:20 | oracle = 34.533%
+[36mINFO[0m 08/13 06:09:20 | iid = 33.447%
+[36mINFO[0m 08/13 06:09:20 | last = 29.741%
+[36mINFO[0m 08/13 06:09:20 | last (inD) = 72.262%
+[36mINFO[0m 08/13 06:09:20 | iid (inD) = 72.684%
+[36mINFO[0m 08/13 06:09:20 | SWAD = 37.570%
+[36mINFO[0m 08/13 06:09:20 | SWAD (inD) = 75.485%
+[36mINFO[0m 08/13 06:09:22 | 
+[36mINFO[0m 08/13 06:09:24 | Testenv name escaping te_sketch -> te_sketch
+[36mINFO[0m 08/13 06:09:24 | Test envs = [2], name = te_sketch
+[36mINFO[0m 08/13 06:09:24 | Batch sizes for each domain: [32, 32, 0] (total=64)
+[36mINFO[0m 08/13 06:09:24 | steps-per-epoch for each domain: 408.00, 2537.50 -> min = 408.00
+[36mINFO[0m 08/13 06:09:27 | # of params = 23923979
+[36mINFO[0m 08/13 06:12:03 | test_in     test_out    train_in    train_out   test_in_au  train_out_  tr_outloss  test_out_a  env0_out    env0_out_a  env1_out    env1_out_a  env2_in     env2_in_au  env2_out    env2_out_a  step        epoch       loss        step_time   eval_time   mem_gb     
+[36mINFO[0m 08/13 06:12:03 | 0.004858    0.005490    0.000000    0.005882    nan         nan         5.332604    nan         0.006740    nan         0.005025    nan         0.004858    nan         0.005490    nan         0           0.000000    5.425316    0.561097    155.989609  9.683208   
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 06:15:43 | 0.009854    0.008344    0.000000    0.012280    nan         nan         5.248369    nan         0.011949    nan         0.012611    nan         0.009854    nan         0.008344    nan         100         0.245098    5.305785    0.585878    156.838268  10.041951  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 06:19:18 | 0.031758    0.033487    0.000000    0.096288    nan         nan         4.128774    nan         0.099571    nan         0.093005    nan         0.031758    nan         0.033487    nan         200         0.490196    4.727908    0.588539    152.021592  10.216396  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 06:22:52 | 0.084788    0.085529    0.000000    0.279441    nan         nan         3.119795    nan         0.311887    nan         0.246995    nan         0.084788    nan         0.085529    nan         300         0.735294    3.653483    0.585162    151.278338  10.393573  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 06:26:23 | 0.129529    0.131423    0.000000    0.404355    nan         nan         2.440030    nan         0.436887    nan         0.371823    nan         0.129529    nan         0.131423    nan         400         0.980392    2.759747    0.586910    148.930532  10.575617  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 06:29:59 | 0.156264    0.167984    0.000000    0.497023    nan         nan         1.995808    nan         0.546262    nan         0.447783    nan         0.156264    nan         0.167984    nan         500         1.225490    2.289153    0.587072    152.772804  10.759141  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 06:33:32 | 0.159942    0.170839    0.000000    0.504629    nan         nan         1.917365    nan         0.555760    nan         0.453498    nan         0.159942    nan         0.170839    nan         600         1.470588    2.013279    0.591306    149.933650  10.937492  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 06:37:06 | 0.181901    0.189723    0.000000    0.553026    nan         nan         1.724982    nan         0.598958    nan         0.507094    nan         0.181901    nan         0.189723    nan         700         1.715686    1.830444    0.578436    151.668201  11.114532  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 06:40:40 | 0.196091    0.201801    0.000000    0.572819    nan         nan         1.639834    nan         0.617953    nan         0.527685    nan         0.196091    nan         0.201801    nan         800         1.960784    1.644220    0.578850    151.835742  11.115653  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 06:44:19 | 0.199413    0.202789    0.000000    0.602850    nan         nan         1.505329    nan         0.660233    nan         0.545468    nan         0.199413    nan         0.202789    nan         900         2.205882    1.572354    0.590331    155.786988  11.117835  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 06:47:50 | 0.198534    0.206741    0.000000    0.604546    nan         nan         1.496742    nan         0.664216    nan         0.544877    nan         0.198534    nan         0.206741    nan         1000        2.450980    1.473402    0.568349    148.757088  11.119376  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 06:51:24 | 0.213521    0.224528    0.000000    0.637768    nan         nan         1.386594    nan         0.698836    nan         0.576700    nan         0.213521    nan         0.224528    nan         1100        2.696078    1.406424    0.577429    151.413729  11.121619  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 06:54:54 | 0.193758    0.196531    0.000000    0.630292    nan         nan         1.383355    nan         0.681373    nan         0.579212    nan         0.193758    nan         0.196531    nan         1200        2.941176    1.350498    0.589681    147.617796  11.123809  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 06:58:26 | 0.206604    0.213878    0.000000    0.656354    nan         nan         1.297701    nan         0.715074    nan         0.597635    nan         0.206604    nan         0.213878    nan         1300        3.186275    1.299283    0.566195    150.252719  11.123809  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 07:01:59 | 0.212286    0.223101    0.000000    0.661296    nan         nan         1.285623    nan         0.718750    nan         0.603842    nan         0.212286    nan         0.223101    nan         1400        3.431373    1.249034    0.566222    150.440422  11.123809  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 07:05:35 | 0.219807    0.229359    0.000000    0.658596    nan         nan         1.286535    nan         0.715074    nan         0.602118    nan         0.219807    nan         0.229359    nan         1500        3.676471    1.194650    0.579267    153.463036  11.125846  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 07:09:09 | 0.191315    0.198726    0.000000    0.670297    nan         nan         1.226698    nan         0.731924    nan         0.608670    nan         0.191315    nan         0.198726    nan         1600        3.921569    1.134264    0.584107    151.888800  11.130294  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 07:12:45 | 0.236413    0.238032    0.000000    0.671662    nan         nan         1.242563    nan         0.722733    nan         0.620591    nan         0.236413    nan         0.238032    nan         1700        4.166667    1.135019    0.577604    153.744344  11.131164  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 07:16:26 | 0.215333    0.220905    0.000000    0.673680    nan         nan         1.221885    nan         0.728248    nan         0.619113    nan         0.215333    nan         0.220905    nan         1800        4.411765    1.102794    0.580141    158.141552  11.133262  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 07:19:56 | 0.222854    0.232323    0.000000    0.690953    nan         nan         1.160300    nan         0.748162    nan         0.633744    nan         0.222854    nan         0.232323    nan         1900        4.656863    1.079145    0.590204    146.567456  11.141097  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 07:23:30 | 0.226202    0.233531    0.000000    0.687133    nan         nan         1.162566    nan         0.743873    nan         0.630394    nan         0.226202    nan         0.233531    nan         2000        4.901961    1.051068    0.578428    151.950010  11.141097  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 07:27:01 | 0.227053    0.235837    0.000000    0.693818    nan         nan         1.130231    nan         0.747243    nan         0.640394    nan         0.227053    nan         0.235837    nan         2100        5.147059    1.001580    0.579509    148.638850  11.141097  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 07:30:41 | 0.226998    0.230567    0.000000    0.685251    nan         nan         1.168273    nan         0.740502    nan         0.630000    nan         0.226998    nan         0.230567    nan         2200        5.392157    0.989920    0.588420    157.902601  11.141097  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 07:34:14 | 0.207345    0.210035    0.000000    0.692683    nan         nan         1.156060    nan         0.745711    nan         0.639655    nan         0.207345    nan         0.210035    nan         2300        5.637255    0.972421    0.578527    150.669513  11.141097  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+Model converged at step 2100, Start step = 1801; Threshold = 1.496978, 
+[36mINFO[0m 08/13 07:37:53 | 0.244071    0.248353    0.000000    0.709334    nan         nan         1.084074    nan         0.768076    nan         0.650591    nan         0.244071    nan         0.248353    nan         2400        5.882353    0.934388    0.584920    155.186848  11.316893  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 07:41:33 | 0.208635    0.214317    0.000000    0.699862    nan         nan         1.159777    nan         0.756127    nan         0.643596    nan         0.208635    nan         0.214317    nan         2500        6.127451    0.922986    0.594040    157.968640  11.316893  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 07:45:11 | 0.229908    0.236825    0.000000    0.708952    nan         nan         1.113656    nan         0.763174    nan         0.654729    nan         0.229908    nan         0.236825    nan         2600        6.372549    0.950508    0.581870    155.244372  11.316893  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 07:48:43 | 0.241903    0.247255    0.000000    0.713888    nan         nan         1.074746    nan         0.776348    nan         0.651429    nan         0.241903    nan         0.247255    nan         2700        6.617647    0.904586    0.583197    148.910977  11.319395  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 07:52:21 | 0.214564    0.221673    0.000000    0.718752    nan         nan         1.070721    nan         0.774203    nan         0.663300    nan         0.214564    nan         0.221673    nan         2800        6.862745    0.904147    0.591959    155.088662  11.319395  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 07:55:57 | 0.224857    0.233531    0.000000    0.705683    nan         nan         1.122806    nan         0.765012    nan         0.646355    nan         0.224857    nan         0.233531    nan         2900        7.107843    0.856011    0.577683    152.900949  11.319395  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 07:59:32 | 0.212890    0.220575    0.000000    0.714765    nan         nan         1.069674    nan         0.770221    nan         0.659310    nan         0.212890    nan         0.220575    nan         3000        7.352941    0.865020    0.567249    153.199419  11.320311  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 08:03:03 | 0.233696    0.238252    0.000000    0.715036    nan         nan         1.066796    nan         0.770221    nan         0.659852    nan         0.233696    nan         0.238252    nan         3100        7.598039    0.866836    0.585315    148.622511  11.320311  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 08:06:36 | 0.227904    0.231884    0.000000    0.707448    nan         nan         1.115462    nan         0.756127    nan         0.658768    nan         0.227904    nan         0.231884    nan         3200        7.843137    0.835163    0.576421    150.438564  11.321898  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 08:10:11 | 0.251812    0.256148    0.000000    0.726498    nan         nan         1.048218    nan         0.781863    nan         0.671133    nan         0.251812    nan         0.256148    nan         3300        8.088235    0.822613    0.577043    152.245790  11.324911  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 08:13:49 | 0.242616    0.242754    0.000000    0.716985    nan         nan         1.080952    nan         0.768995    nan         0.664975    nan         0.242616    nan         0.242754    nan         3400        8.333333    0.800597    0.589946    153.435676  11.324911  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 08:17:19 | 0.246926    0.252635    0.000000    0.727595    nan         nan         1.039591    nan         0.781250    nan         0.673941    nan         0.246926    nan         0.252635    nan         3500        8.578431    0.800935    0.589170    147.973732  11.324911  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 08:20:53 | 0.189449    0.195762    0.000000    0.709552    nan         nan         1.085686    nan         0.756740    nan         0.662365    nan         0.189449    nan         0.195762    nan         3600        8.823529    0.790943    0.593357    151.067762  11.324911  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 08:24:32 | 0.225379    0.229359    0.000000    0.726389    nan         nan         1.069355    nan         0.781250    nan         0.671527    nan         0.225379    nan         0.229359    nan         3700        9.068627    0.789919    0.592576    155.646799  11.324911  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 08:28:08 | 0.224418    0.229249    0.000000    0.723739    nan         nan         1.064568    nan         0.769301    nan         0.678177    nan         0.224418    nan         0.229249    nan         3800        9.313725    0.761964    0.590239    154.289121  11.324911  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 08:31:46 | 0.224281    0.232762    0.000000    0.723843    nan         nan         1.042970    nan         0.772365    nan         0.675320    nan         0.224281    nan         0.232762    nan         3900        9.558824    0.729062    0.587002    154.417672  11.324911  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 08:35:34 | 0.237758    0.243303    0.000000    0.728003    nan         nan         1.001791    nan         0.783395    nan         0.672611    nan         0.237758    nan         0.243303    nan         4000        9.803922    0.734475    0.589059    166.090338  11.324911  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 08:39:16 | 0.245938    0.249561    0.000000    0.721360    nan         nan         1.044235    nan         0.775429    nan         0.667291    nan         0.245938    nan         0.249561    nan         4100        10.049020   0.771539    0.590777    159.367321  11.324911  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 08:42:48 | 0.232241    0.239789    0.000000    0.735511    nan         nan         0.999642    nan         0.787377    nan         0.683645    nan         0.232241    nan         0.239789    nan         4200        10.294118   0.704936    0.586589    149.290129  11.324911  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 08:46:24 | 0.217803    0.222991    0.000000    0.725338    nan         nan         1.073484    nan         0.777574    nan         0.673103    nan         0.217803    nan         0.222991    nan         4300        10.539216   0.711757    0.588473    152.972134  11.324911  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 08:50:01 | 0.252635    0.263065    0.000000    0.736204    nan         nan         1.021653    nan         0.786152    nan         0.686256    nan         0.252635    nan         0.263065    nan         4400        10.784314   0.693442    0.589692    154.058557  11.324911  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 08:53:31 | 0.229331    0.236605    0.000000    0.724451    nan         nan         1.063354    nan         0.767770    nan         0.681133    nan         0.229331    nan         0.236605    nan         4500        11.029412   0.708884    0.588048    147.671135  11.324911  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 08:57:04 | 0.234107    0.242205    0.000000    0.743026    nan         nan         0.990242    nan         0.788909    nan         0.697143    nan         0.234107    nan         0.242205    nan         4600        11.274510   0.707384    0.597709    149.634410  11.325926  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 09:00:39 | 0.248820    0.249231    0.000000    0.737415    nan         nan         1.005562    nan         0.782169    nan         0.692660    nan         0.248820    nan         0.249231    nan         4700        11.519608   0.696413    0.588846    151.463692  11.325926  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 09:04:09 | 0.224638    0.228151    0.000000    0.735734    nan         nan         1.023800    nan         0.784620    nan         0.686847    nan         0.224638    nan         0.228151    nan         4800        11.764706   0.693873    0.570499    147.601925  11.327841  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 09:07:37 | 0.238664    0.243522    0.000000    0.743644    nan         nan         0.995971    nan         0.793199    nan         0.694089    nan         0.238664    nan         0.243522    nan         4900        12.009804   0.682777    0.567449    146.188256  11.327841  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 09:11:07 | 0.245883    0.249890    0.000000    0.739735    nan         nan         1.022995    nan         0.785233    nan         0.694236    nan         0.245883    nan         0.249890    nan         5000        12.254902   0.654797    0.569551    147.741184  11.327841  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 09:11:07 | ---
+[33mWARNING[0m 08/13 09:11:08 | Evaluate SWAD ...
+[36mINFO[0m 08/13 09:13:39 | 0.268692    0.277009    0.000000    0.779347    nan         nan         0.826480    nan         0.830270    nan         0.728424    nan         0.268692    nan         0.277009    nan         [1801-5000]  (N=33)
+[36mINFO[0m 08/13 09:13:39 | oracle = 25.264%
+[36mINFO[0m 08/13 09:13:39 | iid = 23.866%
+[36mINFO[0m 08/13 09:13:39 | last = 24.588%
+[36mINFO[0m 08/13 09:13:39 | last (inD) = 73.973%
+[36mINFO[0m 08/13 09:13:39 | iid (inD) = 74.364%
+[36mINFO[0m 08/13 09:13:39 | SWAD = 26.869%
+[36mINFO[0m 08/13 09:13:39 | SWAD (inD) = 77.935%
+[36mINFO[0m 08/13 09:13:40 | === Summary ===
+[36mINFO[0m 08/13 09:13:40 | Command: /data/home/kxrgzn/lzh/new/DomainBed-new/train_all.py SKET_ALOFT_E_seed0 --dataset SKET --data_dir /data/home/kxrgzn/lzh/new/DomainBed-new/dataset --algorithm ALOFT_E --steps 5000 --checkpoint_freq 100 --batch_size 32 --optimizer adam --lr 5e-5 --weight_decay 0 --resnet_dropout 0 --resnet18 False --pretrained True --freeze_bn True --swad LossValley --seed 0 --trial_seed 0 --deterministic --cache disk --prebuild_loader --image_size 224 --aloft_alpha 1.0 --aloft_mask_ratio 0.5 --aloft_perturb_prob 1.0
+[36mINFO[0m 08/13 09:13:40 | Unique name: 260812_23-17-23_SKET_ALOFT_E_seed0
+[36mINFO[0m 08/13 09:13:40 | Out path: train_output/SKET/260812_23-17-23_SKET_ALOFT_E_seed0
+[36mINFO[0m 08/13 09:13:40 | Algorithm: ALOFT_E
+[36mINFO[0m 08/13 09:13:40 | Dataset: SKET
++------------+----------+-----------+---------+---------+
+| Selection  | TUBerlin | quickdraw |  sketch |   Avg.  |
++------------+----------+-----------+---------+---------+
+|   oracle   | 64.530%  |  34.533%  | 25.264% | 41.442% |
+|    iid     | 64.530%  |  33.447%  | 23.866% | 40.614% |
+|    last    | 63.557%  |  29.741%  | 24.588% | 39.296% |
+| last (inD) | 66.015%  |  72.262%  | 73.973% | 70.750% |
+| iid (inD)  | 66.912%  |  72.684%  | 74.364% | 71.320% |
+|    SWAD    | 67.471%  |  37.570%  | 26.869% | 43.970% |
+| SWAD (inD) | 69.365%  |  75.485%  | 77.935% | 74.262% |
++------------+----------+-----------+---------+---------+
+================================================================================
+Starting ALOFT_E, seed=1, physical GPU=1
+/home/kxrgzn/anaconda3/envs/lzh_DG/bin/python /data/home/kxrgzn/lzh/new/DomainBed-new/train_all.py SKET_ALOFT_E_seed1 --dataset SKET --data_dir /data/home/kxrgzn/lzh/new/DomainBed-new/dataset --algorithm ALOFT_E --steps 5000 --checkpoint_freq 100 --batch_size 32 --optimizer adam --lr 5e-5 --weight_decay 0 --resnet_dropout 0 --resnet18 False --pretrained True --freeze_bn True --swad LossValley --seed 1 --trial_seed 1 --deterministic --cache disk --prebuild_loader --image_size 224 --aloft_alpha 1.0 --aloft_mask_ratio 0.5 --aloft_perturb_prob 1.0
+================================================================================
+/home/kxrgzn/anaconda3/envs/lzh_DG/lib/python3.9/site-packages/munch/__init__.py:24: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+[36mINFO[0m 08/13 09:13:46 | Command :: /data/home/kxrgzn/lzh/new/DomainBed-new/train_all.py SKET_ALOFT_E_seed1 --dataset SKET --data_dir /data/home/kxrgzn/lzh/new/DomainBed-new/dataset --algorithm ALOFT_E --steps 5000 --checkpoint_freq 100 --batch_size 32 --optimizer adam --lr 5e-5 --weight_decay 0 --resnet_dropout 0 --resnet18 False --pretrained True --freeze_bn True --swad LossValley --seed 1 --trial_seed 1 --deterministic --cache disk --prebuild_loader --image_size 224 --aloft_alpha 1.0 --aloft_mask_ratio 0.5 --aloft_perturb_prob 1.0
+Environment:
+	Python: 3.9.23
+	PyTorch: 2.6.0+cu124
+	Torchvision: 0.21.0+cu124
+	CUDA: 12.4
+	CUDNN: 90100
+	NumPy: 1.23.5
+	PIL: 8.1.0
+Args:
+	algorithm: ALOFT_E
+	batch_size: 32
+	cache: disk
+	cache_root: cache
+	cache_size: None
+	checkpoint_freq: 100
+	configs: []
+	data_dir: /data/home/kxrgzn/lzh/new/DomainBed-new/dataset
+	dataset: SKET
+	debug: False
+	deterministic: True
+	end_step: 200
+	evalmode: fast
+	extra_search: n
+	extra_search_end: None
+	extra_search_start: None
+	gga_l_gamma: 0.001
+	grad_fn: sum
+	holdout_fraction: 0.2
+	model_save: None
+	name: SKET_ALOFT_E_seed1
+	neighborhoodSize: 1e-06
+	out_dir: train_output/SKET/260813_09-13-46_SKET_ALOFT_E_seed1
+	out_root: train_output/SKET
+	prebuild_loader: True
+	q_steps: 2000
+	quant: 0
+	resize_mode: stretch
+	saliency: False
+	saliency_cmap: jet
+	saliency_every: 0
+	saliency_noise: 0.15
+	saliency_num: 16
+	saliency_samples: 25
+	saliency_split: test_in
+	seed: 1
+	show: False
+	start_step: 100
+	steps: 5000
+	tb_freq: 10
+	test_envs: None
+	train_output: train_output
+	trial_seed: 1
+	unique_name: 260813_09-13-46_SKET_ALOFT_E_seed1
+	work_dir: .
+HParams:
+	data_augmentation: True
+	val_augment: False
+	[36mresnet18: False
+	[0m[36mresnet_dropout: 0
+	[0mclass_balanced: False
+	[36moptimizer: adam
+	[0m[36mfreeze_bn: True
+	[0m[36mpretrained: True
+	[0m[36mimage_size: 224
+	[0m[36mlr: 5e-05
+	[0mbatch_size: 32
+	[36mweight_decay: 0
+	[0m[36maloft_alpha: 1.0
+	[0m[36maloft_mask_ratio: 0.5
+	[0m[36maloft_perturb_prob: 1.0
+	[0maloft_positions: 
+	  - layer1
+	  - layer2
+	  - layer3
+	[36mswad: LossValley
+	[0mswad_kwargs: 
+	  n_converge: 3
+	  n_tolerance: 6
+	  tolerance_ratio: 0.3
+	test_batchsize: 128
+	indomain_test: False
+	grad_fn: sum
+	extra_search: n
+	logdir: train_output/SKET/260813_09-13-46_SKET_ALOFT_E_seed1
+	neighborhoodSize: 1e-06
+	start_step: 100
+	end_step: 200
+	extra_search_start: None
+	extra_search_end: None
+	gga_l_gamma: 0.001
+Dataset:
+	[SKET] #envs=3, #classes=203
+	env0: TUBerlin (#16320)
+	env1: quickdraw (#101500)
+	env2: sketch (#45540)
+
+[36mINFO[0m 08/13 09:13:49 | n_steps = 5000
+[36mINFO[0m 08/13 09:13:49 | checkpoint_freq = 100
+[36mINFO[0m 08/13 09:13:49 | n_steps is updated to 5000 => 5001 for checkpointing
+[36mINFO[0m 08/13 09:13:49 | Target test envs = [[0], [1], [2]]
+[36mINFO[0m 08/13 09:13:49 | 
+[36mINFO[0m 08/13 09:13:51 | Testenv name escaping te_TUBerlin -> te_TUBerlin
+[36mINFO[0m 08/13 09:13:51 | Test envs = [0], name = te_TUBerlin
+[36mINFO[0m 08/13 09:13:51 | Batch sizes for each domain: [0, 32, 32] (total=64)
+[36mINFO[0m 08/13 09:13:51 | steps-per-epoch for each domain: 2537.50, 1138.50 -> min = 1138.50
+/home/kxrgzn/anaconda3/envs/lzh_DG/lib/python3.9/site-packages/torchvision/models/_utils.py:208: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/home/kxrgzn/anaconda3/envs/lzh_DG/lib/python3.9/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=ResNet50_Weights.IMAGENET1K_V1`. You can also use `weights=ResNet50_Weights.DEFAULT` to get the most up-to-date weights.
+  warnings.warn(msg)
+[36mINFO[0m 08/13 09:13:53 | # of params = 23923979
+[36mINFO[0m 08/13 09:15:38 | test_in     test_out    train_in    train_out   test_in_au  test_out_a  train_out_  tr_outloss  env0_in     env0_in_au  env0_out    env0_out_a  env1_out    env1_out_a  env2_out    env2_out_a  step        epoch       loss        step_time   eval_time   mem_gb     
+[36mINFO[0m 08/13 09:15:38 | 0.004366    0.003983    0.000000    0.006885    nan         nan         nan         5.352014    0.004366    nan         0.003983    nan         0.004877    nan         0.008893    nan         0           0.000000    5.321860    1.003899    103.587550  9.680035   
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 09:18:16 | 0.008885    0.012561    0.000000    0.026143    nan         nan         nan         5.120304    0.008885    nan         0.012561    nan         0.014187    nan         0.038098    nan         100         0.087835    5.260920    0.599620    93.920526   10.041303  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 09:20:54 | 0.194700    0.201287    0.000000    0.189203    nan         nan         nan         3.773240    0.194700    nan         0.201287    nan         0.160246    nan         0.218160    nan         200         0.175670    4.635699    0.571357    96.540441   10.221546  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 09:23:32 | 0.301777    0.312806    0.000000    0.293721    nan         nan         nan         3.092652    0.301777    nan         0.312806    nan         0.280788    nan         0.306653    nan         300         0.263505    3.542520    0.567930    94.971070   10.400310  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 09:26:09 | 0.401118    0.398284    0.000000    0.397854    nan         nan         nan         2.580349    0.401118    nan         0.398284    nan         0.388374    nan         0.407334    nan         400         0.351339    3.037859    0.568985    95.155108   10.577593  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 09:28:47 | 0.427313    0.434130    0.000000    0.429388    nan         nan         nan         2.373108    0.427313    nan         0.434130    nan         0.426847    nan         0.431928    nan         500         0.439174    2.703242    0.597246    94.116920   10.757920  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 09:31:26 | 0.467218    0.475184    0.000000    0.461306    nan         nan         nan         2.266186    0.467218    nan         0.475184    nan         0.472020    nan         0.450593    nan         600         0.527009    2.442758    0.568914    96.854685   10.935616  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 09:34:10 | 0.464997    0.458640    0.000000    0.475411    nan         nan         nan         2.164988    0.464997    nan         0.458640    nan         0.484089    nan         0.466733    nan         700         0.614844    2.321668    0.583085    100.967933  11.114852  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 09:36:56 | 0.501302    0.491115    0.000000    0.507988    nan         nan         nan         2.023869    0.501302    nan         0.491115    nan         0.516305    nan         0.499671    nan         800         0.702679    2.161264    0.583864    103.423005  11.115905  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 09:39:40 | 0.477252    0.477635    0.000000    0.498256    nan         nan         nan         2.064039    0.477252    nan         0.477635    nan         0.502660    nan         0.493852    nan         900         0.790514    2.085047    0.591939    101.459672  11.115905  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 09:42:17 | 0.513863    0.524203    0.000000    0.532545    nan         nan         nan         1.891200    0.513863    nan         0.524203    nan         0.537094    nan         0.527997    nan         1000        0.878349    1.951087    0.579362    93.902183   11.115905  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 09:44:59 | 0.561045    0.549326    0.000000    0.554062    nan         nan         nan         1.809133    0.561045    nan         0.549326    nan         0.568818    nan         0.539306    nan         1100        0.966184    1.939973    0.590713    99.303616   11.117881  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 09:47:40 | 0.549709    0.538297    0.000000    0.561058    nan         nan         nan         1.787510    0.549709    nan         0.538297    nan         0.567438    nan         0.554677    nan         1200        1.054018    1.860328    0.584737    98.864496   11.123733  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 09:50:27 | 0.549632    0.541973    0.000000    0.557148    nan         nan         nan         1.802472    0.549632    nan         0.541973    nan         0.551823    nan         0.562473    nan         1300        1.141853    1.847973    0.590305    104.582907  11.124091  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 09:53:05 | 0.563419    0.558824    0.000000    0.570107    nan         nan         nan         1.740477    0.563419    nan         0.558824    nan         0.586305    nan         0.553909    nan         1400        1.229688    1.796471    0.574263    95.341884   11.124091  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 09:55:43 | 0.565181    0.563419    0.000000    0.583151    nan         nan         nan         1.695099    0.565181    nan         0.563419    nan         0.601084    nan         0.565217    nan         1500        1.317523    1.754331    0.575002    95.051722   11.125129  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 09:58:20 | 0.560892    0.562194    0.000000    0.575787    nan         nan         nan         1.710759    0.560892    nan         0.562194    nan         0.596897    nan         0.554677    nan         1600        1.405358    1.732503    0.587348    94.790829   11.126235  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 10:01:02 | 0.604703    0.600490    0.000000    0.599836    nan         nan         nan         1.621512    0.604703    nan         0.600490    nan         0.614581    nan         0.585090    nan         1700        1.493193    1.703078    0.590252    99.421460   11.126235  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 10:03:41 | 0.563343    0.566483    0.000000    0.599504    nan         nan         nan         1.610463    0.563343    nan         0.566483    nan         0.605025    nan         0.593983    nan         1800        1.581028    1.616174    0.566094    96.726060   11.126235  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 10:06:19 | 0.598499    0.598652    0.000000    0.610313    nan         nan         nan         1.565479    0.598499    nan         0.598652    nan         0.627192    nan         0.593434    nan         1900        1.668863    1.621171    0.588665    94.660605   11.126479  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 10:08:57 | 0.592448    0.585784    0.000000    0.611296    nan         nan         nan         1.562893    0.592448    nan         0.585784    nan         0.632562    nan         0.590031    nan         2000        1.756697    1.588692    0.593778    95.849077   11.126479  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 10:11:41 | 0.606158    0.598652    0.000000    0.606865    nan         nan         nan         1.595059    0.606158    nan         0.598652    nan         0.620296    nan         0.593434    nan         2100        1.844532    1.552420    0.587284    101.132557  11.126479  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 10:14:22 | 0.602482    0.591912    0.000000    0.606537    nan         nan         nan         1.592134    0.602482    nan         0.591912    nan         0.623153    nan         0.589921    nan         2200        1.932367    1.531247    0.565896    97.990963   11.127006  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+Model converged at step 2000, Start step = 1701; Threshold = 2.058371, 
+[36mINFO[0m 08/13 10:17:02 | 0.602941    0.594056    0.000000    0.618139    nan         nan         nan         1.530438    0.602941    nan         0.594056    nan         0.640099    nan         0.596179    nan         2300        2.020202    1.456213    0.573431    97.195232   11.307623  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+[36mINFO[0m 08/13 10:19:40 | 0.610677    0.595282    0.000000    0.606603    nan         nan         nan         1.565175    0.610677    nan         0.595282    nan         0.619113    nan         0.594093    nan         2400        2.108037    1.481121    0.585388    95.726069   11.307623  
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
+WARNING:root:NaN or Inf found in input tensor.
