@@ -190,6 +190,24 @@ METHODS = {
             "--q_steps", "100",
         ],
     },
+    "FQ": {
+        "algorithm": "FQ",
+        "swad": "LossValley",
+        "extra_args": [
+            "--fft_quant", "1",
+            "--fq_steps", "2000",
+            "--fq_ramp", "500",
+        ],
+    },
+    "FQ_noswad": {
+        "algorithm": "FQ",
+        "swad": "False",
+        "extra_args": [
+            "--fft_quant", "1",
+            "--fq_steps", "2000",
+            "--fq_ramp", "500",
+        ],
+    },
 }
 
 METHOD_NAMES = {
@@ -255,10 +273,16 @@ def parse_args():
         default="HTP",
         help="dataset to use; default is HTP",
     )
+    parser.add_argument(
+        "--steps",
+        type=str,
+        default="5000",
+        help="number of steps to train for; default is 5000",
+    )
     return parser.parse_args()
 
 
-def build_command(repo_dir, method_name, seed,batch,dataset):
+def build_command(repo_dir, method_name, seed,batch,dataset,steps):
     method = METHODS[method_name]
     experiment_name = f"{dataset}_{method_name}_seed{seed}"
 
@@ -269,7 +293,7 @@ def build_command(repo_dir, method_name, seed,batch,dataset):
         "--dataset", dataset,
         "--data_dir", str(repo_dir / "dataset"),
         "--algorithm", method["algorithm"],
-        "--steps", "15000",
+        "--steps", steps,
         "--checkpoint_freq", "100",
         "--batch_size", str(batch),
         "--optimizer", "adam",
@@ -319,6 +343,7 @@ def main():
             seed,
             args.batch,
             args.dataset,
+            args.steps,
         )
 
         print("=" * 80, flush=True)

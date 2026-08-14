@@ -20,6 +20,7 @@ from domainbed.lib.query import Q
 from domainbed.lib.fast_data_loader import InfiniteDataLoader, FastDataLoader
 from domainbed import swad as swad_module
 from domainbed.quan.utils import find_modules_to_quantize, replace_module_by_names
+from domainbed.models.frequant import FreqQuant, resnet_freqquant, collect_aux_loss
 
 if torch.cuda.is_available():
     device = "cuda"

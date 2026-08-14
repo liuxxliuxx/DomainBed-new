@@ -28,7 +28,7 @@ from domainbed.lib.misc import random_pairs_of_minibatches, split_meta_train_tes
 from domainbed.optimizers import get_optimizer
 from domainbed.models.aloft import ALOFT as ALOFTModule, resnet_aloft
 from domainbed.models.awwsl import AWWSL as AWWSLModule, resnet_awwsl
-from domainbed.models.freqquant import FreqQuant, resnet_freqquant, collect_aux_loss
+from domainbed.models.frequant import FreqQuant, resnet_freqquant, collect_aux_loss
 
 from domainbed.models.resnet_mixstyle import (
     resnet18_mixstyle_L234_p0d5_a0d1,

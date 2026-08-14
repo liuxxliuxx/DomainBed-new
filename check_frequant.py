@@ -14,7 +14,7 @@ import torch.nn as nn
 import torchvision
 
 sys.path.insert(0, os.getcwd())
-from domainbed.models.freqquant import FreqQuant, resnet_freqquant  # noqa: E402
+from domainbed.models.frequant import FreqQuant, resnet_freqquant  # noqa: E402
 
 OK, BAD = "  [PASS]", "  [FAIL]"
 failures = []
@@ -113,6 +113,26 @@ def main():
     else:
         print("  [SKIP] 4 目视检查：没给 --image")
 
+    # ---------- 4b. 掩码朝向：低频系数必须原样保留 ----------
+    # 这是判断掩码有没有取反的唯一可靠依据。目视看不出来，因为傅里叶基是全局的，
+    # 改任何一个高频系数都会在整幅图上铺开，差值图"均匀铺满"是正常现象。
+    m0.eval()
+    m0.enabled, m0.strength, m0.levels = True, 1.0, 4
+    feat = torch.randn(2, m0.channels, 28, 28)
+    with torch.no_grad():
+        out_f = m0(feat)
+    fx = torch.fft.fftshift(torch.fft.fft2(feat.float(), norm="ortho"), dim=(2, 3))
+    fy = torch.fft.fftshift(torch.fft.fft2(out_f.float(), norm="ortho"), dim=(2, 3))
+    himask = m0._mask(28, 28, feat.device)
+    d = (fy - fx).abs()
+    lo_err = d.masked_select(~himask).max().item()
+    hi_err = d.masked_select(himask).max().item()
+    report("4b 低频未被改动", lo_err < 1e-4 and hi_err > 10 * max(lo_err, 1e-6),
+           f"低频 max|dF|={lo_err:.2e}  高频 max|dF|={hi_err:.2e}")
+    dc = (fy[:, :, 14, 14] - fx[:, :, 14, 14]).abs().max().item()
+    report("4c 直流分量守恒", dc < 1e-4, f"|dDC|={dc:.2e}")
+    m0.levels = 16
+
     # ---------- 5. 梯度能穿过 STE 回到 conv1 ----------
     net.train()
     for m in mods:
@@ -141,15 +161,18 @@ def _raises(fn):
 
 
 def _visual(path, mod):
+    import numpy as np
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
     from PIL import Image
 
+    plt.rcParams["font.sans-serif"] = ["Microsoft YaHei", "SimHei", "DejaVu Sans"]
+    plt.rcParams["axes.unicode_minus"] = False
+
     im = Image.open(path).convert("L").resize((224, 224))
-    a = 1.0 - torch.from_numpy(__import__("numpy").asarray(im, dtype="float32") / 255.0)
+    a = 1.0 - torch.from_numpy(np.asarray(im, dtype="float32") / 255.0)
     x = a.view(1, 1, 224, 224).repeat(1, mod.channels, 1, 1)
-    mod.eval()
     mod.enabled, mod.strength, mod.levels = True, 1.0, 4
     mod.inited.fill_(0)
     mod.train()          # 让它自己估一次分位区间
@@ -158,16 +181,48 @@ def _visual(path, mod):
     mod.eval()
     with torch.no_grad():
         y = mod(x)
+
+    xi, yi = x[0, 0].numpy(), y[0, 0].numpy()
+    di = yi - xi
     out = os.path.join(os.path.dirname(os.path.abspath(__file__)), "fq_visual.png")
-    fig, ax = plt.subplots(1, 3, figsize=(11, 3.8))
-    for a_, img, t in zip(ax, [x[0, 0], y[0, 0], (y - x)[0, 0]],
-                          ["输入", "levels=4 输出", "差值"]):
-        a_.imshow(img.numpy(), cmap="gray")
-        a_.set_title(t)
+    fig, ax = plt.subplots(1, 4, figsize=(15, 4.1))
+
+    # 前两幅共用同一个色标，否则 autoscale 会把输出的背景显示成灰色，看着像直流漂了
+    vmin, vmax = float(xi.min()), float(xi.max())
+    for a_, img, t in zip(ax[:2], [xi, yi], ["输入", "levels=4 输出（与左图同色标）"]):
+        a_.imshow(img, cmap="gray", vmin=vmin, vmax=vmax)
+        a_.set_title(t, fontsize=10)
         a_.axis("off")
+    lim = float(np.abs(di).max())
+    ax[2].imshow(di, cmap="coolwarm", vmin=-lim, vmax=lim)
+    ax[2].set_title(f"差值（对称色标 ±{lim:.3f}）", fontsize=10)
+    ax[2].axis("off")
+
+    # 差值的径向功率谱：能量该堆在高频侧，堆在低频就是掩码取反了
+    F = np.fft.fftshift(np.fft.fft2(di))
+    P = np.abs(F) ** 2
+    n = 112
+    yy, xx = np.mgrid[0:224, 0:224]
+    rad = np.sqrt((yy - 112) ** 2 + (xx - 112) ** 2)
+    rb = np.clip(rad.astype(int), 0, n - 1)
+    ins = rad < n
+    cnt = np.bincount(rb[ins], minlength=n)
+    prof = np.bincount(rb[ins], weights=P[ins], minlength=n) / np.maximum(cnt, 1)
+    w = prof * cnt
+    cut = int(mod.mask_ratio * 224 / 2)
+    frac_hi = w[cut:].sum() / w.sum()
+    ax[3].plot(np.arange(1, n), prof[1:], lw=2, color="#2a78d6")
+    ax[3].axvline(cut, color="#52514e", lw=1.2, ls=(0, (4, 3)))
+    ax[3].set_yscale("log")
+    ax[3].set_title(f"差值的功率谱：高频侧占 {frac_hi:.1%}", fontsize=10)
+    ax[3].set_xlabel("径向频率 r", fontsize=9)
+    ax[3].grid(True, color="#dedcd6", lw=0.8)
+    for s in ("top", "right"):
+        ax[3].spines[s].set_visible(False)
+
     fig.tight_layout()
     fig.savefig(out, dpi=140)
-    print(f"  [LOOK] 4 目视检查已存 -> {out}")
+    print(f"  [LOOK] 4 目视检查已存 -> {out}  差值高频占比={frac_hi:.1%}（应 >80%）")
 
 
 if __name__ == "__main__":
