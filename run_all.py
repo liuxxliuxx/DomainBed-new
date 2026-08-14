@@ -269,7 +269,7 @@ def build_command(repo_dir, method_name, seed,batch,dataset):
         "--dataset", dataset,
         "--data_dir", str(repo_dir / "dataset"),
         "--algorithm", method["algorithm"],
-        "--steps", "5000",
+        "--steps", "15000",
         "--checkpoint_freq", "100",
         "--batch_size", str(batch),
         "--optimizer", "adam",
