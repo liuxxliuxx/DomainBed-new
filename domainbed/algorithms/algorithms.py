@@ -28,6 +28,7 @@ from domainbed.lib.misc import random_pairs_of_minibatches, split_meta_train_tes
 from domainbed.optimizers import get_optimizer
 from domainbed.models.aloft import ALOFT as ALOFTModule, resnet_aloft
 from domainbed.models.awwsl import AWWSL as AWWSLModule, resnet_awwsl
+from domainbed.models.freqquant import FreqQuant, resnet_freqquant, collect_aux_loss
 
 from domainbed.models.resnet_mixstyle import (
     resnet18_mixstyle_L234_p0d5_a0d1,
@@ -2299,3 +2300,39 @@ class AWWSL_rev_E(AWWSL_DG):
 class AWWSL_rev_S(AWWSL_DG):
     mode = "S"
     rev = True
+
+
+class FQ(Algorithm):
+    def __init__(self, input_shape, num_classes, num_domains, hparams):
+        super().__init__(input_shape, num_classes, num_domains, hparams)
+        if hparams["resnet18"]:
+            network = torchvision.models.resnet18(pretrained=hparams["pretrained"])
+        else:
+            network = torchvision.models.resnet50(pretrained=hparams["pretrained"])
+
+        network = resnet_freqquant(              # 权重加载之后再包
+            network,
+            layers=tuple(hparams["fq_layers"]),
+            levels=hparams["fq_levels"],
+            mask_ratio=hparams["fq_mask_ratio"],
+            low_gain=hparams["fq_low_gain"],
+        )
+        self.featurizer = networks.ResNet(input_shape, self.hparams, network)
+        self.classifier = nn.Linear(self.featurizer.n_outputs, num_classes)
+        self.network = nn.Sequential(self.featurizer, self.classifier)
+        self.optimizer = self.new_optimizer(self.network.parameters())
+        self.aux_weight = hparams["fq_aux_weight"]
+
+    def update(self, x, y, **kwargs):
+        all_x, all_y = torch.cat(x), torch.cat(y)
+        loss = F.cross_entropy(self.predict(all_x), all_y)
+        aux = collect_aux_loss(self.network)
+        total = loss + self.aux_weight * aux
+        self.optimizer.zero_grad()
+        total.backward()
+        self.optimizer.step()
+        return {"loss": loss.item(),
+                "aux": float(aux) if torch.is_tensor(aux) else aux}
+
+    def predict(self, x):
+        return self.network(x)

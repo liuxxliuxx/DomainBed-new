@@ -33,7 +33,7 @@ def json_handler(v):
     raise TypeError(f"`{type(v)}` is not JSON Serializable")
 
 
-def train(args_q, test_envs, args, hparams, n_steps, q_steps, quant, checkpoint_freq, logger, writer, target_env=None):
+def train(args_q, test_envs, args, hparams, n_steps, q_steps, quant, checkpoint_freq, logger, writer, target_env=None,fft_quant,fq_steps,fq_ramp):
     logger.info("")
 
     #######################################################
@@ -142,6 +142,9 @@ def train(args_q, test_envs, args, hparams, n_steps, q_steps, quant, checkpoint_
 
     algorithm.to(device)
 
+    fq_modules = [m for m in algorithm.modules() if isinstance(m, FreqQuant)]
+    logger.info(f"FreqQuant modules: {len(fq_modules)}")
+
     n_params = sum([p.numel() for p in algorithm.parameters()])
     logger.info("# of params = %d" % n_params)
 
@@ -208,6 +211,15 @@ def train(args_q, test_envs, args, hparams, n_steps, q_steps, quant, checkpoint_
                 swad_algorithm = swa_utils.AveragedModel(algorithm)
                 swad_cls = getattr(swad_module, hparams["swad"])
                 swad = swad_cls(evaluator, **hparams.swad_kwargs)
+        if fft_quant == 1 and step >= fq_steps:
+            s = 1.0 if fq_ramp <= 0 else min(1.0, (step - fq_steps) / fq_ramp)
+            for m in fq_modules:
+                m.enabled, m.strength = True, s
+            if step == fq_steps + fq_ramp and hparams["swad"]:
+                swad_algorithm = swa_utils.AveragedModel(algorithm)
+                swad_cls = getattr(swad_module, hparams["swad"])
+                swad = swad_cls(evaluator, **hparams.swad_kwargs)
+                logger.info(f"SWAD reset at step {step} after fq ramp")
                 
         step_start_time = time.time()
         # batches_dictlist: [{env0_data_key: tensor, env0_...}, env1_..., ...]

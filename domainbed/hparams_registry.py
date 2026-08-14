@@ -154,6 +154,14 @@ def _hparams(algorithm, dataset, random_state):
         # weight_nu: 跨域原型对比权重；weight_mu: 不变原型对比权重
         hparams["weight_nu"] = (1.0, random_state.uniform(1.0, 2.0))
         hparams["weight_mu"] = (1.0, random_state.uniform(1.0, 2.0))
+    elif algorithm == "FQ":
+        hparams["fq_layers"] = (["layer1", "layer2", "layer3"],) * 2
+        hparams["fq_levels"] = (16, int(random_state.choice([4, 8, 16, 64])))
+        hparams["fq_mask_ratio"] = (0.5, random_state.choice([0.25, 0.5, 0.75]))
+        hparams["fq_low_gain"] = (1.0, random_state.choice([0.5, 0.8, 1.0]))
+        hparams["fq_aux_weight"] = (0.25, random_state.choice([0.1, 0.25, 1.0]))
+        hparams["fq_codebook"] = (0, 0)   # 第二、三步用，0 = 标量量化
+        hparams["fq_groups"] = (1, 1)
     return hparams
 
 

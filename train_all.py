@@ -105,6 +105,13 @@ def main():
     with open("config_q.yaml", encoding="utf8") as yaml_file:
         cfg = munch.munchify(yaml.safe_load(yaml_file))
 
+    parser.add_argument("--fft_quant", type=int, default=0,
+                        help="1 表示启用频域量化模块")
+    parser.add_argument("--fq_steps", type=int, default=2000,
+                        help="第几步开始开启频域量化")
+    parser.add_argument("--fq_ramp", type=int, default=500,
+                        help="strength 从 0 升到 1 用多少步，0 表示硬开关")
+
     
     args, left_argv = parser.parse_known_args()
     # setup hparams
@@ -134,7 +141,7 @@ def main():
     args.out_root = args.work_dir / Path(args.train_output) / args.dataset
     args.out_dir = args.out_root / args.unique_name
     args.out_dir.mkdir(exist_ok=True, parents=True)
-
+    
     writer = get_writer(args.out_root / "runs" / args.unique_name)
     logger = Logger.get(args.out_dir / "log.txt")
 

@@ -118,7 +118,8 @@ def resnet_aloft(network, positions=("layer1", "layer2", "layer3"), **kwargs):
     """
     for name in positions:
         stage = getattr(network, name)
-        if isinstance(stage, nn.Sequential) and len(stage) and isinstance(stage[-1], ALOFT):
-            raise RuntimeError(f"{name} already wrapped with ALOFT; resnet_aloft is not idempotent")
-        setattr(network, name, nn.Sequential(stage, ALOFT(**kwargs)))
+        for i, block in enumerate(stage):
+            if isinstance(block, nn.Sequential) and isinstance(block[-1], FreqQuant):
+                raise RuntimeError(f"{name}[{i}] already wrapped")
+            stage[i] = nn.Sequential(block, FreqQuant(_out_channels(block), **kwargs))
     return network
