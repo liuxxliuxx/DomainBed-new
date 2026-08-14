@@ -238,6 +238,9 @@ def main():
             checkpoint_freq=checkpoint_freq,
             logger=logger,
             writer=writer,
+            fft_quant=args.fft_quant,
+            fq_steps=args.fq_steps,
+            fq_ramp=args.fq_ramp
         )
         all_records.append(records)
         for k, v in res.items():
