@@ -109,7 +109,6 @@ class ALOFT(nn.Module):
         new = sig_hat * (f - mu) / sig + mu_hat
         return torch.where(m, new, f)
 
-
 def resnet_aloft(network, positions=("layer1", "layer2", "layer3"), **kwargs):
     """把 ALOFT 挂到 torchvision ResNet 指定 stage 的输出上。
 
@@ -118,8 +117,7 @@ def resnet_aloft(network, positions=("layer1", "layer2", "layer3"), **kwargs):
     """
     for name in positions:
         stage = getattr(network, name)
-        for i, block in enumerate(stage):
-            if isinstance(block, nn.Sequential) and isinstance(block[-1], FreqQuant):
-                raise RuntimeError(f"{name}[{i}] already wrapped")
-            stage[i] = nn.Sequential(block, FreqQuant(_out_channels(block), **kwargs))
+        if isinstance(stage, nn.Sequential) and len(stage) and isinstance(stage[-1], ALOFT):
+            raise RuntimeError(f"{name} already wrapped with ALOFT; resnet_aloft is not idempotent")
+        setattr(network, name, nn.Sequential(stage, ALOFT(**kwargs)))
     return network
