@@ -54,7 +54,7 @@ class AWWSL(nn.Module):
         return self._mask_cache[key]
 
     def forward(self, x):
-        if not self.training or self.alpha <= 0:
+        if self.alpha <= 0:
             return x
         if self.perturb_prob < 1.0 and random.random() > self.perturb_prob:
             return x
