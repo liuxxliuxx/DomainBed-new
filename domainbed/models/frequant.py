@@ -83,7 +83,7 @@ class FreqQuant(nn.Module):
         q = t + (q - t).detach()                       # STE
         return torch.exp(q * span + self.log_lo), None
 
-        
+
 def _out_channels(block):
     return block.bn3.num_features if hasattr(block, "bn3") else block.bn2.num_features
 
