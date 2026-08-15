@@ -49,6 +49,26 @@ METHODS = {
         "swad": "LossValley",
         "extra_args": [],
     },
+    # 频带均衡：ERM+SWAD 上加逐样本径向频谱归一化。对照臂直接用上面的 SWAD。
+    "BEQ": {
+        "algorithm": "ERM",
+        "swad": "LossValley",
+        "extra_args": [
+            "--band_eq", "1",
+            "--band_eq_preserve_total", "True",
+            "--band_eq_target_mode", "source_mean",
+        ],
+    },
+    # 消融：目标改用 1/f^2 解析剖面（不统计源域，无泄漏、无逐划分缓存）
+    "BEQ_fixed": {
+        "algorithm": "ERM",
+        "swad": "LossValley",
+        "extra_args": [
+            "--band_eq", "1",
+            "--band_eq_preserve_total", "True",
+            "--band_eq_target_mode", "fixed",
+        ],
+    },
     "Arith": {
         "algorithm": "Arith",
         "swad": "LossValley",
