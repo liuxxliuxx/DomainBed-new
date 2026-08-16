@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 import torch
@@ -17,18 +18,26 @@ def set_transfroms(dset, data_type, hparams, algorithm_class=None, band_eq=None)
     assert hparams["data_augmentation"]
     size = int(hparams["image_size"])
 
+    # band_eq_mode 决定均衡挂在哪几条分支上：
+    #   both       训练和推理都过（归一化的标准用法）
+    #   test_only  只有目标域过——训练保留原始多样性，均衡当成推理时的输入归一化
+    #   train_only 只有源域过，目标域原样（消融，用来隔离两侧各自的作用）
+    # valid 是源域的留出集，跟随训练侧，这样 inD 指标在同一分布上可比。
+    mode = str(hparams["band_eq_mode"])
+    beq_src = band_eq if mode in ("both", "train_only") else None
+    beq_tgt = band_eq if mode in ("both", "test_only") else None
+
     additional_data = False
     if data_type == "train":
-        dset.transforms = {"x": DBT.aug(size, band_eq)}
+        dset.transforms = {"x": DBT.aug(size, beq_src)}
         additional_data = True
     elif data_type == "valid":
         if hparams["val_augment"] is False:
-            dset.transforms = {"x": DBT.basic(size, band_eq)}
+            dset.transforms = {"x": DBT.basic(size, beq_src)}
         else:
-            dset.transforms = {"x": DBT.aug(size, band_eq)}
+            dset.transforms = {"x": DBT.aug(size, beq_src)}
     elif data_type == "test":
-        # 均衡是归一化不是增强，测试域也必须过，否则训练和推理的分布对不上
-        dset.transforms = {"x": DBT.basic(size, band_eq)}
+        dset.transforms = {"x": DBT.basic(size, beq_tgt)}
     elif data_type == "mnist":
         dset.transforms = {"x": lambda x: x}
     else:
@@ -106,7 +115,10 @@ def get_band_target(dataset, test_envs, args, hparams, n_per_env=400):
     target = np.exp(np.log(np.clip(np.array(profs), 1e-30, None)).mean(axis=0))
     target = target / target.sum()
     path.parent.mkdir(parents=True, exist_ok=True)
-    np.savez(path, target=target, edges=edges)
+    # 和图片缓存一样先写临时文件再原子替换，防止并发的两个 run 写出半截文件
+    tmp = path.parent / f"{path.stem}.{os.getpid()}.tmp.npz"
+    np.savez(tmp, target=target, edges=edges)
+    os.replace(tmp, path)
     return target, edges
 
 

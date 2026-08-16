@@ -27,6 +27,8 @@ def _hparams(algorithm, dataset, random_state):
     # 逐样本径向频带均衡。放无条件区，任何算法都能 --band_eq 1 直接用。
     hparams["band_eq"] = (0, 0)
     hparams["band_eq_preserve_total"] = (True, True)
+    # both / test_only / train_only —— 均衡挂在训练侧、推理侧还是两侧
+    hparams["band_eq_mode"] = ("both", "both")
     # "source_mean" = 只用源域统计（每个留一域划分各一份）；"fixed" = 1/f^2 解析剖面
     hparams["band_eq_target_mode"] = ("source_mean", "source_mean")
 

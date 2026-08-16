@@ -55,6 +55,29 @@ METHODS = {
         "swad": "LossValley",
         "extra_args": [
             "--band_eq", "1",
+            "--band_eq_mode", "both",
+            "--band_eq_preserve_total", "True",
+            "--band_eq_target_mode", "source_mean",
+        ],
+    },
+    # 训练侧保留原始多样性，只在推理时把目标域输入归一到源域均值
+    "BEQ_test": {
+        "algorithm": "ERM",
+        "swad": "LossValley",
+        "extra_args": [
+            "--band_eq", "1",
+            "--band_eq_mode", "test_only",
+            "--band_eq_preserve_total", "True",
+            "--band_eq_target_mode", "source_mean",
+        ],
+    },
+    # 消融：只归一源域、目标域原样，用来隔离两侧各自的作用
+    "BEQ_train": {
+        "algorithm": "ERM",
+        "swad": "LossValley",
+        "extra_args": [
+            "--band_eq", "1",
+            "--band_eq_mode", "train_only",
             "--band_eq_preserve_total", "True",
             "--band_eq_target_mode", "source_mean",
         ],

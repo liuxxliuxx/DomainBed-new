@@ -113,6 +113,7 @@ def main():
     hp["band_eq"] = 1
     hp["band_eq_preserve_total"] = True
     hp["band_eq_target_mode"] = "source_mean"
+    hp["band_eq_mode"] = "both"
 
     te = [a.test_env]
     dataset, in_splits, out_splits = get_dataset(te, args, hp)
@@ -132,6 +133,20 @@ def main():
     _, in0, _ = get_dataset(te, args, hp0)
     ok0, _ = has_bandeq(in0[te[0]][0].transforms["x"])
     report("2 band_eq=0 时不插入模块", not ok0, "关闭时链里不应出现 BandEqualize")
+
+    # ---------- 2b 三种 mode 挂在正确的分支上 ----------
+    want = {"both": (True, True, True),
+            "test_only": (False, False, True),
+            "train_only": (True, True, False)}
+    for mode, (w_tr, w_va, w_te) in want.items():
+        hpm = dict(hp)
+        hpm["band_eq_mode"] = mode
+        _, i_m, o_m = get_dataset(te, args, hpm)
+        got = (has_bandeq(i_m[train_i][0].transforms["x"])[0],
+               has_bandeq(o_m[train_i][0].transforms["x"])[0],
+               has_bandeq(i_m[te[0]][0].transforms["x"])[0])
+        report(f"2b mode={mode:<10} (train,valid,test)", got == (w_tr, w_va, w_te),
+               f"实际 {got} 期望 {(w_tr, w_va, w_te)}")
 
     beq = next(o for o in in_splits[train_i][0].transforms["x"].transforms
                if isinstance(o, BandEqualize))
