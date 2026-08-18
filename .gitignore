@@ -9,3 +9,4 @@ train_output/
 logs_newest/
 output/
 *.pptx
+logs/

@@ -253,6 +253,88 @@ METHODS = {
             "--fq_levels","8",
         ],
     },
+    # ---- 机制分解：levels 32~256 四档结果几乎相同，说明起作用的可能是那个
+    # 和 levels 无关的分位截断，而不是量化。这两档把它们拆开。对照臂用 SWAD。
+    # 只截断不量化
+    "FQ_clip": {
+        "algorithm": "FQ",
+        "swad": "LossValley",
+        "extra_args": [
+            "--fft_quant", "1",
+            "--fq_steps", "2000",
+            "--fq_ramp", "500",
+            "--fq_mode", "clip",
+            "--fq_quantile", "0.01",
+        ],
+    },
+    # 只量化不截断
+    "FQ_noclip": {
+        "algorithm": "FQ",
+        "swad": "LossValley",
+        "extra_args": [
+            "--fft_quant", "1",
+            "--fq_steps", "2000",
+            "--fq_ramp", "500",
+            "--fq_mode", "quant",
+            "--fq_levels", "256",
+            "--fq_quantile", "0",
+        ],
+    },
+    # ---- 码本：标量 round 只能表达「幅度接近」，表达不了「不同抽象度的
+    # 同一结构是同一个东西」。K=256 对齐 DDG(arXiv 2504.06572)。
+    # 频带内单码本
+    "FQ_cbf": {
+        "algorithm": "FQ",
+        "swad": "LossValley",
+        "extra_args": [
+            "--fft_quant", "1",
+            "--fq_steps", "2000",
+            "--fq_ramp", "500",
+            "--fq_mode", "cb_freq",
+            "--fq_codebook", "256",
+            "--fq_groups", "1",
+        ],
+    },
+    # 频带内乘积量化：等开销下容量大得多，单码本压太狠时的备胎
+    "FQ_cbf_pq": {
+        "algorithm": "FQ",
+        "swad": "LossValley",
+        "extra_args": [
+            "--fft_quant", "1",
+            "--fq_steps", "2000",
+            "--fq_ramp", "500",
+            "--fq_mode", "cb_freq",
+            "--fq_codebook", "256",
+            "--fq_groups", "2",
+        ],
+    },
+    # 低频码本，和之前 hi/lo 那组对齐
+    "FQ_cbf_lo": {
+        "algorithm": "FQ",
+        "swad": "LossValley",
+        "extra_args": [
+            "--fft_quant", "1",
+            "--fq_steps", "2000",
+            "--fq_ramp", "500",
+            "--fq_mode", "cb_freq",
+            "--fq_band", "low",
+            "--fq_codebook", "256",
+            "--fq_groups", "1",
+        ],
+    },
+    # 全图码本，不碰频域，对标 DDG。机制最硬的一档
+    "FQ_cbx": {
+        "algorithm": "FQ",
+        "swad": "LossValley",
+        "extra_args": [
+            "--fft_quant", "1",
+            "--fq_steps", "2000",
+            "--fq_ramp", "500",
+            "--fq_mode", "cb_feat",
+            "--fq_codebook", "256",
+            "--fq_groups", "1",
+        ],
+    },
 }
 
 METHOD_NAMES = {

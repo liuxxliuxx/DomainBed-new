@@ -168,7 +168,14 @@ def _hparams(algorithm, dataset, random_state):
         hparams["fq_mask_ratio"] = (0.5, random_state.choice([0.25, 0.5, 0.75]))
         hparams["fq_low_gain"] = (1.0, random_state.choice([0.5, 0.8, 1.0]))
         hparams["fq_aux_weight"] = (0.25, random_state.choice([0.1, 0.25, 1.0]))
-        hparams["fq_codebook"] = (0, 0)   # 第二、三步用，0 = 标量量化
+        # quant / clip / cb_freq / cb_feat，见 models/frequant.py 顶部
+        hparams["fq_mode"] = ("quant", "quant")
+        hparams["fq_band"] = ("high", "high")
+        # 区间分位。0 = 取真实 min/max、完全不截断，用来把截断和量化分解开
+        hparams["fq_quantile"] = (0.01, random_state.choice([0.0, 0.005, 0.01, 0.02]))
+        # 码本条目数 K。默认对齐 DDG(arXiv 2504.06572) 的 256
+        hparams["fq_codebook"] = (256, int(random_state.choice([128, 256, 512])))
+        # 1 = 单码本；>1 = 乘积量化。等开销下 PQ 的瓶颈更松，先用单码本
         hparams["fq_groups"] = (1, 1)
     return hparams
 

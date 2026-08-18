@@ -135,7 +135,10 @@ class BandEqualize:
 
 
 def basic(size=224, band_eq=None):
-    ops = [T.Resize((size, size)), T.ToTensor()]
+    ops = [
+        T.Resize((size, size)), 
+        T.ToTensor(),
+    ]
     if band_eq is not None:
         ops.append(band_eq)          # 必须在 ToTensor 之后、_NORM 之前
     ops.append(_NORM)

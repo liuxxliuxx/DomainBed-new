@@ -2313,9 +2313,14 @@ class FQ(Algorithm):
         network = resnet_freqquant(              # 权重加载之后再包
             network,
             layers=tuple(hparams["fq_layers"]),
+            mode=hparams["fq_mode"],
+            band=hparams["fq_band"],
             levels=hparams["fq_levels"],
             mask_ratio=hparams["fq_mask_ratio"],
             low_gain=hparams["fq_low_gain"],
+            quantile=hparams["fq_quantile"],
+            codebook=hparams["fq_codebook"],
+            groups=hparams["fq_groups"],
         )
         self.featurizer = networks.ResNet(input_shape, self.hparams, network)
         self.classifier = nn.Linear(self.featurizer.n_outputs, num_classes)
