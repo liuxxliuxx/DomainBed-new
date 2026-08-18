@@ -2321,6 +2321,7 @@ class FQ(Algorithm):
             quantile=hparams["fq_quantile"],
             codebook=hparams["fq_codebook"],
             groups=hparams["fq_groups"],
+            strength_max=hparams["fq_strength_max"],
         )
         self.featurizer = networks.ResNet(input_shape, self.hparams, network)
         self.classifier = nn.Linear(self.featurizer.n_outputs, num_classes)

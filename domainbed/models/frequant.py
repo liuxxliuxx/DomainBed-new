@@ -22,7 +22,8 @@ import torch.nn.functional as F
 class FreqQuant(nn.Module):
     def __init__(self, channels, mode="quant", band="high", levels=16,
                  mask_ratio=0.5, low_gain=1.0, quantile=0.01,
-                 codebook=256, groups=1, momentum=0.1, dead_thr=0.5, eps=1e-6):
+                 codebook=256, groups=1, strength_max=1.0,
+                 momentum=0.1, dead_thr=0.5, eps=1e-6):
         super().__init__()
         assert mode in ("quant", "clip", "cb_freq", "cb_feat"), f"unknown fq_mode: {mode}"
         assert band in ("high", "low"), f"unknown fq_band: {band}"
@@ -39,7 +40,8 @@ class FreqQuant(nn.Module):
         self.dead_thr = dead_thr
         self.eps = eps
         self.enabled = False      # trainer 翻
-        self.strength = 0.0       # 0 -> 1 渐变
+        self.strength = 0.0       # 0 -> strength_max 渐变
+        self.strength_max = float(strength_max)   # 封顶，<1 时输出是原值和量化值的混合
         self.aux_loss = None      # commitment loss，由 collect_aux_loss 取走
         self.register_buffer("log_lo", torch.zeros(()))
         self.register_buffer("log_hi", torch.ones(()))

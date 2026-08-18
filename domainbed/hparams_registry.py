@@ -177,6 +177,8 @@ def _hparams(algorithm, dataset, random_state):
         hparams["fq_codebook"] = (256, int(random_state.choice([128, 256, 512])))
         # 1 = 单码本；>1 = 乘积量化。等开销下 PQ 的瓶颈更松，先用单码本
         hparams["fq_groups"] = (1, 1)
+        # strength 封顶，<1 时量化只按比例混合进去，是最直接的力度旋钮
+        hparams["fq_strength_max"] = (1.0, random_state.choice([0.3, 0.5, 1.0]))
     return hparams
 
 

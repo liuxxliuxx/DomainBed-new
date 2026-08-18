@@ -215,7 +215,8 @@ def train(args_q, test_envs, args, hparams, n_steps, q_steps, quant, checkpoint_
         if fft_quant == 1 and step >= fq_steps:
             s = 1.0 if fq_ramp <= 0 else min(1.0, (step - fq_steps) / fq_ramp)
             for m in fq_modules:
-                m.enabled, m.strength = True, s
+                # strength_max 封顶：输出是原值和量化值的混合，破坏程度按比例缩
+                m.enabled, m.strength = True, s * m.strength_max
             if step == fq_steps + fq_ramp and hparams["swad"]:
                 swad_algorithm = swa_utils.AveragedModel(algorithm)
                 swad_cls = getattr(swad_module, hparams["swad"])
