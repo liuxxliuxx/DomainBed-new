@@ -28,6 +28,12 @@ from domainbed.lib.misc import random_pairs_of_minibatches, split_meta_train_tes
 from domainbed.optimizers import get_optimizer
 from domainbed.models.aloft import ALOFT as ALOFTModule, resnet_aloft
 from domainbed.models.aloft_cb import resnet_aloft_cb, find_band_codebooks
+from domainbed.models.aloft_sketch import (
+    collect_sketch_diagnostics,
+    collect_sketch_topology_loss,
+    find_sketch_spectrum_modules,
+    resnet_aloft_sketch,
+)
 from domainbed.models.awwsl import AWWSL as AWWSLModule, resnet_awwsl
 from domainbed.models.frequant import FreqQuant, resnet_freqquant, collect_aux_loss
 
@@ -2290,6 +2296,92 @@ class ALOFT_CB_rev_E(Algorithm):
 
     def predict(self, x):
         return self.network(x)
+
+
+class _ALOFTSketchBase(Algorithm):
+    """Direction/radial high-frequency perturbation for sketch features."""
+
+    TOPOLOGY = False
+
+    def __init__(self, input_shape, num_classes, num_domains, hparams):
+        assert input_shape[0] == 3, "ALOFT sketch variants support R18/R50 only"
+        super().__init__(input_shape, num_classes, num_domains, hparams)
+
+        if hparams["resnet18"]:
+            network = torchvision.models.resnet18(pretrained=hparams["pretrained"])
+        else:
+            network = torchvision.models.resnet50(pretrained=hparams["pretrained"])
+
+        network = resnet_aloft_sketch(
+            network,
+            num_classes=num_classes,
+            positions=("layer1", "layer2"),
+            alpha=hparams["aloft_alpha"],
+            mask_ratio=hparams["aloft_mask_ratio"],
+            perturb_prob=hparams["aloft_perturb_prob"],
+            group_size=hparams["aloft_sketch_group_size"],
+            radial_bands=hparams["aloft_sketch_radial_bands"],
+            orientation_bins=hparams["aloft_sketch_orientation_bins"],
+            strength_max=hparams["aloft_sketch_strength_max"],
+            warmup_steps=hparams["aloft_sketch_warmup"],
+            ramp_steps=hparams["aloft_sketch_ramp"],
+            class_decay=hparams["aloft_sketch_class_decay"],
+            class_min_count=hparams["aloft_sketch_class_min_count"],
+            ready_ratio=hparams["aloft_sketch_ready_ratio"],
+            gate_power=hparams["aloft_sketch_gate_power"],
+            topology=self.TOPOLOGY,
+            skeleton_iters=hparams["aloft_sketch_skeleton_iters"],
+        )
+
+        self.featurizer = networks.ResNet(input_shape, self.hparams, network)
+        self.classifier = nn.Linear(self.featurizer.n_outputs, num_classes)
+        self.network = nn.Sequential(self.featurizer, self.classifier)
+        self.optimizer = self.new_optimizer(self.network.parameters())
+        self.topology_weight = (
+            hparams["aloft_sketch_topo_weight"] if self.TOPOLOGY else 0.0)
+
+    def update(self, x, y, **kwargs):
+        all_x = torch.cat(x)
+        all_y = torch.cat(y)
+        step = int(kwargs.get("step", 0))
+        modules = find_sketch_spectrum_modules(self)
+        for module in modules:
+            module.set_batch_context(all_y, step)
+        try:
+            logits = self.predict(all_x)
+        finally:
+            for module in modules:
+                module.clear_batch_context()
+
+        classification_loss = F.cross_entropy(logits, all_y)
+        topology_loss = collect_sketch_topology_loss(self)
+        if topology_loss is None:
+            topology_loss = classification_loss.new_zeros(())
+        loss = classification_loss + self.topology_weight * topology_loss
+
+        self.optimizer.zero_grad()
+        loss.backward()
+        self.optimizer.step()
+
+        result = {
+            "loss": loss.item(),
+            "ce_loss": classification_loss.item(),
+        }
+        result.update(collect_sketch_diagnostics(self))
+        return result
+
+    def predict(self, x):
+        return self.network(x)
+
+
+class ALOFT_Sketch_rev_E(_ALOFTSketchBase):
+    """Sketch-spectrum perturbation with phase/orientation hard constraints."""
+
+
+class ALOFT_SketchTopo_rev_E(_ALOFTSketchBase):
+    """Sketch-spectrum perturbation plus soft-skeleton consistency."""
+
+    TOPOLOGY = True
 
 class AWWSL_DG(Algorithm):
     """AWWSL (CVPR'23) 的 ResNet 版：把频域扰动插进 ResNet 的 stage 之间。

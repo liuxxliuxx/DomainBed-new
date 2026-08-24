@@ -142,6 +142,22 @@ def _hparams(algorithm, dataset, random_state):
         hparams["aloft_cb_decay"] = (0.99, 0.99)
         hparams["aloft_cb_dead_patience"] = (200, 200)
         hparams["aloft_cb_reservoir"] = (1024, 1024)
+    elif algorithm in ["ALOFT_Sketch_rev_E", "ALOFT_SketchTopo_rev_E"]:
+        hparams["aloft_alpha"] = (1.0, 1.0)
+        hparams["aloft_mask_ratio"] = (0.7, 0.7)
+        hparams["aloft_perturb_prob"] = (1.0, 1.0)
+        hparams["aloft_sketch_group_size"] = (32, 32)
+        hparams["aloft_sketch_radial_bands"] = (3, 3)
+        hparams["aloft_sketch_orientation_bins"] = (6, 6)
+        hparams["aloft_sketch_strength_max"] = (0.3, 0.3)
+        hparams["aloft_sketch_warmup"] = (500, 500)
+        hparams["aloft_sketch_ramp"] = (500, 500)
+        hparams["aloft_sketch_class_decay"] = (0.99, 0.99)
+        hparams["aloft_sketch_class_min_count"] = (20, 20)
+        hparams["aloft_sketch_ready_ratio"] = (0.5, 0.5)
+        hparams["aloft_sketch_gate_power"] = (0.5, 0.5)
+        hparams["aloft_sketch_topo_weight"] = (0.05, 0.05)
+        hparams["aloft_sketch_skeleton_iters"] = (10, 10)
     elif algorithm in ["ALOFT_E", "ALOFT_S", "ALOFT_DG","ALOFT_rev_E","ALOFT_rev_S", "AWWSL_E", "AWWSL_S", "AWWSL_DG","AWWSL_rev_E","AWWSL_rev_S", "AWWSL_rev_DG"]:
         # 论文 4.2 节："we set the perturbation strength alpha ... to 1.0 in
         # ALOFT-E and 0.9 in ALOFT-S"
