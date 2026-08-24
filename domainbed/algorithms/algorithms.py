@@ -27,6 +27,7 @@ from domainbed.lib.gradient_utils import METHODS, get_method, agreement_mask
 from domainbed.lib.misc import random_pairs_of_minibatches, split_meta_train_test, ParamDict
 from domainbed.optimizers import get_optimizer
 from domainbed.models.aloft import ALOFT as ALOFTModule, resnet_aloft
+from domainbed.models.aloft_cb import resnet_aloft_cb, find_band_codebooks
 from domainbed.models.awwsl import AWWSL as AWWSLModule, resnet_awwsl
 from domainbed.models.frequant import FreqQuant, resnet_freqquant, collect_aux_loss
 
@@ -2233,6 +2234,62 @@ class ALOFT_rev_E(ALOFT_DG):
 class ALOFT_rev_S(ALOFT_DG):
     mode = "S"
     rev = True
+
+
+class ALOFT_CB_rev_E(Algorithm):
+    """High-frequency ALOFT-E on layer1/2 and a band codebook on layer3."""
+
+    MODE = "E"
+    REV = True
+
+    def __init__(self, input_shape, num_classes, num_domains, hparams):
+        assert input_shape[0] == 3, "ALOFT_CB_rev_E supports R18/R50 only"
+        super().__init__(input_shape, num_classes, num_domains, hparams)
+
+        if hparams["resnet18"]:
+            network = torchvision.models.resnet18(pretrained=hparams["pretrained"])
+        else:
+            network = torchvision.models.resnet50(pretrained=hparams["pretrained"])
+
+        network = resnet_aloft_cb(
+            network,
+            positions=tuple(hparams["aloft_positions"]),
+            mode=self.MODE,
+            alpha=hparams["aloft_alpha"],
+            mask_ratio=hparams["aloft_mask_ratio"],
+            perturb_prob=hparams["aloft_perturb_prob"],
+            rev=self.REV,
+            codebook=hparams["aloft_cb_codebook"],
+            group_size=hparams["aloft_cb_group_size"],
+            n_bands=hparams["aloft_cb_bands"],
+            strength_max=hparams["aloft_cb_strength_max"],
+            decay=hparams["aloft_cb_decay"],
+            dead_patience=hparams["aloft_cb_dead_patience"],
+            reservoir_size=hparams["aloft_cb_reservoir"],
+        )
+
+        self.featurizer = networks.ResNet(input_shape, self.hparams, network)
+        self.classifier = nn.Linear(self.featurizer.n_outputs, num_classes)
+        self.network = nn.Sequential(self.featurizer, self.classifier)
+        self.optimizer = self.new_optimizer(self.network.parameters())
+
+    def update(self, x, y, **kwargs):
+        all_x = torch.cat(x)
+        all_y = torch.cat(y)
+        loss = F.cross_entropy(self.predict(all_x), all_y)
+
+        self.optimizer.zero_grad()
+        loss.backward()
+        self.optimizer.step()
+
+        result = {"loss": loss.item()}
+        codebooks = find_band_codebooks(self)
+        if codebooks:
+            result.update(codebooks[0].diagnostics())
+        return result
+
+    def predict(self, x):
+        return self.network(x)
 
 class AWWSL_DG(Algorithm):
     """AWWSL (CVPR'23) 的 ResNet 版：把频域扰动插进 ResNet 的 stage 之间。

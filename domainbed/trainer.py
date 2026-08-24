@@ -21,6 +21,7 @@ from domainbed.lib.fast_data_loader import InfiniteDataLoader, FastDataLoader
 from domainbed import swad as swad_module
 from domainbed.quan.utils import find_modules_to_quantize, replace_module_by_names
 from domainbed.models.frequant import FreqQuant, resnet_freqquant, collect_aux_loss
+from domainbed.models.aloft_cb import BandStatsCodebook, codebook_strength_at_step
 
 if torch.cuda.is_available():
     device = "cuda"
@@ -145,6 +146,14 @@ def train(args_q, test_envs, args, hparams, n_steps, q_steps, quant, checkpoint_
 
     fq_modules = [m for m in algorithm.modules() if isinstance(m, FreqQuant)]
     logger.info(f"FreqQuant modules: {len(fq_modules)}")
+    cb_modules = [m for m in algorithm.modules() if isinstance(m, BandStatsCodebook)]
+    for module in cb_modules:
+        module.set_collection(fft_quant == 1)
+        module.set_quantization(False, 0.0)
+    logger.info(
+        f"ALOFT band-codebook modules: {len(cb_modules)} "
+        f"(warmup={'on' if fft_quant == 1 else 'off'})"
+    )
 
     n_params = sum([p.numel() for p in algorithm.parameters()])
     logger.info("# of params = %d" % n_params)
@@ -217,11 +226,27 @@ def train(args_q, test_envs, args, hparams, n_steps, q_steps, quant, checkpoint_
             for m in fq_modules:
                 # strength_max 封顶：输出是原值和量化值的混合，破坏程度按比例缩
                 m.enabled, m.strength = True, s * m.strength_max
-            if step == fq_steps + fq_ramp and hparams["swad"]:
+            if step == fq_steps + fq_ramp and fq_modules and hparams["swad"]:
                 swad_algorithm = swa_utils.AveragedModel(algorithm)
                 swad_cls = getattr(swad_module, hparams["swad"])
                 swad = swad_cls(evaluator, **hparams.swad_kwargs)
                 logger.info(f"SWAD reset at step {step} after fq ramp")
+
+            for m in cb_modules:
+                strength = codebook_strength_at_step(
+                    step, fq_steps, fq_ramp, m.strength_max)
+                m.set_quantization(True, strength)
+            if step == fq_steps + fq_ramp and cb_modules:
+                # AveragedModel averages parameters but not changing buffers.
+                # Freeze first so the ordinary and SWAD models copy one codebook.
+                for m in cb_modules:
+                    m.freeze_codebook()
+                logger.info(f"ALOFT band codebook frozen at step {step}")
+                if hparams["swad"]:
+                    swad_algorithm = swa_utils.AveragedModel(algorithm)
+                    swad_cls = getattr(swad_module, hparams["swad"])
+                    swad = swad_cls(evaluator, **hparams.swad_kwargs)
+                    logger.info(f"SWAD reset at step {step} after codebook freeze")
                 
         step_start_time = time.time()
         # batches_dictlist: [{env0_data_key: tensor, env0_...}, env1_..., ...]

@@ -130,6 +130,18 @@ def _hparams(algorithm, dataset, random_state):
         hparams['mlp_dropout'] = (0., random_state.choice([0., 0.1, 0.5]))
     elif algorithm == "Arith":
         hparams["arith_meta_lr"] = (1e-2,10 ** random_state.uniform(-3, -1))
+    elif algorithm == "ALOFT_CB_rev_E":
+        hparams["aloft_alpha"] = (1.0, 1.0)
+        hparams["aloft_mask_ratio"] = (0.7, 0.7)
+        hparams["aloft_perturb_prob"] = (1.0, 1.0)
+        hparams["aloft_positions"] = (["layer1", "layer2", "layer3"],) * 2
+        hparams["aloft_cb_codebook"] = (256, 256)
+        hparams["aloft_cb_group_size"] = (32, 32)
+        hparams["aloft_cb_bands"] = (3, 3)
+        hparams["aloft_cb_strength_max"] = (0.2, 0.2)
+        hparams["aloft_cb_decay"] = (0.99, 0.99)
+        hparams["aloft_cb_dead_patience"] = (200, 200)
+        hparams["aloft_cb_reservoir"] = (1024, 1024)
     elif algorithm in ["ALOFT_E", "ALOFT_S", "ALOFT_DG","ALOFT_rev_E","ALOFT_rev_S", "AWWSL_E", "AWWSL_S", "AWWSL_DG","AWWSL_rev_E","AWWSL_rev_S", "AWWSL_rev_DG"]:
         # 论文 4.2 节："we set the perturbation strength alpha ... to 1.0 in
         # ALOFT-E and 0.9 in ALOFT-S"
