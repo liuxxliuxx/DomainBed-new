@@ -2235,11 +2235,11 @@ class ALOFT_S(ALOFT_DG):
 
     MODE = "S"
 class ALOFT_rev_E(ALOFT_DG):
-    mode = "E"
-    rev = True
+    MODE = "E"
+    REV = True
 class ALOFT_rev_S(ALOFT_DG):
-    mode = "S"
-    rev = True
+    MODE = "S"
+    REV = True
 
 
 class ALOFT_CB_rev_E(Algorithm):
@@ -2444,11 +2444,11 @@ class AWWSL_S(AWWSL_DG):
 
     MODE = "S"
 class AWWSL_rev_E(AWWSL_DG):
-    mode = "E"
-    rev = True
+    MODE = "E"
+    REV = True
 class AWWSL_rev_S(AWWSL_DG):
-    mode = "S"
-    rev = True
+    MODE = "S"
+    REV = True
 
 
 class FQ(Algorithm):
