@@ -34,6 +34,14 @@ from domainbed.models.aloft_sketch import (
     find_sketch_spectrum_modules,
     resnet_aloft_sketch,
 )
+from domainbed.models.aloft_structure import (
+    SketchStructureTargets,
+    collect_structure_diagnostics,
+    collect_structure_losses,
+    find_structure_probes,
+    resnet_aloft_structure,
+    structure_scale_at_step,
+)
 from domainbed.models.awwsl import AWWSL as AWWSLModule, resnet_awwsl
 from domainbed.models.frequant import FreqQuant, resnet_freqquant, collect_aux_loss
 
@@ -2242,6 +2250,13 @@ class ALOFT_rev_S(ALOFT_DG):
     REV = True
 
 
+class ALOFT_HF_E(ALOFT_DG):
+    """Unambiguous high-frequency ALOFT-E baseline."""
+
+    MODE = "E"
+    REV = True
+
+
 class ALOFT_CB_rev_E(Algorithm):
     """High-frequency ALOFT-E on layer1/2 and a band codebook on layer3."""
 
@@ -2382,6 +2397,141 @@ class ALOFT_SketchTopo_rev_E(_ALOFTSketchBase):
     """Sketch-spectrum perturbation plus soft-skeleton consistency."""
 
     TOPOLOGY = True
+
+
+class _ALOFTStructureBase(Algorithm):
+    """Original ALOFT-E plus train-only sketch-structure recovery."""
+
+    REV = False
+    DIRECTION = True
+    TOPOLOGY = True
+
+    def __init__(self, input_shape, num_classes, num_domains, hparams):
+        assert input_shape[0] == 3, "ALOFT structure variants support R18/R50 only"
+        super().__init__(input_shape, num_classes, num_domains, hparams)
+
+        if hparams["resnet18"]:
+            network = torchvision.models.resnet18(pretrained=hparams["pretrained"])
+        else:
+            network = torchvision.models.resnet50(pretrained=hparams["pretrained"])
+
+        network = resnet_aloft_structure(
+            network,
+            direction=self.DIRECTION,
+            topology=self.TOPOLOGY,
+            hidden_channels=hparams["aloft_struct_head_channels"],
+            skeleton_iters=hparams["aloft_struct_skeleton_iters"],
+            positions=tuple(hparams["aloft_positions"]),
+            mode="E",
+            alpha=hparams["aloft_alpha"],
+            mask_ratio=hparams["aloft_mask_ratio"],
+            perturb_prob=hparams["aloft_perturb_prob"],
+            rev=self.REV,
+        )
+
+        self.featurizer = networks.ResNet(input_shape, self.hparams, network)
+        self.classifier = nn.Linear(self.featurizer.n_outputs, num_classes)
+        self.network = nn.Sequential(self.featurizer, self.classifier)
+        self.structure_targets = SketchStructureTargets()
+        self.optimizer = self.new_optimizer(self.network.parameters())
+
+        self.struct_warmup = int(hparams["aloft_struct_warmup"])
+        self.struct_ramp = int(hparams["aloft_struct_ramp"])
+        self.struct_weights = {
+            "dir": float(hparams["aloft_struct_dir_weight"]),
+            "stroke": float(hparams["aloft_struct_stroke_weight"]),
+            "closure": float(hparams["aloft_struct_closure_weight"]),
+            "cldice": float(hparams["aloft_struct_cldice_weight"]),
+        }
+
+    def update(self, x, y, **kwargs):
+        all_x = torch.cat(x)
+        all_y = torch.cat(y)
+        step = int(kwargs.get("step", 0))
+        scale = structure_scale_at_step(
+            step, self.struct_warmup, self.struct_ramp)
+        probes = find_structure_probes(self)
+
+        targets = self.structure_targets(
+            all_x, direction=self.DIRECTION, topology=self.TOPOLOGY
+        ) if scale > 0.0 else None
+        for probe in probes:
+            probe.set_batch_context(targets, scale)
+        try:
+            logits = self.predict(all_x)
+        finally:
+            for probe in probes:
+                probe.clear_batch_context()
+
+        classification_loss = F.cross_entropy(logits, all_y)
+        auxiliary = collect_structure_losses(self)
+        zero = classification_loss.new_zeros(())
+        direction_loss = auxiliary.get("dir", zero)
+        stroke_loss = auxiliary.get("stroke", zero)
+        closure_loss = auxiliary.get("closure", zero)
+        cldice_loss = auxiliary.get("cldice", zero)
+        weighted_auxiliary = (
+            self.struct_weights["dir"] * direction_loss
+            + self.struct_weights["stroke"] * stroke_loss
+            + self.struct_weights["closure"] * closure_loss
+            + self.struct_weights["cldice"] * cldice_loss
+        )
+        structure_loss = weighted_auxiliary * scale
+        loss = classification_loss + structure_loss
+
+        self.optimizer.zero_grad()
+        loss.backward()
+        self.optimizer.step()
+
+        result = {
+            "loss": loss.item(),
+            "ce_loss": classification_loss.item(),
+            "struct_scale": float(scale),
+            "struct_loss": structure_loss.item(),
+            "struct_dir_loss": direction_loss.item(),
+            "struct_stroke_loss": stroke_loss.item(),
+            "struct_closure_loss": closure_loss.item(),
+            "struct_cldice_loss": cldice_loss.item(),
+        }
+        result.update(collect_structure_diagnostics(self))
+        return result
+
+    def predict(self, x):
+        return self.network(x)
+
+
+class ALOFT_StructLF_E(_ALOFTStructureBase):
+    """Observed strongest low-frequency ALOFT-E plus both structure heads."""
+
+
+class ALOFT_StructLF_Dir_E(_ALOFTStructureBase):
+    """Low-frequency ALOFT-E with direction recovery only."""
+
+    TOPOLOGY = False
+
+
+class ALOFT_StructLF_Topo_E(_ALOFTStructureBase):
+    """Low-frequency ALOFT-E with stroke/topology recovery only."""
+
+    DIRECTION = False
+
+
+class ALOFT_StructHF_E(_ALOFTStructureBase):
+    """True high-frequency ALOFT-E plus both structure heads."""
+
+    REV = True
+
+
+class ALOFT_StructHF_Dir_E(ALOFT_StructLF_Dir_E):
+    """True high-frequency ALOFT-E with direction recovery only."""
+
+    REV = True
+
+
+class ALOFT_StructHF_Topo_E(ALOFT_StructLF_Topo_E):
+    """True high-frequency ALOFT-E with stroke/topology recovery only."""
+
+    REV = True
 
 class AWWSL_DG(Algorithm):
     """AWWSL (CVPR'23) 的 ResNet 版：把频域扰动插进 ResNet 的 stage 之间。

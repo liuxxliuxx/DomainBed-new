@@ -7,6 +7,23 @@ from pathlib import Path
 
 SEEDS = [0, 1, 2, 3, 4]
 
+_ALOFT_MASK07_ARGS = [
+    "--aloft_alpha", "1.0",
+    "--aloft_mask_ratio", "0.7",
+    "--aloft_perturb_prob", "1.0",
+]
+
+_ALOFT_STRUCT_ARGS = _ALOFT_MASK07_ARGS + [
+    "--aloft_struct_head_channels", "64",
+    "--aloft_struct_warmup", "200",
+    "--aloft_struct_ramp", "500",
+    "--aloft_struct_dir_weight", "0.05",
+    "--aloft_struct_stroke_weight", "0.05",
+    "--aloft_struct_closure_weight", "0.05",
+    "--aloft_struct_cldice_weight", "0.02",
+    "--aloft_struct_skeleton_iters", "10",
+]
+
 METHODS = {
     "ERM": {
         "algorithm": "ERM",
@@ -161,6 +178,46 @@ METHODS = {
                 "--aloft_perturb_prob", "1.0",
             ],
         },
+    "ALOFT_LF_E_mask07": {
+        "algorithm": "ALOFT_E",
+        "swad": "LossValley",
+        "extra_args": list(_ALOFT_MASK07_ARGS),
+    },
+    "ALOFT_HF_E_mask07": {
+        "algorithm": "ALOFT_HF_E",
+        "swad": "LossValley",
+        "extra_args": list(_ALOFT_MASK07_ARGS),
+    },
+    "ALOFT_StructLF_E": {
+        "algorithm": "ALOFT_StructLF_E",
+        "swad": "LossValley",
+        "extra_args": list(_ALOFT_STRUCT_ARGS),
+    },
+    "ALOFT_StructLF_Dir_E": {
+        "algorithm": "ALOFT_StructLF_Dir_E",
+        "swad": "LossValley",
+        "extra_args": list(_ALOFT_STRUCT_ARGS),
+    },
+    "ALOFT_StructLF_Topo_E": {
+        "algorithm": "ALOFT_StructLF_Topo_E",
+        "swad": "LossValley",
+        "extra_args": list(_ALOFT_STRUCT_ARGS),
+    },
+    "ALOFT_StructHF_E": {
+        "algorithm": "ALOFT_StructHF_E",
+        "swad": "LossValley",
+        "extra_args": list(_ALOFT_STRUCT_ARGS),
+    },
+    "ALOFT_StructHF_Dir_E": {
+        "algorithm": "ALOFT_StructHF_Dir_E",
+        "swad": "LossValley",
+        "extra_args": list(_ALOFT_STRUCT_ARGS),
+    },
+    "ALOFT_StructHF_Topo_E": {
+        "algorithm": "ALOFT_StructHF_Topo_E",
+        "swad": "LossValley",
+        "extra_args": list(_ALOFT_STRUCT_ARGS),
+    },
     "ALOFT_CB_rev_E": {
         "algorithm": "ALOFT_CB_rev_E",
         "swad": "LossValley",

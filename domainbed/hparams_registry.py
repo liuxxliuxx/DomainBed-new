@@ -130,6 +130,22 @@ def _hparams(algorithm, dataset, random_state):
         hparams['mlp_dropout'] = (0., random_state.choice([0., 0.1, 0.5]))
     elif algorithm == "Arith":
         hparams["arith_meta_lr"] = (1e-2,10 ** random_state.uniform(-3, -1))
+    elif algorithm in [
+            "ALOFT_StructLF_E", "ALOFT_StructLF_Dir_E",
+            "ALOFT_StructLF_Topo_E", "ALOFT_StructHF_E",
+            "ALOFT_StructHF_Dir_E", "ALOFT_StructHF_Topo_E"]:
+        hparams["aloft_alpha"] = (1.0, 1.0)
+        hparams["aloft_mask_ratio"] = (0.7, 0.7)
+        hparams["aloft_perturb_prob"] = (1.0, 1.0)
+        hparams["aloft_positions"] = (["layer1", "layer2", "layer3"],) * 2
+        hparams["aloft_struct_head_channels"] = (64, 64)
+        hparams["aloft_struct_warmup"] = (200, 200)
+        hparams["aloft_struct_ramp"] = (500, 500)
+        hparams["aloft_struct_dir_weight"] = (0.05, 0.05)
+        hparams["aloft_struct_stroke_weight"] = (0.05, 0.05)
+        hparams["aloft_struct_closure_weight"] = (0.05, 0.05)
+        hparams["aloft_struct_cldice_weight"] = (0.02, 0.02)
+        hparams["aloft_struct_skeleton_iters"] = (10, 10)
     elif algorithm == "ALOFT_CB_rev_E":
         hparams["aloft_alpha"] = (1.0, 1.0)
         hparams["aloft_mask_ratio"] = (0.7, 0.7)
@@ -158,7 +174,9 @@ def _hparams(algorithm, dataset, random_state):
         hparams["aloft_sketch_gate_power"] = (0.5, 0.5)
         hparams["aloft_sketch_topo_weight"] = (0.05, 0.05)
         hparams["aloft_sketch_skeleton_iters"] = (10, 10)
-    elif algorithm in ["ALOFT_E", "ALOFT_S", "ALOFT_DG","ALOFT_rev_E","ALOFT_rev_S", "AWWSL_E", "AWWSL_S", "AWWSL_DG","AWWSL_rev_E","AWWSL_rev_S", "AWWSL_rev_DG"]:
+    elif algorithm in ["ALOFT_E", "ALOFT_S", "ALOFT_DG", "ALOFT_HF_E",
+                       "ALOFT_rev_E", "ALOFT_rev_S", "AWWSL_E", "AWWSL_S",
+                       "AWWSL_DG", "AWWSL_rev_E", "AWWSL_rev_S", "AWWSL_rev_DG"]:
         # 论文 4.2 节："we set the perturbation strength alpha ... to 1.0 in
         # ALOFT-E and 0.9 in ALOFT-S"
         default_alpha = 0.9 if algorithm == "ALOFT_S" else 1.0
