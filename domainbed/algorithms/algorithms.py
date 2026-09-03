@@ -44,6 +44,7 @@ from domainbed.models.aloft_structure import (
 )
 from domainbed.models.awwsl import AWWSL as AWWSLModule, resnet_awwsl
 from domainbed.models.frequant import FreqQuant, resnet_freqquant, collect_aux_loss
+from domainbed.models.csu import resnet_csu
 
 from domainbed.models.resnet_mixstyle import (
     resnet18_mixstyle_L234_p0d5_a0d1,
@@ -158,6 +159,40 @@ class ERM(Algorithm):
         loss.backward()
         self.optimizer.step()
 
+        return {"loss": loss.item()}
+
+    def predict(self, x):
+        return self.network(x)
+
+
+class CSU(Algorithm):
+    """Correlated Style Uncertainty with the standard ERM objective."""
+
+    def __init__(self, input_shape, num_classes, num_domains, hparams):
+        assert input_shape[0] == 3, "CSU supports three-channel images only"
+        assert not hparams["resnet18"], "This CSU integration uses ResNet-50"
+        super().__init__(input_shape, num_classes, num_domains, hparams)
+
+        network = torchvision.models.resnet50(pretrained=hparams["pretrained"])
+        network = resnet_csu(
+            network,
+            positions=tuple(hparams["csu_positions"]),
+            p=hparams["csu_p"],
+            alpha=hparams["csu_alpha"],
+        )
+        self.featurizer = networks.ResNet(input_shape, self.hparams, network)
+        self.classifier = nn.Linear(self.featurizer.n_outputs, num_classes)
+        self.network = nn.Sequential(self.featurizer, self.classifier)
+        self.optimizer = self.new_optimizer(self.network.parameters())
+
+    def update(self, x, y, **kwargs):
+        all_x = torch.cat(x)
+        all_y = torch.cat(y)
+        loss = F.cross_entropy(self.predict(all_x), all_y)
+
+        self.optimizer.zero_grad()
+        loss.backward()
+        self.optimizer.step()
         return {"loss": loss.item()}
 
     def predict(self, x):

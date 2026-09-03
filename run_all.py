@@ -142,6 +142,22 @@ METHODS = {
             "--mlp_dropout", "0",
         ],
     },
+    "CSU": {
+        "algorithm": "CSU",
+        "swad": "False",
+        "extra_args": [
+            "--csu_p", "0.5",
+            "--csu_alpha", "0.3",
+        ],
+    },
+    "CSU_SWAD": {
+        "algorithm": "CSU",
+        "swad": "LossValley",
+        "extra_args": [
+            "--csu_p", "0.5",
+            "--csu_alpha", "0.3",
+        ],
+    },
     "ALOFT_E": {
         "algorithm": "ALOFT_E",
         "swad": "LossValley",

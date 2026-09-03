@@ -130,6 +130,15 @@ def _hparams(algorithm, dataset, random_state):
         hparams['mlp_dropout'] = (0., random_state.choice([0., 0.1, 0.5]))
     elif algorithm == "Arith":
         hparams["arith_meta_lr"] = (1e-2,10 ** random_state.uniform(-3, -1))
+    elif algorithm == "CSU":
+        hparams["csu_p"] = (
+            0.5, float(random_state.choice([0.25, 0.5, 0.75])))
+        hparams["csu_alpha"] = (
+            0.3,
+            float(random_state.choice([0.1, 0.2, 0.3, 0.4, 0.5, 0.7, 0.9])),
+        )
+        # CSU 自带 ResNet-50 配置中的前两个扰动点：maxpool 后、layer1 后。
+        hparams["csu_positions"] = (["maxpool", "layer1"],) * 2
     elif algorithm in [
             "ALOFT_StructLF_E", "ALOFT_StructLF_Dir_E",
             "ALOFT_StructLF_Topo_E", "ALOFT_StructHF_E",
