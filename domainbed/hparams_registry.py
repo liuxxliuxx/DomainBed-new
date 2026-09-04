@@ -155,6 +155,14 @@ def _hparams(algorithm, dataset, random_state):
         hparams["aloft_struct_closure_weight"] = (0.05, 0.05)
         hparams["aloft_struct_cldice_weight"] = (0.02, 0.02)
         hparams["aloft_struct_skeleton_iters"] = (10, 10)
+    elif algorithm in ["ALOFT_CovLF_E", "ALOFT_DomainLF_E"]:
+        # Controlled directional-noise ablation against ALOFT_LF_E_mask07.
+        hparams["aloft_alpha"] = (1.0, 1.0)
+        hparams["aloft_mask_ratio"] = (0.7, 0.7)
+        hparams["aloft_perturb_prob"] = (1.0, 1.0)
+        hparams["aloft_positions"] = (
+            ["layer1", "layer2", "layer3"],
+        ) * 2
     elif algorithm == "ALOFT_CB_rev_E":
         hparams["aloft_alpha"] = (1.0, 1.0)
         hparams["aloft_mask_ratio"] = (0.7, 0.7)

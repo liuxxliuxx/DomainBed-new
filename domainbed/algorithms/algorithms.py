@@ -26,7 +26,11 @@ from domainbed import networks
 from domainbed.lib.gradient_utils import METHODS, get_method, agreement_mask
 from domainbed.lib.misc import random_pairs_of_minibatches, split_meta_train_test, ParamDict
 from domainbed.optimizers import get_optimizer
-from domainbed.models.aloft import ALOFT as ALOFTModule, resnet_aloft
+from domainbed.models.aloft import (
+    ALOFT as ALOFTModule,
+    find_aloft_modules,
+    resnet_aloft,
+)
 from domainbed.models.aloft_cb import resnet_aloft_cb, find_band_codebooks
 from domainbed.models.aloft_sketch import (
     collect_sketch_diagnostics,
@@ -2225,6 +2229,7 @@ class ALOFT_DG(Algorithm):
 
     MODE = "E"          # 由子类覆盖
     REV = False         # 由子类覆盖
+    NOISE_MODE = "iid"  # 由定向扰动子类覆盖
 
     def __init__(self, input_shape, num_classes, num_domains, hparams):
         assert input_shape[0] == 3, "ALOFT supports R18/R50 only"
@@ -2243,7 +2248,8 @@ class ALOFT_DG(Algorithm):
             alpha=hparams["aloft_alpha"],
             mask_ratio=hparams["aloft_mask_ratio"],
             perturb_prob=hparams["aloft_perturb_prob"],
-            rev=self.REV
+            rev=self.REV,
+            noise_mode=self.NOISE_MODE,
         )
 
         self.featurizer = networks.ResNet(input_shape, self.hparams, network)
@@ -2256,7 +2262,23 @@ class ALOFT_DG(Algorithm):
         # 混合多域样本才能让方差真正反映域间差异（论文 3.3 的出发点）
         all_x = torch.cat(x)
         all_y = torch.cat(y)
-        loss = F.cross_entropy(self.predict(all_x), all_y)
+        aloft_modules = []
+        if self.NOISE_MODE == "domain":
+            domain_ids = torch.cat([
+                torch.full(
+                    (minibatch.shape[0],), index,
+                    device=minibatch.device, dtype=torch.long)
+                for index, minibatch in enumerate(x)
+            ])
+            aloft_modules = find_aloft_modules(self)
+            for module in aloft_modules:
+                module.set_domain_context(domain_ids)
+        try:
+            logits = self.predict(all_x)
+        finally:
+            for module in aloft_modules:
+                module.clear_domain_context()
+        loss = F.cross_entropy(logits, all_y)
 
         self.optimizer.zero_grad()
         loss.backward()
@@ -2289,6 +2311,20 @@ class ALOFT_HF_E(ALOFT_DG):
     """Unambiguous high-frequency ALOFT-E baseline."""
 
     MODE = "E"
+
+
+class ALOFT_CovLF_E(ALOFT_DG):
+    """ALOFT-E with full batch-covariance low-frequency directions."""
+
+    MODE = "E"
+    NOISE_MODE = "covariance"
+
+
+class ALOFT_DomainLF_E(ALOFT_DG):
+    """ALOFT-E with source-domain low-frequency mean directions."""
+
+    MODE = "E"
+    NOISE_MODE = "domain"
     REV = True
 
 

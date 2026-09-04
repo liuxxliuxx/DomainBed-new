@@ -5,6 +5,8 @@ ALOFT: dynAmic LOw-Frequency spectrum Transform (CVPR 2023).
 与论文正文不一致的地方，一律按论文实现。
 """
 import random
+import math
+
 import torch
 import torch.nn as nn
 
@@ -27,20 +29,38 @@ class ALOFT(nn.Module):
       Eq.(5)      逆 DFT 回空间域
     """
 
-    def __init__(self, mode="E", alpha=1.0, mask_ratio=0.5, perturb_prob=1.0, eps=1e-6, rev=False):
+    def __init__(self, mode="E", alpha=1.0, mask_ratio=0.5,
+                 perturb_prob=1.0, eps=1e-6, rev=False,
+                 noise_mode="iid"):
         super().__init__()
         assert mode in ("E", "S"), f"unknown ALOFT mode: {mode}"
+        if noise_mode not in ("iid", "covariance", "domain"):
+            raise ValueError(f"unknown ALOFT noise mode: {noise_mode}")
+        if mode != "E" and noise_mode != "iid":
+            raise ValueError("directional noise is supported by ALOFT-E only")
         self.mode = mode
         self.rev  = rev
+        self.noise_mode = noise_mode
         self.alpha = alpha
         self.mask_ratio = mask_ratio
         self.perturb_prob = perturb_prob
         self.eps = eps
         self._mask_cache = {}
+        self._domain_context = None
 
     def extra_repr(self):
-        return (f"mode={self.mode}, alpha={self.alpha}, mask_ratio={self.mask_ratio}, rev={self.rev}, "
-                f"perturb_prob={self.perturb_prob}")
+        return (f"mode={self.mode}, noise_mode={self.noise_mode}, "
+                f"alpha={self.alpha}, mask_ratio={self.mask_ratio}, "
+                f"rev={self.rev}, perturb_prob={self.perturb_prob}")
+
+    def set_domain_context(self, domain_ids):
+        """Set source-domain ids for one DomainLF training forward."""
+        if domain_ids.ndim != 1:
+            raise ValueError("domain_ids must be a one-dimensional tensor")
+        self._domain_context = domain_ids
+
+    def clear_domain_context(self):
+        self._domain_context = None
         
     def _mask(self, h, w, device):
         """论文 Eq.(2)：以频谱中心为心、半边长 r*min(H,W)/2 的正方形二值掩码。"""
@@ -55,6 +75,8 @@ class ALOFT(nn.Module):
 
     def forward(self, x):
         if not self.training or self.alpha <= 0:
+            return x
+        if self.noise_mode != "iid" and x.shape[0] < 2:
             return x
         if self.perturb_prob < 1.0 and random.random() > self.perturb_prob:
             return x
@@ -81,7 +103,11 @@ class ALOFT(nn.Module):
         return torch.fft.ifft2(spec, dim=(2, 3), norm="ortho").real.to(x.dtype)
 
     def _resample(self, f, m):
-        return self._by_element(f, m) if self.mode == "E" else self._by_statistic(f, m)
+        if self.mode == "S":
+            return self._by_statistic(f, m)
+        if self.noise_mode == "iid":
+            return self._by_element(f, m)
+        return self._by_direction(f, m)
 
     def _by_element(self, f, m):
         """ALOFT-E，论文 Eq.(6)(7)。"""
@@ -90,6 +116,82 @@ class ALOFT(nn.Module):
         # Eq.(7)：F_l_hat = F_l + eps * Sigma(F_l)，eps ~ N(0, alpha)
         noise = torch.randn_like(f) * self.alpha * sigma
         return torch.where(m, f + noise, f)     # 掩码外即 Eq.(4) 的高频，原样保留
+
+    def _by_direction(self, f, m):
+        """ALOFT-E with covariance-shaped noise inside the selected band.
+
+        The selected real/imaginary spectrum is flattened to (B, D).  Both
+        directional samplers keep ALOFT-E's per-element marginal variance but
+        add correlations learned from the current source batch.
+        """
+        batch = f.shape[0]
+        if batch < 2:
+            return f
+
+        mask = m[0, 0]
+        selected = f[..., mask]
+        flat = selected.reshape(batch, -1)
+        if self.noise_mode == "covariance":
+            noise = self._covariance_noise(flat)
+        else:
+            noise = self._domain_noise(flat)
+
+        changed = flat + self.alpha * noise
+        output = f.clone()
+        output[..., mask] = changed.reshape_as(selected)
+        return output
+
+    def _covariance_noise(self, flat):
+        """Sample N(0, empirical covariance + eps I) in batch space."""
+        batch = flat.shape[0]
+        centered = flat - flat.mean(dim=0, keepdim=True)
+        coefficients = torch.randn(
+            batch, batch, device=flat.device, dtype=flat.dtype)
+        correlated = coefficients @ centered / math.sqrt(batch)
+        jitter = torch.randn_like(flat) * math.sqrt(self.eps)
+        return correlated + jitter
+
+    def _domain_noise(self, flat):
+        """Sample between-domain directions plus diagonal within-domain noise."""
+        if self._domain_context is None:
+            raise RuntimeError(
+                "domain noise requires set_domain_context() before forward")
+        if self._domain_context.shape[0] != flat.shape[0]:
+            raise ValueError(
+                "domain id count does not match the feature batch: "
+                f"{self._domain_context.shape[0]} != {flat.shape[0]}")
+
+        domain_ids = self._domain_context.to(device=flat.device)
+        domains, inverse, counts = torch.unique(
+            domain_ids, sorted=True, return_inverse=True, return_counts=True)
+        if domains.numel() < 2:
+            raise ValueError("domain noise requires at least two source domains")
+
+        batch = flat.shape[0]
+        global_mean = flat.mean(dim=0, keepdim=True)
+        weights = counts.to(dtype=flat.dtype) / float(batch)
+        domain_means = []
+        within_variance = torch.zeros_like(flat[0])
+        for index in range(domains.numel()):
+            values = flat[inverse == index]
+            domain_mean = values.mean(dim=0)
+            domain_means.append(domain_mean)
+            within_variance = within_variance + (
+                weights[index]
+                * (values - domain_mean).square().mean(dim=0)
+            )
+
+        domain_means = torch.stack(domain_means)
+        basis = ((domain_means - global_mean)
+                 * weights.sqrt().unsqueeze(1))
+        coefficients = torch.randn(
+            batch, domains.numel(), device=flat.device, dtype=flat.dtype)
+        between_noise = coefficients @ basis
+        within_noise = (
+            torch.randn_like(flat)
+            * (within_variance + self.eps).sqrt().unsqueeze(0)
+        )
+        return between_noise + within_noise
 
     def _by_statistic(self, f, m):
         """ALOFT-S，论文 Eq.(8)-(14)。"""
@@ -121,3 +223,7 @@ def resnet_aloft(network, positions=("layer1", "layer2", "layer3"), **kwargs):
             raise RuntimeError(f"{name} already wrapped with ALOFT; resnet_aloft is not idempotent")
         setattr(network, name, nn.Sequential(stage, ALOFT(**kwargs)))
     return network
+
+
+def find_aloft_modules(module):
+    return [item for item in module.modules() if isinstance(item, ALOFT)]
