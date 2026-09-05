@@ -2325,7 +2325,6 @@ class ALOFT_DomainLF_E(ALOFT_DG):
 
     MODE = "E"
     NOISE_MODE = "domain"
-    REV = True
 
 
 class ALOFT_CB_rev_E(Algorithm):
