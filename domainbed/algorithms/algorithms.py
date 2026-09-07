@@ -174,17 +174,20 @@ class CSU(Algorithm):
 
     def __init__(self, input_shape, num_classes, num_domains, hparams):
         assert input_shape[0] == 3, "CSU supports three-channel images only"
-        assert not hparams["resnet18"], "This CSU integration uses ResNet-50"
+        assert networks.is_vit(hparams) or not hparams["resnet18"], "This CSU integration uses ResNet-50"
         super().__init__(input_shape, num_classes, num_domains, hparams)
 
-        network = torchvision.models.resnet50(pretrained=hparams["pretrained"])
+        if networks.is_vit(hparams):
+            network = networks.Featurizer(input_shape, hparams)
+        else:
+            network = torchvision.models.resnet50(pretrained=hparams["pretrained"])
         network = resnet_csu(
             network,
             positions=tuple(hparams["csu_positions"]),
             p=hparams["csu_p"],
             alpha=hparams["csu_alpha"],
         )
-        self.featurizer = networks.ResNet(input_shape, self.hparams, network)
+        self.featurizer = networks.wrap_backbone(input_shape, self.hparams, network)
         self.classifier = nn.Linear(self.featurizer.n_outputs, num_classes)
         self.network = nn.Sequential(self.featurizer, self.classifier)
         self.optimizer = self.new_optimizer(self.network.parameters())
@@ -521,13 +524,19 @@ class Mixstyle(Algorithm):
     def __init__(self, input_shape, num_classes, num_domains, hparams):
         assert input_shape[0] == 3, "Mixstyle support R18 and R50 only"
         super().__init__(input_shape, num_classes, num_domains, hparams)
-        if hparams["resnet18"]:
+        if networks.is_vit(hparams):
+            from domainbed.models.mixstyle import MixStyle
+            network = networks.Featurizer(input_shape, hparams)
+            operation = MixStyle(p=1.0, alpha=0.1)
+            for position in ("layer1", "layer2", "layer3"):
+                network.add_stage_op(position, operation, "mixstyle")
+        elif hparams["resnet18"]:
             network = resnet18_mixstyle_L234_p0d5_a0d1()
         else:
             # network = resnet50_mixstyle_L234_p0d5_a0d1(postion=["conv2_x", "conv3_x", "conv4_x"])
             network = resnet50_mixstyle_L234_p0d5_a0d1(postion=[])
 
-        self.featurizer = networks.ResNet(input_shape, self.hparams, network)
+        self.featurizer = networks.wrap_backbone(input_shape, self.hparams, network)
 
         self.classifier = nn.Linear(self.featurizer.n_outputs, num_classes)
         self.network = nn.Sequential(self.featurizer, self.classifier)
@@ -554,11 +563,17 @@ class Mixstyle2(Algorithm):
     def __init__(self, input_shape, num_classes, num_domains, hparams):
         assert input_shape[0] == 3, "Mixstyle support R18 and R50 only"
         super().__init__(input_shape, num_classes, num_domains, hparams)
-        if hparams["resnet18"]:
+        if networks.is_vit(hparams):
+            from domainbed.models.mixstyle import MixStyle2
+            network = networks.Featurizer(input_shape, hparams)
+            operation = MixStyle2(p=0.5, alpha=0.1)
+            for position in ("layer1", "layer2", "layer3"):
+                network.add_stage_op(position, operation, "mixstyle")
+        elif hparams["resnet18"]:
             network = resnet18_mixstyle2_L234_p0d5_a0d1()
         else:
             network = resnet50_mixstyle2_L234_p0d5_a0d1()
-        self.featurizer = networks.ResNet(input_shape, self.hparams, network)
+        self.featurizer = networks.wrap_backbone(input_shape, self.hparams, network)
 
         self.classifier = nn.Linear(self.featurizer.n_outputs, num_classes)
         self.network = nn.Sequential(self.featurizer, self.classifier)
@@ -2235,7 +2250,9 @@ class ALOFT_DG(Algorithm):
         assert input_shape[0] == 3, "ALOFT supports R18/R50 only"
         super().__init__(input_shape, num_classes, num_domains, hparams)
 
-        if hparams["resnet18"]:
+        if networks.is_vit(hparams):
+            network = networks.Featurizer(input_shape, hparams)
+        elif hparams["resnet18"]:
             network = torchvision.models.resnet18(pretrained=hparams["pretrained"])
         else:
             network = torchvision.models.resnet50(pretrained=hparams["pretrained"])
@@ -2252,7 +2269,7 @@ class ALOFT_DG(Algorithm):
             noise_mode=self.NOISE_MODE,
         )
 
-        self.featurizer = networks.ResNet(input_shape, self.hparams, network)
+        self.featurizer = networks.wrap_backbone(input_shape, self.hparams, network)
         self.classifier = nn.Linear(self.featurizer.n_outputs, num_classes)
         self.network = nn.Sequential(self.featurizer, self.classifier)
         self.optimizer = self.new_optimizer(self.network.parameters())
@@ -2337,7 +2354,9 @@ class ALOFT_CB_rev_E(Algorithm):
         assert input_shape[0] == 3, "ALOFT_CB_rev_E supports R18/R50 only"
         super().__init__(input_shape, num_classes, num_domains, hparams)
 
-        if hparams["resnet18"]:
+        if networks.is_vit(hparams):
+            network = networks.Featurizer(input_shape, hparams)
+        elif hparams["resnet18"]:
             network = torchvision.models.resnet18(pretrained=hparams["pretrained"])
         else:
             network = torchvision.models.resnet50(pretrained=hparams["pretrained"])
@@ -2359,7 +2378,7 @@ class ALOFT_CB_rev_E(Algorithm):
             reservoir_size=hparams["aloft_cb_reservoir"],
         )
 
-        self.featurizer = networks.ResNet(input_shape, self.hparams, network)
+        self.featurizer = networks.wrap_backbone(input_shape, self.hparams, network)
         self.classifier = nn.Linear(self.featurizer.n_outputs, num_classes)
         self.network = nn.Sequential(self.featurizer, self.classifier)
         self.optimizer = self.new_optimizer(self.network.parameters())
@@ -2392,7 +2411,9 @@ class _ALOFTSketchBase(Algorithm):
         assert input_shape[0] == 3, "ALOFT sketch variants support R18/R50 only"
         super().__init__(input_shape, num_classes, num_domains, hparams)
 
-        if hparams["resnet18"]:
+        if networks.is_vit(hparams):
+            network = networks.Featurizer(input_shape, hparams)
+        elif hparams["resnet18"]:
             network = torchvision.models.resnet18(pretrained=hparams["pretrained"])
         else:
             network = torchvision.models.resnet50(pretrained=hparams["pretrained"])
@@ -2418,7 +2439,7 @@ class _ALOFTSketchBase(Algorithm):
             skeleton_iters=hparams["aloft_sketch_skeleton_iters"],
         )
 
-        self.featurizer = networks.ResNet(input_shape, self.hparams, network)
+        self.featurizer = networks.wrap_backbone(input_shape, self.hparams, network)
         self.classifier = nn.Linear(self.featurizer.n_outputs, num_classes)
         self.network = nn.Sequential(self.featurizer, self.classifier)
         self.optimizer = self.new_optimizer(self.network.parameters())
@@ -2480,7 +2501,9 @@ class _ALOFTStructureBase(Algorithm):
         assert input_shape[0] == 3, "ALOFT structure variants support R18/R50 only"
         super().__init__(input_shape, num_classes, num_domains, hparams)
 
-        if hparams["resnet18"]:
+        if networks.is_vit(hparams):
+            network = networks.Featurizer(input_shape, hparams)
+        elif hparams["resnet18"]:
             network = torchvision.models.resnet18(pretrained=hparams["pretrained"])
         else:
             network = torchvision.models.resnet50(pretrained=hparams["pretrained"])
@@ -2499,7 +2522,7 @@ class _ALOFTStructureBase(Algorithm):
             rev=self.REV,
         )
 
-        self.featurizer = networks.ResNet(input_shape, self.hparams, network)
+        self.featurizer = networks.wrap_backbone(input_shape, self.hparams, network)
         self.classifier = nn.Linear(self.featurizer.n_outputs, num_classes)
         self.network = nn.Sequential(self.featurizer, self.classifier)
         self.structure_targets = SketchStructureTargets()
@@ -2616,7 +2639,9 @@ class AWWSL_DG(Algorithm):
         assert input_shape[0] == 3, "AWWSL supports R18/R50 only"
         super().__init__(input_shape, num_classes, num_domains, hparams)
 
-        if hparams["resnet18"]:
+        if networks.is_vit(hparams):
+            network = networks.Featurizer(input_shape, hparams)
+        elif hparams["resnet18"]:
             network = torchvision.models.resnet18(pretrained=hparams["pretrained"])
         else:
             network = torchvision.models.resnet50(pretrained=hparams["pretrained"])
@@ -2632,7 +2657,7 @@ class AWWSL_DG(Algorithm):
             rev=self.REV
         )
 
-        self.featurizer = networks.ResNet(input_shape, self.hparams, network)
+        self.featurizer = networks.wrap_backbone(input_shape, self.hparams, network)
         self.classifier = nn.Linear(self.featurizer.n_outputs, num_classes)
         self.network = nn.Sequential(self.featurizer, self.classifier)
         self.optimizer = self.new_optimizer(self.network.parameters())
@@ -2674,7 +2699,9 @@ class AWWSL_rev_S(AWWSL_DG):
 class FQ(Algorithm):
     def __init__(self, input_shape, num_classes, num_domains, hparams):
         super().__init__(input_shape, num_classes, num_domains, hparams)
-        if hparams["resnet18"]:
+        if networks.is_vit(hparams):
+            network = networks.Featurizer(input_shape, hparams)
+        elif hparams["resnet18"]:
             network = torchvision.models.resnet18(pretrained=hparams["pretrained"])
         else:
             network = torchvision.models.resnet50(pretrained=hparams["pretrained"])
@@ -2692,7 +2719,7 @@ class FQ(Algorithm):
             groups=hparams["fq_groups"],
             strength_max=hparams["fq_strength_max"],
         )
-        self.featurizer = networks.ResNet(input_shape, self.hparams, network)
+        self.featurizer = networks.wrap_backbone(input_shape, self.hparams, network)
         self.classifier = nn.Linear(self.featurizer.n_outputs, num_classes)
         self.network = nn.Sequential(self.featurizer, self.classifier)
         self.optimizer = self.new_optimizer(self.network.parameters())

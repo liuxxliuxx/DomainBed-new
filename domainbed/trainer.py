@@ -212,9 +212,14 @@ def train(args_q, test_envs, args, hparams, n_steps, q_steps, quant, checkpoint_
     for step in range(n_steps):
 
         if step == q_steps and quant == 1:            # if quantization
-            modules_to_replace = find_modules_to_quantize(algorithm, args_q.quan)
-            logger.info(f"Quantizing {len(modules_to_replace)} modules at step {step}")
-            algorithm = replace_module_by_names(algorithm, modules_to_replace)
+            if hparams.get("backbone", "resnet").lower() in ("vit", "vit_b_16"):
+                from domainbed.quan.vit import prepare_vit_quantization
+                converted = prepare_vit_quantization(algorithm, args_q.quan)
+                logger.info(f"Quantizing {len(converted)} ViT modules at step {step}: {converted}")
+            else:
+                modules_to_replace = find_modules_to_quantize(algorithm, args_q.quan)
+                logger.info(f"Quantizing {len(modules_to_replace)} modules at step {step}")
+                algorithm = replace_module_by_names(algorithm, modules_to_replace)
             algorithm.to(device)
             swad = None
             if hparams["swad"]:
@@ -343,6 +348,8 @@ def train(args_q, test_envs, args, hparams, n_steps, q_steps, quant, checkpoint_
                     "test_envs": test_envs,
                     "model_dict": algorithm.cpu().state_dict(),
                 }
+                if hasattr(algorithm, "_vit_quantization_config"):
+                    save_dict["vit_quantization"] = algorithm._vit_quantization_config
                 algorithm.cuda()
                 if not args.debug:
                     torch.save(save_dict, path)

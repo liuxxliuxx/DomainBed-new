@@ -203,7 +203,8 @@ class SketchSpectrumPerturb(nn.Module):
             for radial in range(self.radial_bands)
             for orientation in range(self.orientation_bins)
         ]).view(self.radial_bands, self.orientation_bins, height, width)
-        if not bool(cell_masks.flatten(2).any(-1).all()):
+        if (not bool(cell_masks.flatten(2).any(-1).all())
+                and not getattr(self, "allow_empty_cells", False)):
             raise ValueError(
                 f"empty direction/radial cell for shape {(height, width)}, "
                 f"mask_ratio={self.mask_ratio}, radial_bands={self.radial_bands}, "
@@ -218,6 +219,15 @@ class SketchSpectrumPerturb(nn.Module):
             batch, self.groups, self.group_size, height, width)
         statistics = []
         for mask in cell_masks.flatten(0, 1):
+            # A 14x14 ViT grid can have empty cells in the unchanged 3x6
+            # partition. They carry no samples/energy: use finite placeholders,
+            # not interpolated features or a different frequency mask. All
+            # subsequent matching/energy operations on this empty mask are noops.
+            # The historical ResNet path never enters this branch.
+            if getattr(self, "allow_empty_cells", False) and not bool(mask.any()):
+                zero = grouped.new_zeros((batch, self.groups))
+                statistics.extend((zero, zero))
+                continue
             values = grouped[..., mask].reshape(batch, self.groups, -1)
             mean = values.mean(-1)
             std = values.var(-1, unbiased=False).add(self.eps).sqrt()
@@ -408,6 +418,15 @@ def _stage_out_channels(stage):
 def resnet_aloft_sketch(network, num_classes,
                         positions=("layer1", "layer2"), **kwargs):
     """Attach sketch-spectrum perturbation after the selected ResNet stages."""
+    if getattr(network, "is_vit_backbone", False):
+        if tuple(positions) != ("layer1", "layer2"):
+            raise ValueError("ALOFT sketch perturbation must use layer1 and layer2 only")
+        for name in positions:
+            operation = SketchSpectrumPerturb(
+                network.n_outputs, num_classes=num_classes, **kwargs)
+            operation.allow_empty_cells = True
+            network.add_stage_op(name, operation, "aloft_sketch")
+        return network
     positions = tuple(positions)
     if positions != ("layer1", "layer2"):
         raise ValueError("ALOFT sketch perturbation must use layer1 and layer2 only")

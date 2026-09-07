@@ -219,7 +219,8 @@ class BandStatsCodebook(nn.Module):
         width = (max_dist - cutoff).clamp_min(self.eps) / self.n_bands
         band_idx = torch.floor((dist - cutoff) / width).long().clamp(0, self.n_bands - 1)
         masks = torch.stack([high & (band_idx == i) for i in range(self.n_bands)])
-        if not bool(masks.flatten(1).any(1).all()):
+        if (not bool(masks.flatten(1).any(1).all())
+                and not getattr(self, "allow_empty_bands", False)):
             raise ValueError(
                 f"empty frequency band for shape {(h, w)}, mask_ratio={self.mask_ratio}, "
                 f"n_bands={self.n_bands}")
@@ -231,6 +232,13 @@ class BandStatsCodebook(nn.Module):
         grouped = log_amp.view(b, self.groups, self.group_size, h, w)
         parts = []
         for mask in masks:
+            # Small ViT grids can leave a radial band empty. Its constant
+            # coordinates contribute nothing to distances or spectral matching.
+            # Keep the original masks and the legacy ResNet validation unchanged.
+            if getattr(self, "allow_empty_bands", False) and not bool(mask.any()):
+                zero = grouped.new_zeros((b, self.groups))
+                parts.extend((zero, zero))
+                continue
             values = grouped[..., mask].reshape(b, self.groups, -1)
             mu = values.mean(-1)
             sig = values.var(-1, unbiased=False).add(self.eps).sqrt()
@@ -372,6 +380,22 @@ def _stage_out_channels(stage):
 
 def resnet_aloft_cb(network, positions=("layer1", "layer2", "layer3"), **kwargs):
     """Attach high-frequency ALOFT to early stages and a codebook to the last."""
+    if getattr(network, "is_vit_backbone", False):
+        positions = tuple(positions)
+        if not positions:
+            raise ValueError("positions must contain at least one stage")
+        cb_keys = {"codebook", "group_size", "n_bands", "strength_max", "decay",
+                   "dead_patience", "reservoir_size"}
+        aloft_kwargs = {k: v for k, v in kwargs.items() if k not in cb_keys}
+        cb_kwargs = {k: v for k, v in kwargs.items() if k in cb_keys}
+        cb_kwargs["mask_ratio"] = kwargs.get("mask_ratio", 0.7)
+        for index, name in enumerate(positions):
+            op = (BandStatsCodebook(network.n_outputs, **cb_kwargs)
+                  if index == len(positions) - 1 else ALOFT(**aloft_kwargs))
+            if isinstance(op, BandStatsCodebook):
+                op.allow_empty_bands = True
+            network.add_stage_op(name, op, "aloft_cb")
+        return network
     positions = tuple(positions)
     if not positions:
         raise ValueError("positions must contain at least one ResNet stage")

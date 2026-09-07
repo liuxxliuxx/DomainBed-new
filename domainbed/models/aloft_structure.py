@@ -362,6 +362,19 @@ def resnet_aloft_structure(network, direction=True, topology=True,
                             hidden_channels=64, skeleton_iters=10,
                             positions=("layer1", "layer2", "layer3"), **aloft_kwargs):
     """Attach original ALOFT at all stages and identity structure probes."""
+    if getattr(network, "is_vit_backbone", False):
+        if tuple(positions) != ("layer1", "layer2", "layer3"):
+            raise ValueError("ALOFT structure variants require layer1/layer2/layer3")
+        resnet_aloft(network, positions=positions, **aloft_kwargs)
+        if direction:
+            network.add_stage_op("layer1", StructureProbe(
+                network.n_outputs, "direction", hidden_channels, skeleton_iters),
+                "structure_direction")
+        if topology:
+            network.add_stage_op("layer2", StructureProbe(
+                network.n_outputs, "topology", hidden_channels, skeleton_iters),
+                "structure_topology")
+        return network
     positions = tuple(positions)
     if positions != ("layer1", "layer2", "layer3"):
         raise ValueError("ALOFT structure variants require layer1/layer2/layer3")

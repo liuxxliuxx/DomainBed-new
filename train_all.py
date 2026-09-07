@@ -15,6 +15,7 @@ from prettytable import PrettyTable
 
 from domainbed.datasets import get_dataset
 from domainbed import hparams_registry
+from domainbed.backbones import normalize_backbone
 from domainbed.lib import misc
 from domainbed.lib.writers import get_writer
 from domainbed.lib.logger import Logger
@@ -121,6 +122,7 @@ def main():
     keys = [open(key, encoding="utf8") for key in keys]
     hparams = Config(*keys, default=hparams)
     hparams.argv_update(left_argv)
+    hparams["backbone"] = normalize_backbone(hparams.get("backbone", "resnet"))
     hparams["grad_fn"] = args.grad_fn
     hparams["extra_search"] = args.extra_search
     hparams["batch_size"] = args.batch_size

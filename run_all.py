@@ -523,6 +523,14 @@ def parse_gpu(value):
     return gpu_index
 
 
+def parse_backbone(value):
+    from domainbed.backbones import normalize_backbone
+    try:
+        return normalize_backbone(value)
+    except ValueError as error:
+        raise argparse.ArgumentTypeError(str(error)) from error
+
+
 def parse_args():
     parser = argparse.ArgumentParser(
         description=(
@@ -561,12 +569,21 @@ def parse_args():
         default="5000",
         help="number of steps to train for; default is 5000",
     )
+    parser.add_argument(
+        "--backbone", type=parse_backbone, default="resnet",
+        metavar="{resnet,vit}",
+        help="backbone (case-insensitive); vit_b_16 is an alias for vit",
+    )
     return parser.parse_args()
 
 
-def build_command(repo_dir, method_name, seed,batch,dataset,steps):
+def build_command(repo_dir, method_name, seed,batch,dataset,steps, backbone="resnet"):
     method = METHODS[method_name]
     experiment_name = f"{dataset}_{method_name}_seed{seed}"
+
+    backbone = parse_backbone(backbone)
+    if backbone == "vit":
+        experiment_name = f"{dataset}_{method_name}_vit_b_16_seed{seed}"
 
     command = [
         sys.executable,
@@ -588,6 +605,8 @@ def build_command(repo_dir, method_name, seed,batch,dataset,steps):
         "--image_size", "224",
     ]
     command.extend(method["extra_args"])
+    if backbone == "vit":
+        command.extend(["--backbone", "vit"])
     return command
 
 
@@ -612,6 +631,8 @@ def main():
         flush=True,
     )
 
+    print(f"Backbone: {args.backbone}", flush=True)
+
     for seed in SEEDS:
         command = build_command(
             repo_dir,
@@ -620,6 +641,7 @@ def main():
             args.batch,
             args.dataset,
             args.steps,
+            args.backbone,
         )
 
         print("=" * 80, flush=True)

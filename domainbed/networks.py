@@ -8,6 +8,7 @@ import copy
 import numpy as np
 
 from domainbed.lib import wide_resnet
+from domainbed.backbones import is_vit
 from domainbed.models.resnet_mixstyle import (
     resnet18_mixstyle_L234_p0d5_a0d1,
     resnet50_mixstyle_L234_p0d5_a0d1,
@@ -214,6 +215,9 @@ class ContextNet(nn.Module):
 
 def Featurizer(input_shape, hparams):
     """Auto-select an appropriate featurizer for the given input shape."""
+    if is_vit(hparams):
+        from domainbed.models.vit import ViT
+        return ViT(input_shape, hparams)
     if len(input_shape) == 1:
         return MLP(input_shape[0], 128, hparams)
     elif input_shape[1:3] == (28, 28):
@@ -224,6 +228,13 @@ def Featurizer(input_shape, hparams):
         return ResNet(input_shape, hparams)
     else:
         raise NotImplementedError(f"Input shape {input_shape} is not supported")
+
+
+def wrap_backbone(input_shape, hparams, network):
+    """Keep the historical ResNet wrapper and return an already wrapped ViT."""
+    if is_vit(hparams):
+        return network
+    return ResNet(input_shape, hparams, network)
 
 
 def Classifier(in_features, out_features, is_nonlinear=False):

@@ -13,6 +13,9 @@ def _hparams(algorithm, dataset, random_state):
 
     hparams = {}
 
+    # Constant defaults must not consume RNG or shift existing random hparams.
+    hparams["backbone"] = ("resnet", "resnet")
+
     hparams["data_augmentation"] = (True, True)
     hparams["val_augment"] = (False, False)  # augmentation for in-domain validation set
     hparams["resnet18"] = (False, False)

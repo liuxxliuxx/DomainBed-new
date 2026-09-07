@@ -104,6 +104,10 @@ def resnet_csu(network, positions=("maxpool", "layer1"), **kwargs):
     wrappers add one level to the selected components' state-dict keys.
     """
 
+    if getattr(network, "is_vit_backbone", False):
+        for name in positions:
+            network.add_stage_op(name, CorrelatedDistributionUncertainty(**kwargs), "csu")
+        return network
     positions = tuple(positions)
     unknown = sorted(set(positions) - set(VALID_CSU_POSITIONS))
     if unknown:

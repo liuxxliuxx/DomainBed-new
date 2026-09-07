@@ -10,3 +10,6 @@ logs_newest/
 output/
 *.pptx
 logs/
+analysis/
+docs/
+*.log

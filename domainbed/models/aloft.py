@@ -217,6 +217,10 @@ def resnet_aloft(network, positions=("layer1", "layer2", "layer3"), **kwargs):
     必须在预训练权重加载完之后调用，否则 nn.Sequential 会给权重键名多插一层 ".0."。
     不幂等，重复调用会叠加模块，所以显式挡住。
     """
+    if getattr(network, "is_vit_backbone", False):
+        for name in positions:
+            network.add_stage_op(name, ALOFT(**kwargs), "aloft")
+        return network
     for name in positions:
         stage = getattr(network, name)
         if isinstance(stage, nn.Sequential) and len(stage) and isinstance(stage[-1], ALOFT):

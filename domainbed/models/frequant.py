@@ -224,12 +224,28 @@ class FreqQuant(nn.Module):
         return int((self.ema_n > self.dead_thr).sum()), self.G * self.K
 
 
+class ViTFreqQuant(FreqQuant):
+    """Same operation, with ViT-only persistence of the trainer's stage flags."""
+
+    def get_extra_state(self):
+        return {"enabled": self.enabled, "strength": self.strength}
+
+    def set_extra_state(self, state):
+        self.enabled = bool(state["enabled"])
+        self.strength = float(state["strength"])
+
+
 def _out_channels(block):
     return block.bn3.num_features if hasattr(block, "bn3") else block.bn2.num_features
 
 
 def resnet_freqquant(network, layers=("layer1", "layer2", "layer3"), **kwargs):
     """按 block 插。必须在预训练权重加载之后调用，且不幂等。"""
+    if getattr(network, "is_vit_backbone", False):
+        for name in layers:
+            for index in network.block_indices(name):
+                network.add_block_op(index, ViTFreqQuant(network.n_outputs, **kwargs), "freqquant")
+        return network
     for name in layers:
         stage = getattr(network, name)
         for i, block in enumerate(stage):
