@@ -492,7 +492,7 @@ METHODS = {
     },
     "StableNet": {
         "algorithm": "StableNet",
-        "swad": "False",
+        "swad": "LossValley",
         "extra_args": [
             "--stable_epochb", "20",
             "--stable_lrbl", "1.0",
