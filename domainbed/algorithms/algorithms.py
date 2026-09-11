@@ -63,6 +63,11 @@ from domainbed.sagm import SAGM, LinearScheduler, SAGM_CUSTOM
 from domainbed import gsam
 
 from domainbed.lib.stablenet import learn_weights
+from domainbed.lib.aloft_stable import (
+    clean_features,
+    domain_balanced_weights,
+    stable_mix_at_step,
+)
 
 
 def to_minibatch(x, y):
@@ -2312,6 +2317,108 @@ class ALOFT_E(ALOFT_DG):
     """按元素建模低频分布，论文 Eq.(6)(7)，论文 4.2 节给的 alpha = 1.0。"""
 
     MODE = "E"
+
+
+class ALOFT_Stable_E(ALOFT_E):
+    """Unchanged low-frequency ALOFT-E with clean-view, weak reweighting.
+
+    StableNet learns detached weights from an eval-mode feature forward. The
+    gradient-bearing forward retains all baseline ALOFT perturbations. Source
+    domain mass is preserved; no label-conditional balancing is performed.
+    """
+
+    def __init__(self, input_shape, num_classes, num_domains, hparams):
+        super().__init__(input_shape, num_classes, num_domains, hparams)
+        stable_mix_at_step(
+            0, hparams["stable_mix_max"], hparams["stable_warmup_steps"],
+            hparams["stable_ramp_steps"])
+        if not 0.0 <= hparams["stable_presave_ratio"] < 1.0:
+            raise ValueError("stable_presave_ratio must be in [0, 1)")
+        if num_domains < 1 or hparams["batch_size"] < 1:
+            raise ValueError("ALOFT_Stable_E requires non-empty source batches")
+
+        size = hparams["batch_size"] * num_domains
+        self.register_buffer("pre_features", torch.zeros(size, self.featurizer.n_outputs))
+        self.register_buffer("pre_logits", torch.ones(size, 1))
+        self.register_buffer("history_count", torch.tensor(0, dtype=torch.long))
+        self.register_buffer("update_count", torch.tensor(0, dtype=torch.long))
+
+    @torch.no_grad()
+    def _save_clean_history(self, features, raw):
+        count = int(self.history_count.item())
+        # Populate with actual clean features, never synthetic zero observations.
+        rate = 1.0 / (count + 1) if count < 10 else 1.0 - self.hparams["stable_presave_ratio"]
+        self.pre_features.mul_(1 - rate).add_(features.detach(), alpha=rate)
+        self.pre_logits.mul_(1 - rate).add_(raw.detach(), alpha=rate)
+        self.history_count.add_(1)
+
+    def update(self, x, y, **kwargs):
+        sizes = [batch.shape[0] for batch in x]
+        if (len(x) != self.num_domains or len(y) != self.num_domains
+                or any(size != self.hparams["batch_size"] for size in sizes)
+                or any(labels.shape[0] != size for labels, size in zip(y, sizes))):
+            raise ValueError(
+                "ALOFT_Stable_E expects batch_size examples per source domain")
+
+        all_x, all_y = torch.cat(x), torch.cat(y)
+        step = int(self.update_count.item())
+        mix = stable_mix_at_step(
+            step, self.hparams["stable_mix_max"],
+            self.hparams["stable_warmup_steps"], self.hparams["stable_ramp_steps"])
+        raw = self.pre_logits.new_ones((all_x.shape[0], 1))
+        original_weights = raw / all_x.shape[0]
+        clean = None
+
+        # mix_max=0 is an exact baseline ablation: no extra forward or RNG draws.
+        # During warmup the clean history is populated, but weights are uniform.
+        if self.hparams["stable_mix_max"] > 0.0:
+            clean = clean_features(self.featurizer, all_x)
+            if clean.shape != self.pre_features.shape or not torch.isfinite(clean).all():
+                raise ValueError("Invalid clean features for ALOFT_Stable_E")
+            if mix > 0.0:
+                ready = int(self.history_count.item()) > 0
+                original_weights, raw = learn_weights(
+                    clean, self.pre_features if ready else clean,
+                    self.pre_logits if ready else torch.ones_like(raw),
+                    self.hparams, epoch=int(kwargs.get("epoch", 0)))
+
+        weights = domain_balanced_weights(raw, sizes, mix).flatten()
+        # clean_features has already restored the original module modes.
+        logits = self.predict(all_x)
+        per_sample = F.cross_entropy(logits, all_y, reduction="none")
+        if mix == 0.0:
+            # Match the baseline reduction exactly, including floating-point order.
+            loss = F.cross_entropy(logits, all_y)
+        else:
+            loss = (weights * per_sample).sum()
+
+        self.optimizer.zero_grad()
+        loss.backward()
+        self.optimizer.step()
+
+        if clean is not None:
+            self._save_clean_history(clean, raw)
+        self.update_count.add_(1)
+
+        with torch.no_grad():
+            ess = 1.0 / weights.square().sum()
+            result = {
+                "loss": loss.item(),
+                "loss_unweighted": per_sample.mean().item(),
+                "stable_mix": mix,
+                "weight_min": weights.min().item(),
+                "weight_max": weights.max().item(),
+                "weight_ess": ess.item(),
+                "weight_ess_ratio": (ess / weights.numel()).item(),
+                "stable_raw_ess": (1.0 / original_weights.square().sum()).item(),
+            }
+            for index, domain_weights in enumerate(weights.split(sizes)):
+                result[f"weight_domain_{index}"] = domain_weights.sum().item()
+            for label in range(self.num_classes):
+                selected = all_y == label
+                result[f"weight_class_{label}"] = weights[selected].sum().item()
+                result[f"batch_class_{label}"] = selected.float().mean().item()
+        return result
 
 
 class ALOFT_S(ALOFT_DG):

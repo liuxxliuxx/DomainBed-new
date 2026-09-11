@@ -45,7 +45,8 @@ class BackboneCLITest(unittest.TestCase):
         spec = importlib.util.spec_from_file_location("old_run_all", path)
         old = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(old)
-        self.assertEqual(run_all.METHODS, old.METHODS)
+        # New recipes may be added; every pre-existing recipe must stay unchanged.
+        self.assertEqual({name: run_all.METHODS[name] for name in old.METHODS}, old.METHODS)
         for name in old.METHODS:
             for seed in old.SEEDS:
                 args = (root, name, seed, 32, "HTP", "5000")

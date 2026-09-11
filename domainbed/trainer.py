@@ -268,7 +268,7 @@ def train(args_q, test_envs, args, hparams, n_steps, q_steps, quant, checkpoint_
 
         inputs = {**batches, "step": step}
 
-        if args.algorithm == "StableNet":
+        if args.algorithm in ("StableNet", "ALOFT_Stable_E"):
             inputs["epoch"] = int(step / steps_per_epoch)    
 
         if (args.algorithm in ["ERM_GGA"] and

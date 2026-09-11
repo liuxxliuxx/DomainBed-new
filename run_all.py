@@ -199,6 +199,18 @@ METHODS = {
         "swad": "LossValley",
         "extra_args": list(_ALOFT_MASK07_ARGS),
     },
+    "ALOFT_Stable_E": {
+        "algorithm": "ALOFT_Stable_E",
+        "swad": "LossValley",
+        "extra_args": _ALOFT_MASK07_ARGS + [
+            "--stable_mix_max", "0.2",
+            "--stable_warmup_steps", "100",
+            "--stable_ramp_steps", "200",
+            "--stable_epochb", "20",
+            "--stable_lrbl", "1.0",
+            "--stable_lambdap", "70.0",
+        ],
+    },
     "ALOFT_CovLF_E": {
         "algorithm": "ALOFT_CovLF_E",
         "swad": "LossValley",

@@ -272,7 +272,9 @@ class ViTTests(unittest.TestCase):
                     for method in cls.body if isinstance(method, ast.FunctionDef)
                     and method.name != "__init__"}
 
-        self.assertEqual(methods(before), methods(root / relative))
+        previous, current = methods(before), methods(root / relative)
+        # Additive algorithms must not invalidate the legacy-method regression.
+        self.assertEqual(previous, {key: current[key] for key in previous})
 
     def test_legacy_resnet_checkpoints_strict_load(self):
         root = Path(__file__).resolve().parents[1]
@@ -449,7 +451,10 @@ for name in ('ERM', 'ALOFT_rev_E', 'ALOFT_CB_rev_E', 'FQ'):
         spec = importlib.util.spec_from_file_location("old_hparams", path)
         old = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(old)
-        for name in algorithm_names():
+        legacy_tree = ast.parse((path.parent / "algorithms/algorithms.py").read_text(encoding="utf-8"))
+        legacy_names = {node.name for node in legacy_tree.body if isinstance(node, ast.ClassDef)}
+        # A new algorithm has no old hyperparameter definition to compare with.
+        for name in sorted(set(algorithm_names()) & legacy_names):
             for dataset in ("PACS", "OfficeHome", "DomainNet", "ColoredMNIST"):
                 for seed in (0, 9):
                     before = old.random_hparams(name, dataset, seed)

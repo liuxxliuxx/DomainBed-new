@@ -158,8 +158,8 @@ def _hparams(algorithm, dataset, random_state):
         hparams["aloft_struct_closure_weight"] = (0.05, 0.05)
         hparams["aloft_struct_cldice_weight"] = (0.02, 0.02)
         hparams["aloft_struct_skeleton_iters"] = (10, 10)
-    elif algorithm in ["ALOFT_CovLF_E", "ALOFT_DomainLF_E"]:
-        # Controlled directional-noise ablation against ALOFT_LF_E_mask07.
+    elif algorithm in ["ALOFT_CovLF_E", "ALOFT_DomainLF_E", "ALOFT_Stable_E"]:
+        # Controlled extensions of the ALOFT_LF_E_mask07 baseline.
         hparams["aloft_alpha"] = (1.0, 1.0)
         hparams["aloft_mask_ratio"] = (0.7, 0.7)
         hparams["aloft_perturb_prob"] = (1.0, 1.0)
@@ -245,7 +245,7 @@ def _hparams(algorithm, dataset, random_state):
         hparams["fq_groups"] = (1, 1)
         # strength 封顶，<1 时量化只按比例混合进去，是最直接的力度旋钮
         hparams["fq_strength_max"] = (1.0, random_state.choice([0.3, 0.5, 1.0]))
-    if algorithm == "StableNet":
+    if algorithm in ("StableNet", "ALOFT_Stable_E"):
         defaults = {
             "stable_lrbl": 1.0,
             "stable_epochb": 20,
@@ -262,6 +262,10 @@ def _hparams(algorithm, dataset, random_state):
 
         for key, value in defaults.items():
             hparams[key] = (value, value)
+    if algorithm == "ALOFT_Stable_E":
+        hparams["stable_mix_max"] = (0.2, 0.2)
+        hparams["stable_warmup_steps"] = (100, 100)
+        hparams["stable_ramp_steps"] = (200, 200)
     return hparams
 
 
