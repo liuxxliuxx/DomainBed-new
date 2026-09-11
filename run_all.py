@@ -490,6 +490,15 @@ METHODS = {
             "--fq_aux_weight", "0.05",
         ],
     },
+    "StableNet": {
+        "algorithm": "StableNet",
+        "swad": "False",
+        "extra_args": [
+            "--stable_epochb", "20",
+            "--stable_lrbl", "1.0",
+            "--stable_lambdap", "70.0",
+        ],
+    },
 }
 
 METHOD_NAMES = {

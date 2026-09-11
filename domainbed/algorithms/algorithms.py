@@ -62,6 +62,8 @@ from domainbed.models.resnet_mixstyle2 import (
 from domainbed.sagm import SAGM, LinearScheduler, SAGM_CUSTOM
 from domainbed import gsam
 
+from domainbed.lib.stablenet import learn_weights
+
 
 def to_minibatch(x, y):
     minibatches = list(zip(x, y))
@@ -2735,6 +2737,121 @@ class FQ(Algorithm):
         self.optimizer.step()
         return {"loss": loss.item(),
                 "aux": float(aux) if torch.is_tensor(aux) else aux}
+
+    def predict(self, x):
+        return self.network(x)
+
+class StableNet(Algorithm):
+    def __init__(
+        self,
+        input_shape,
+        num_classes,
+        num_domains,
+        hparams,
+    ):
+        super().__init__(
+            input_shape,
+            num_classes,
+            num_domains,
+            hparams,
+        )
+
+        self.featurizer = networks.Featurizer(input_shape, hparams)
+        self.classifier = nn.Linear(
+            self.featurizer.n_outputs,
+            num_classes,
+        )
+
+        self.network = nn.Sequential(
+            self.featurizer,
+            self.classifier,
+        )
+
+        self.optimizer = self.new_optimizer(
+            self.network.parameters()
+        )
+
+        # DomainBed 的 batch_size 是每个源域的 batch size。
+        size = hparams["batch_size"] * num_domains
+        dim = self.featurizer.n_outputs
+
+        self.register_buffer(
+            "pre_features",
+            torch.zeros(size, dim),
+        )
+        self.register_buffer(
+            "pre_logits",
+            torch.ones(size, 1),
+        )
+        self.register_buffer(
+            "update_count",
+            torch.tensor(0, dtype=torch.long),
+        )
+
+    def update(self, x, y, **kwargs):
+        all_x = torch.cat(x)
+        all_y = torch.cat(y)
+
+        features = self.featurizer(all_x)
+        logits = self.classifier(features)
+
+        if features.shape != self.pre_features.shape:
+            raise ValueError(
+                "StableNet expects a fixed combined source batch"
+            )
+
+        step = int(self.update_count.item())
+        epoch = int(kwargs.get("epoch", 0))
+
+        self.optimizer.zero_grad()
+
+        weights, raw = learn_weights(
+            features,
+            self.pre_features,
+            self.pre_logits,
+            self.hparams,
+            epoch,
+        )
+
+        per_sample = F.cross_entropy(
+            logits,
+            all_y,
+            reduction="none",
+        )
+
+        # weights 已经归一化，使用 sum，不能再 mean。
+        loss = (per_sample * weights.flatten()).sum()
+
+        loss.backward()
+        self.optimizer.step()
+
+        # 历史状态不保留计算图。
+        with torch.no_grad():
+            if epoch == 0 and step < 10:
+                rate = 1.0 / (step + 1)
+            else:
+                rate = 1.0 - self.hparams["stable_presave_ratio"]
+
+            self.pre_features.mul_(1 - rate).add_(
+                features.detach().float(),
+                alpha=rate,
+            )
+
+            self.pre_logits.mul_(1 - rate).add_(
+                raw,
+                alpha=rate,
+            )
+
+            self.update_count.add_(1)
+
+        return {
+            "loss": loss.item(),
+            "weight_min": weights.min().item(),
+            "weight_max": weights.max().item(),
+            "weight_ess": (
+                1 / weights.square().sum()
+            ).item(),
+        }
 
     def predict(self, x):
         return self.network(x)

@@ -268,6 +268,9 @@ def train(args_q, test_envs, args, hparams, n_steps, q_steps, quant, checkpoint_
 
         inputs = {**batches, "step": step}
 
+        if args.algorithm == "StableNet":
+            inputs["epoch"] = int(step / steps_per_epoch)    
+
         if (args.algorithm in ["ERM_GGA"] and
                 (hparams["start_step"] <= step <= hparams["end_step"] or (hparams["extra_search"] ==
                                                                           "y" and hparams["extra_search_start"]

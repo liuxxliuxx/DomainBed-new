@@ -245,6 +245,23 @@ def _hparams(algorithm, dataset, random_state):
         hparams["fq_groups"] = (1, 1)
         # strength 封顶，<1 时量化只按比例混合进去，是最直接的力度旋钮
         hparams["fq_strength_max"] = (1.0, random_state.choice([0.3, 0.5, 1.0]))
+    if algorithm == "StableNet":
+        defaults = {
+            "stable_lrbl": 1.0,
+            "stable_epochb": 20,
+            "stable_num_f": 1,
+            "stable_concat": True,
+            "stable_lambdap": 70.0,
+            "stable_decay_pow": 2.0,
+            "stable_presave_ratio": 0.9,
+            "stable_lambda_decay_rate": 1.0,
+            "stable_lambda_decay_epoch": 5,
+            "stable_min_lambda_times": 0.01,
+            "stable_first_step_cons": 1.0,
+        }
+
+        for key, value in defaults.items():
+            hparams[key] = (value, value)
     return hparams
 
 
