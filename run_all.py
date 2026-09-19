@@ -25,6 +25,16 @@ _ALOFT_STRUCT_ARGS = _ALOFT_MASK07_ARGS + [
 ]
 
 METHODS = {
+    "SFT": {
+        "algorithm": "SFT",
+        "swad": "False",
+        "extra_args": [],
+    },
+    "SFT_SWAD": {
+        "algorithm": "SFT",
+        "swad": "LossValley",
+        "extra_args": [],
+    },
     "ERM": {
         "algorithm": "ERM",
         "swad": "False",

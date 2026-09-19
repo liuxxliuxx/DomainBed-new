@@ -14,6 +14,8 @@ class AveragedModel(Module):
         if isinstance(model, AveragedModel):
             # prevent nested averagedmodel
             model = model.module
+        if hasattr(model, "get_swad_model"):
+            model = model.get_swad_model()
         self.module = deepcopy(model)
         if rm_optimizer:
             for k, v in vars(self.module).items():
@@ -55,6 +57,8 @@ class AveragedModel(Module):
         """
         if isinstance(model, AveragedModel):
             model = model.module
+        if hasattr(model, "get_swad_model"):
+            model = model.get_swad_model()
         for p_swa, p_model in zip(self.parameters(), model.parameters()):
             device = p_swa.device
             p_model_ = p_model.detach().to(device)
@@ -81,7 +85,9 @@ class AveragedModel(Module):
 
     def clone(self):
         clone = copy.deepcopy(self.module)
-        clone.optimizer = clone.new_optimizer(clone.network.parameters())
+        # An opt-in inference-only SWAD view intentionally has no optimizer.
+        if hasattr(clone, "new_optimizer"):
+            clone.optimizer = clone.new_optimizer(clone.network.parameters())
         return clone
 
 

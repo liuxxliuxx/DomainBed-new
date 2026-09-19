@@ -96,6 +96,101 @@ python tests/check_backbone_compatibility.py --reference /path/to/pre-edit/sourc
 
 兼容性脚本在独立进程中比较修改前、修改后默认、显式 ResNet 三条路径的模型、梯度、优化器、随机状态和预测哈希。CUDA 专属更新在没有 CUDA 时明确跳过。CPU 测试通过不代表完成了完整 GPU 训练结果复现。
 
+### SFT / SFT_SWAD
+
+SFT 对应论文 *Seeking Consistent Flat Minima for Better Domain Generalization
+via Refining Loss Landscapes*（arXiv:2412.13573v2）的 Self-Feedback Training。
+实现依据 Algorithm 1、Algorithm 2 和式 (6)–(13)，没有引入目标域训练数据。
+
+在仓库根目录运行，默认 ResNet50、seed 0–4，每个 seed 完成所有目标域的留一训练：
+
+```sh
+python run_all.py --algorithm SFT --gpu 0 --dataset HTP --batch 32
+python run_all.py --algorithm SFT_SWAD --gpu 0 --dataset HTP --batch 32
+python run_all.py --algorithm SFT --gpu 0 --dataset HTP --backbone vit --batch 8
+```
+
+`SFT` 配方显式关闭 SWAD；`SFT_SWAD` 是叠加 `LossValley` 的组合配方。
+两者调用同一个 `SFT` 算法，保留当前框架的学习率、优化器、weight decay、
+图像增强、数据划分和计划训练步数。`--gpu` 指物理 GPU 编号。
+ViT 沿用 torchvision ImageNet ViT-B/16 全量微调，与论文 CLIP + VPT 设置不同，
+不能直接对照论文 ViT 表格报告复现结果。本次没有实现与量化、ALOFT 的组合。
+
+#### 训练流程
+
+1. 分类模型与 refiner 使用相同架构和独立参数，分别创建优化器；两者均遵守
+   `pretrained`、`resnet_dropout`、`freeze_bn` 等现有配置。refiner 不是 EMA teacher。
+2. 每步从本次训练的源域中均匀抽取两个不同域 `d`、`d'`。refiner 对所有源域
+   拼接的 minibatch 做一次前向，生成软标签；分类模型只使用 `d` 的 detached
+   软标签执行一次 SAM 更新。扰动覆盖整个可训练分类模型，按全局 L2 范数归一化。
+3. 在更新后的分类模型上，分别计算 `d`、`d'` 自己的扰动和 sharpness：
+   `S_d = CE_soft(theta + epsilon_d, phi) - CE_soft(theta, phi)`。
+4. 使用所有源域样本的平均 PCE，以及 `lambda1 * S_d + lambda2 * abs(S_d - S_d')`，
+   更新 refiner。分类模型固定，不反传穿过前面的 Adam/SGD 更新；保留扰动及其
+   归一化对 refiner 的可微依赖，因此这里包含混合二阶导数。
+5. PCE 按 Algorithm 2 求解 `min_q KL(q || softmax(refiner_logits))`，约束为
+   `q_y >= alpha * q_k`。排序和前缀和在对数域内确定活跃约束，避免小概率连乘下溢；
+   投影目标停止梯度。PCE 不替换成 one-hot CE 或固定 label smoothing。
+
+SAM 和反馈使用 functional call，不原地扰动真实权重。同一损失差分的两次前向
+复用 CPU/CUDA 随机状态，探测使用独立 buffers，不改变模块 train/eval 标志。
+当 `freeze_bn=False` 时，分类模型只提交 SAM 基准前向的 BN 更新，refiner 在全源域
+前向时更新一次 BN；反馈探测不更新两者统计。上述随机状态和 buffer 规则属于论文
+未明确部分的工程约定。零梯度使用安全分母；`rho=0` 时执行普通软标签更新且反馈为零。
+
+推理仅调用分类模型。SWAD 通过可选 `get_swad_model()` 接口复制和平均分类模型，
+不保存 refiner 或两个训练优化器；没有此接口的旧算法保留原路径。
+普通模型 `state_dict` 包含两个网络，使用 `model_hparams` 构建后可 strict 加载。
+SWAD 的 state_dict 只对应推理模型，需要加载到同样的 `AveragedModel` 包装中。
+当前训练入口未增加自动断点续训；继续训练仍需另行保存/恢复两个优化器和随机状态。
+
+#### 参数与日志
+
+| 参数 | 起始默认值 | 含义 |
+| --- | --- | --- |
+| `sft_rho` | `0.05` | SAM 和两个反馈域的扰动半径 |
+| `sft_alpha` | `10.0` | 投影要求的真实类别与其他类别概率比下限 |
+| `sft_lambda1` | `0.5` | 训练域 sharpness 惩罚系数 |
+| `sft_lambda2` | `0.5` | 两域 sharpness 差异惩罚系数 |
+
+这些默认值用于启动实验，不是论文公开的各数据集最优值。注册表的随机搜索范围采用
+论文 ResNet 范围：rho 从 `[0.01, 0.02, 0.03, 0.05, 0.1]` 抽取，alpha 为
+`10 ** U[0.5, 3]`，两个 lambda 为 `U[0, 1]`。现有训练入口默认使用固定超参数；
+新增范围不会自动启动超参数搜索。ViT 沿用这些起始值，不声称沿用论文 VPT 的训练配方。
+
+单 seed、可覆盖超参数的原始 SFT 示例：
+
+```sh
+python train_all.py HTP_SFT_seed0 --dataset HTP --data_dir ./dataset --algorithm SFT --steps 5000 --batch_size 32 --pretrained True --freeze_bn True --swad False --seed 0 --trial_seed 0 --deterministic --sft_rho 0.05 --sft_alpha 10 --sft_lambda1 0.5 --sft_lambda2 0.5
+```
+
+单次入口仍遵循 `hparams_registry -> config.yaml -> CLI` 的优先级，务必显式传入
+`--swad False` 来关闭全局配置中的 SWAD；组合实验传 `--swad LossValley`。
+日志记录 `loss`（分类模型的 SAM 软标签损失）、`sft_pce`、`sft_refiner_loss`、
+`sft_sharpness_train`、`sft_sharpness_other`、`sft_sharpness_gap`。损失为 minibatch
+平均值；域 batch 不等长时，PCE 按样本数加权。关闭两个 lambda 后 refiner 只优化 PCE。
+
+SFT 需要至少两个源域。双网络、两个优化器和反馈高阶梯度都会增加训练内存与耗时，
+尤其是全量微调 ViT；显存不足时显式减小 `--batch`，不会静默更换骨干或近似梯度。
+服务器可先运行以下短训练，不用于报告准确率：
+
+```sh
+CUDA_VISIBLE_DEVICES=0 python train_all.py HTP_SFT_smoke --dataset HTP --data_dir ./dataset --algorithm SFT --test_envs 0 --steps 2 --checkpoint_freq 1 --batch_size 2 --pretrained False --freeze_bn True --swad False
+```
+
+离线测试（不下载数据或预训练权重）：
+
+```sh
+python -m unittest discover -s tests -p "test_sft.py" -v
+python -m unittest discover -s tests -p "test_*.py" -v
+```
+
+测试覆盖独立约束求解器核对投影、有限差分核对 refiner 梯度、SAM 更新时序与梯度隔离、
+BN/dropout 状态、零半径、检查点及 SWAD，以及 ResNet18、ResNet50 和小型真实 ViT 的
+多步更新。有限差分检查固定 PCE 投影目标，与交替优化语义一致。本地 CPU 测试不代表
+完整 CUDA 训练或论文准确率复现；无 CUDA 时明确跳过 CUDA 测试。原有训练入口和
+LossValley 最终模型迁移仍要求 CUDA，CPU 测试仅替换 LossValley 的设备迁移动作。
+
 ### CSU
 
 CSU uses the repository's ResNet-50 backbone and inserts correlated style

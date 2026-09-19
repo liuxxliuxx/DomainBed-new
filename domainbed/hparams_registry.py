@@ -108,6 +108,14 @@ def _hparams(algorithm, dataset, random_state):
         hparams["rho"] = (0.05, random_state.choice([0.01, 0.02, 0.05, 0.1]))
         hparams["alpha"] = (0.001, random_state.choice([0.01, 0.02, 0.05, 0.1]))
 
+    elif algorithm == "SFT":
+        # Starting defaults, not published dataset-optimal settings. The search
+        # follows the paper's ResNet ranges; our ViT is not its CLIP/VPT setup.
+        hparams["sft_rho"] = (0.05, float(random_state.choice([0.01, 0.02, 0.03, 0.05, 0.1])))
+        hparams["sft_alpha"] = (10.0, float(10 ** random_state.uniform(0.5, 3)))
+        hparams["sft_lambda1"] = (0.5, float(random_state.uniform(0, 1)))
+        hparams["sft_lambda2"] = (0.5, float(random_state.uniform(0, 1)))
+
     elif algorithm == "CutMix":
         hparams["beta"] = (1.0, 1.0)
         # cutmix_prob is set to 1.0 for ImageNet and 0.5 for CIFAR100 in the original paper.

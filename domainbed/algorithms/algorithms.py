@@ -68,6 +68,7 @@ from domainbed.lib.aloft_stable import (
     domain_balanced_weights,
     stable_mix_at_step,
 )
+from domainbed.lib import sft as sft_utils
 
 
 def to_minibatch(x, y):
@@ -174,6 +175,100 @@ class ERM(Algorithm):
 
     def predict(self, x):
         return self.network(x)
+
+
+class SFT(Algorithm):
+    """Self-Feedback Training (arXiv:2412.13573v2, Algorithm 1).
+
+    The student takes one soft-label SAM step on a randomly selected source
+    domain. Then a separate, equally sized refiner learns from all-source PCE
+    and post-update, domain-specific sharpness feedback. Only the student is
+    used at inference. Neither optimizer owns the other network's parameters.
+    """
+    def __init__(self, input_shape, num_classes, num_domains, hparams):
+        super().__init__(input_shape, num_classes, num_domains, hparams)
+        if num_domains < 2:
+            raise ValueError("SFT requires at least two source domains")
+        if num_classes < 2:
+            raise ValueError("SFT requires at least two classes")
+        for key, lower in (("sft_rho", 0), ("sft_alpha", 1),
+                           ("sft_lambda1", 0), ("sft_lambda2", 0)):
+            value = float(hparams[key])
+            if not np.isfinite(value) or value < lower:
+                raise ValueError(f"{key} must be finite and >= {lower}")
+            setattr(self, key, value)
+
+        self.featurizer = networks.Featurizer(input_shape, hparams)
+        self.classifier = nn.Linear(self.featurizer.n_outputs, num_classes)
+        self.network = nn.Sequential(self.featurizer, self.classifier)
+        refiner_features = networks.Featurizer(input_shape, hparams)
+        self.refiner = nn.Sequential(
+            refiner_features, nn.Linear(refiner_features.n_outputs, num_classes))
+        self.optimizer = self.new_optimizer(self.network.parameters())
+        self.refiner_optimizer = self.new_optimizer(self.refiner.parameters())
+
+    def update(self, x, y, **kwargs):
+        if len(x) != self.num_domains or len(y) != self.num_domains:
+            raise ValueError("SFT expects one nonempty minibatch per source domain")
+        for xi, yi in zip(x, y):
+            if (len(xi) == 0 or yi.shape != (len(xi),) or yi.dtype != torch.long
+                    or xi.device != yi.device or xi.device != x[0].device):
+                raise ValueError("SFT expects matching nonempty inputs and int64 labels")
+            if (yi < 0).any() or (yi >= self.num_classes).any():
+                raise ValueError("SFT labels are outside the class range")
+
+        d, other = torch.randperm(self.num_domains)[:2].tolist()
+        self.optimizer.zero_grad(set_to_none=True)
+        self.refiner_optimizer.zero_grad(set_to_none=True)
+        # One refiner forward updates BN once and reuses the same soft labels
+        # throughout both phases. Only the SAM targets are detached.
+        refiner_logits = self.refiner(torch.cat(x))
+        pce = sft_utils.projection_cross_entropy(
+            refiner_logits, torch.cat(y), self.sft_alpha)
+        targets = refiner_logits.softmax(dim=-1).split([len(xi) for xi in x])
+
+        _, model_loss = sft_utils.paired_losses(
+            self.network, x[d], targets[d].detach(), self.sft_rho,
+            update_buffers=True)
+        model_loss.backward()
+        self.optimizer.step()
+        self.optimizer.zero_grad(set_to_none=True)
+
+        # Eq. (9) must be recomputed at the updated theta, separately per domain.
+        # Detached parameter leaves keep refinement out of the live model and
+        # avoid unrolling the preceding optimizer step. Epsilon remains a
+        # differentiable function of phi, including its global normalization.
+        feedback_enabled = self.sft_lambda1 != 0 or self.sft_lambda2 != 0
+        feedback_targets = targets if feedback_enabled else [t.detach() for t in targets]
+        sharp_d = sft_utils.sharpness(
+            self.network, x[d], feedback_targets[d], self.sft_rho,
+            create_graph=feedback_enabled)
+        sharp_other = sft_utils.sharpness(
+            self.network, x[other], feedback_targets[other], self.sft_rho,
+            create_graph=feedback_enabled)
+        gap = (sharp_d - sharp_other).abs()
+        refiner_loss = pce + self.sft_lambda1 * sharp_d + self.sft_lambda2 * gap
+        refiner_parameters = tuple(self.refiner.parameters())
+        gradients = torch.autograd.grad(refiner_loss, refiner_parameters, allow_unused=True)
+        for p, gradient in zip(refiner_parameters, gradients):
+            p.grad = gradient
+        self.refiner_optimizer.step()
+
+        return {"loss": model_loss.item(), "sft_pce": pce.item(),
+                "sft_refiner_loss": refiner_loss.item(),
+                "sft_sharpness_train": sharp_d.item(),
+                "sft_sharpness_other": sharp_other.item(),
+                "sft_sharpness_gap": gap.item()}
+
+    def predict(self, x):
+        return self.network(x)
+
+    def get_swad_model(self):
+        return sft_utils.SFTInferenceModel(self.network, self.training)
+
+    def clone(self):
+        # Copy both optimizers together with their parameter owners and states.
+        return copy.deepcopy(self)
 
 
 class CSU(Algorithm):
