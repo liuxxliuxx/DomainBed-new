@@ -3057,3 +3057,7 @@ class StableNet(Algorithm):
 
     def predict(self, x):
         return self.network(x)
+
+
+# Import after Algorithm is defined: preserve both package and legacy module APIs.
+from .cs_dro import CS_DRO  # noqa: E402,F401

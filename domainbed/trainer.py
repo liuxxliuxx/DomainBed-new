@@ -35,6 +35,29 @@ def json_handler(v):
     raise TypeError(f"`{type(v)}` is not JSON Serializable")
 
 
+def _refresh_cs_dro_radius(algorithm, iterator, n_batches, device, step):
+    """Use source batches only; the CW search itself must retain gradients."""
+    was_training = algorithm.training
+    algorithm.eval()
+    dists = []
+    try:
+        for _ in range(n_batches):
+            batches = misc.merge_dictlist(next(iterator))
+            batches = {
+                key: [tensor.to(device) for tensor in values]
+                for key, values in batches.items()
+            }
+            with torch.no_grad():
+                zz, yy = algorithm.get_emb(**batches, step=step)
+            dists.append(algorithm.recompute_rho_adv_ref(zz, yy))
+        rho = float(np.sqrt(np.concatenate(dists) + 1e-12).mean())
+        if np.isfinite(rho):
+            rho = max(1e-2, min(rho, 1e2))
+            algorithm.target_rho = 0.9 * algorithm.target_rho + 0.1 * rho
+    finally:
+        algorithm.train(was_training)
+
+
 def train(args_q, test_envs, args, hparams, n_steps, q_steps, quant, checkpoint_freq, logger, writer, target_env=None, fft_quant=0, fq_steps=2000, fq_ramp=500):
     logger.info("")
 
@@ -196,8 +219,11 @@ def train(args_q, test_envs, args, hparams, n_steps, q_steps, quant, checkpoint_
         logger.info(f"Saliency ON -> {args.out_dir / 'saliency' / testenv_name}")
     sal_every = args.saliency_every or checkpoint_freq
 
+    is_cs_dro = args.algorithm == "CS_DRO"
+    swad_start_step = algorithm.SWAD_START_STEP if is_cs_dro else 0
+    swad_observations = 0
     swad = None
-    if hparams["swad"]:
+    if hparams["swad"] and not is_cs_dro:
         swad_algorithm = swa_utils.AveragedModel(algorithm)
         swad_cls = getattr(swad_module, hparams["swad"])
         swad = swad_cls(evaluator, **hparams.swad_kwargs)
@@ -208,6 +234,9 @@ def train(args_q, test_envs, args, hparams, n_steps, q_steps, quant, checkpoint_
     last_results_keys = None
     records = []
     epochs_path = args.out_dir / "results.jsonl"
+    if is_cs_dro:
+        # Guard tiny/debug datasets against zero periods or empty samples.
+        rho_freq = max(4, int(4 * steps_per_epoch))
 
     for step in range(n_steps):
 
@@ -222,19 +251,21 @@ def train(args_q, test_envs, args, hparams, n_steps, q_steps, quant, checkpoint_
                 algorithm = replace_module_by_names(algorithm, modules_to_replace)
             algorithm.to(device)
             swad = None
-            if hparams["swad"]:
+            if hparams["swad"] and step >= swad_start_step:
                 swad_algorithm = swa_utils.AveragedModel(algorithm)
                 swad_cls = getattr(swad_module, hparams["swad"])
                 swad = swad_cls(evaluator, **hparams.swad_kwargs)
+                swad_observations = 0
         if fft_quant == 1 and step >= fq_steps:
             s = 1.0 if fq_ramp <= 0 else min(1.0, (step - fq_steps) / fq_ramp)
             for m in fq_modules:
                 # strength_max 封顶：输出是原值和量化值的混合，破坏程度按比例缩
                 m.enabled, m.strength = True, s * m.strength_max
-            if step == fq_steps + fq_ramp and fq_modules and hparams["swad"]:
+            if step == fq_steps + fq_ramp and fq_modules and hparams["swad"] and step >= swad_start_step:
                 swad_algorithm = swa_utils.AveragedModel(algorithm)
                 swad_cls = getattr(swad_module, hparams["swad"])
                 swad = swad_cls(evaluator, **hparams.swad_kwargs)
+                swad_observations = 0
                 logger.info(f"SWAD reset at step {step} after fq ramp")
 
             for m in cb_modules:
@@ -247,13 +278,19 @@ def train(args_q, test_envs, args, hparams, n_steps, q_steps, quant, checkpoint_
                 for m in cb_modules:
                     m.freeze_codebook()
                 logger.info(f"ALOFT band codebook frozen at step {step}")
-                if hparams["swad"]:
+                if hparams["swad"] and step >= swad_start_step:
                     swad_algorithm = swa_utils.AveragedModel(algorithm)
                     swad_cls = getattr(swad_module, hparams["swad"])
                     swad = swad_cls(evaluator, **hparams.swad_kwargs)
+                    swad_observations = 0
                     logger.info(f"SWAD reset at step {step} after codebook freeze")
                 
         step_start_time = time.time()
+        if is_cs_dro and step % rho_freq == 0:
+            logger.info(f"CS-DRO radius refresh at step {step} ({rho_freq // 4} source batches)")
+            _refresh_cs_dro_radius(
+                algorithm, train_minibatches_iterator, rho_freq // 4, device, step
+            )
         # batches_dictlist: [{env0_data_key: tensor, env0_...}, env1_..., ...]
         batches_dictlist = next(train_minibatches_iterator)
         # batches: {data_key: [env0_tensor, ...], ...}
@@ -283,6 +320,20 @@ def train(args_q, test_envs, args, hparams, n_steps, q_steps, quant, checkpoint_
 
         else:
             step_vals = algorithm.update(**inputs)
+
+        if is_cs_dro:
+            if 100 < step < 300:
+                dag_vals = [algorithm.update_dag() for _ in range(3)]
+                for key in dag_vals[0]:
+                    step_vals[f"dag_{key}"] = np.mean([v[key] for v in dag_vals])
+            if hparams["swad"] and step == swad_start_step:
+                # The learned mask is now fixed. No pre-warmup segments or
+                # LossValley observations may carry over into this phase.
+                swad_algorithm = swa_utils.AveragedModel(algorithm)
+                swad_cls = getattr(swad_module, hparams["swad"])
+                swad = swad_cls(evaluator, **hparams.swad_kwargs)
+                swad_observations = 0
+                logger.info(f"CS-DRO: start SWAD with frozen mask at step {step}")
         for key, val in step_vals.items():
             checkpoint_vals[key].append(val)
         checkpoint_vals["step_time"].append(time.time() - step_start_time)
@@ -369,6 +420,7 @@ def train(args_q, test_envs, args, hparams, n_steps, q_steps, quant, checkpoint_
                 swad.update_and_evaluate(
                     swad_algorithm, results["train_out"], results["tr_outloss"], prt_results_fn
                 )
+                swad_observations += 1
 
                 if hasattr(swad, "dead_valley") and swad.dead_valley:
                     logger.info("SWAD valley is dead -> early stop !")
@@ -408,6 +460,9 @@ def train(args_q, test_envs, args, hparams, n_steps, q_steps, quant, checkpoint_
     }
 
     # Evaluate SWAD
+    if is_cs_dro and swad and swad_observations == 0:
+        logger.warning("CS-DRO: no validation checkpoint after SWAD start; use ordinary model results")
+        swad = None
     if swad:
         swad_algorithm = swad.get_final_model()
         if hparams["freeze_bn"] is False:

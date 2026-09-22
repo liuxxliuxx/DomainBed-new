@@ -1,4 +1,5 @@
 import argparse
+import math
 import os
 import subprocess
 import sys
@@ -25,6 +26,16 @@ _ALOFT_STRUCT_ARGS = _ALOFT_MASK07_ARGS + [
 ]
 
 METHODS = {
+    "CS_DRO": {
+        "algorithm": "CS_DRO",
+        "swad": "False",
+        "extra_args": [],
+    },
+    "CS_DRO_SWAD": {
+        "algorithm": "CS_DRO",
+        "swad": "LossValley",
+        "extra_args": [],
+    },
     "SFT": {
         "algorithm": "SFT",
         "swad": "False",
@@ -217,8 +228,9 @@ METHODS = {
             "--stable_warmup_steps", "100",
             "--stable_ramp_steps", "200",
             "--stable_epochb", "20",
-            "--stable_lrbl", "1.0",
-            "--stable_lambdap", "70.0",
+            "--aloft_alpha", "1.0",
+            "--aloft_mask_ratio", "0.7",
+            "--aloft_positions","[\"layer1\",\"layer2\",\"layer3\"]",
         ],
     },
     "ALOFT_CovLF_E": {
@@ -562,6 +574,16 @@ def parse_backbone(value):
         raise argparse.ArgumentTypeError(str(error)) from error
 
 
+def parse_lr(value):
+    try:
+        lr = float(value)
+    except ValueError as error:
+        raise argparse.ArgumentTypeError("lr must be a positive finite number") from error
+    if not math.isfinite(lr) or lr <= 0:
+        raise argparse.ArgumentTypeError("lr must be a positive finite number")
+    return lr
+
+
 def parse_args():
     parser = argparse.ArgumentParser(
         description=(
@@ -605,10 +627,14 @@ def parse_args():
         metavar="{resnet,vit}",
         help="backbone (case-insensitive); vit_b_16 is an alias for vit",
     )
+    parser.add_argument(
+        "--lr", type=parse_lr, default=None,
+        help="override the shared learning rate; omitted keeps existing defaults (not lr_g/lr_d)",
+    )
     return parser.parse_args()
 
 
-def build_command(repo_dir, method_name, seed,batch,dataset,steps, backbone="resnet"):
+def build_command(repo_dir, method_name, seed,batch,dataset,steps, backbone="resnet", lr=None):
     method = METHODS[method_name]
     experiment_name = f"{dataset}_{method_name}_seed{seed}"
 
@@ -638,6 +664,8 @@ def build_command(repo_dir, method_name, seed,batch,dataset,steps, backbone="res
     command.extend(method["extra_args"])
     if backbone == "vit":
         command.extend(["--backbone", "vit"])
+    if lr is not None:
+        command.extend(["--lr", str(lr)])
     return command
 
 
@@ -673,6 +701,7 @@ def main():
             args.dataset,
             args.steps,
             args.backbone,
+            lr=args.lr,
         )
 
         print("=" * 80, flush=True)

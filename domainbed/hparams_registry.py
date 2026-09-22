@@ -168,9 +168,9 @@ def _hparams(algorithm, dataset, random_state):
         hparams["aloft_struct_skeleton_iters"] = (10, 10)
     elif algorithm in ["ALOFT_CovLF_E", "ALOFT_DomainLF_E", "ALOFT_Stable_E"]:
         # Controlled extensions of the ALOFT_LF_E_mask07 baseline.
-        hparams["aloft_alpha"] = (1.0, 1.0)
-        hparams["aloft_mask_ratio"] = (0.7, 0.7)
         hparams["aloft_perturb_prob"] = (1.0, 1.0)
+        hparams["stable_lrbl"]=(1.0,1.0)
+        hparams["table_lambdap"]=(70.0,70.0)
         hparams["aloft_positions"] = (
             ["layer1", "layer2", "layer3"],
         ) * 2
@@ -215,6 +215,27 @@ def _hparams(algorithm, dataset, random_state):
         hparams["aloft_perturb_prob"] = (1.0, random_state.choice([0.5, 1.0]))
         # 论文 Fig.3 里 ALOFT 出现在每个 core block；ResNet 的对应位置是每个 stage 之后
         hparams["aloft_positions"] = (["layer1", "layer2", "layer3"],) * 2
+    elif algorithm == "CS_DRO":
+        # Fixed reference settings; do not consume RNG for other algorithms.
+        dim, lambda_G, kappa = {
+            "PACS": (256, 10.0, 1.0),
+            "VLCS": (512, 10.0, 1.0),
+            "OfficeHome": (512, 1.0, 0.001),
+            "TerraIncognita": (512, 0.1, 10.0),
+        }.get(dataset, (512, 1.0, 1.0))
+        defaults = {
+            "hidden_size": dim, "out_dim": dim, "num_hidden_layers": 0,
+            "lambda_r": 1.0, "lambda_G": lambda_G, "kappa": kappa,
+            "hp_tau": 10.0, "ema_ratio": 0.99, "lambda1": 0.01,
+            "rho_max": 100.0, "rho": 1.0, "alpha": 1.0,
+            "adv_steps": 15, "adv_step_size": 0.05,
+            "adv_gamma": 0.001, "target_rho": 0.5,
+            "full_cov": False, "gauss_min_count": 5,
+            "gauss_decay": 0.9, "gauss_eps": 1e-4, "gauss_shrink": 0.1,
+            "m_ema_mu": 0.1,
+        }
+        for key, value in defaults.items():
+            hparams[key] = (value, value)
     elif algorithm == "iDAG":
         # LightEncoder 结构：2048 -> hidden_size -> out_dim
         hparams["hidden_size"] = (512, 512)
