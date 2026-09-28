@@ -230,9 +230,11 @@ class StableALOFTIntegrationTest(unittest.TestCase):
         self.assertFalse(model.pre_features.requires_grad)
         self.assertTrue(all(module.training for module in find_aloft_modules(model)))
         weights = domain_balanced_weights(raw, [2, 2], 0.2).flatten()
-        expected_loss = (weights * nn.functional.cross_entropy(
-            predictions[0], torch.cat(ys), reduction="none")).sum().item()
+        expected_loss = nn.functional.cross_entropy(
+            predictions[0], torch.cat(ys)).item()
         self.assertEqual(result["loss"], expected_loss)
+        self.assertTrue(all(module._sample_strength is None
+                            for module in find_aloft_modules(model)))
         self.assertAlmostEqual(result["weight_ess"], (1 / weights.square().sum()).item())
         self.assertAlmostEqual(result["weight_domain_0"], 0.5)
         self.assertAlmostEqual(result["weight_domain_1"], 0.5)

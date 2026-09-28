@@ -2415,11 +2415,11 @@ class ALOFT_E(ALOFT_DG):
 
 
 class ALOFT_Stable_E(ALOFT_E):
-    """Unchanged low-frequency ALOFT-E with clean-view, weak reweighting.
+    """Low-frequency ALOFT-E with clean-view, sample-wise perturbation strength.
 
     StableNet learns detached weights from an eval-mode feature forward. The
-    gradient-bearing forward retains all baseline ALOFT perturbations. Source
-    domain mass is preserved; no label-conditional balancing is performed.
+    weights control perturbation strength in the gradient-bearing forward.
+    Training uses ordinary cross entropy.
     """
 
     def __init__(self, input_shape, num_classes, num_domains, hparams):
@@ -2478,14 +2478,20 @@ class ALOFT_Stable_E(ALOFT_E):
                     self.hparams, epoch=int(kwargs.get("epoch", 0)))
 
         weights = domain_balanced_weights(raw, sizes, mix).flatten()
+        aloft_modules = find_aloft_modules(self)
+        if mix > 0.0:
+            strength = (weights - weights.min()) / (weights.max() - weights.min() + 1e-6)
+            sample_strength = 0.5 + (1.5 - 0.5) * strength
+            for module in aloft_modules:
+                module.set_sample_strength(sample_strength)
         # clean_features has already restored the original module modes.
-        logits = self.predict(all_x)
+        try:
+            logits = self.predict(all_x)
+        finally:
+            for module in aloft_modules:
+                module.clear_sample_strength()
         per_sample = F.cross_entropy(logits, all_y, reduction="none")
-        if mix == 0.0:
-            # Match the baseline reduction exactly, including floating-point order.
-            loss = F.cross_entropy(logits, all_y)
-        else:
-            loss = (weights * per_sample).sum()
+        loss = F.cross_entropy(logits, all_y)
 
         self.optimizer.zero_grad()
         loss.backward()

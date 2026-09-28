@@ -47,6 +47,7 @@ class ALOFT(nn.Module):
         self.eps = eps
         self._mask_cache = {}
         self._domain_context = None
+        self._sample_strength = None
 
     def extra_repr(self):
         return (f"mode={self.mode}, noise_mode={self.noise_mode}, "
@@ -61,6 +62,15 @@ class ALOFT(nn.Module):
 
     def clear_domain_context(self):
         self._domain_context = None
+
+    def set_sample_strength(self, sample_strength):
+        """Set detached per-sample multipliers for one ALOFT-E forward."""
+        if sample_strength.ndim != 1:
+            raise ValueError("sample_strength must be a one-dimensional tensor")
+        self._sample_strength = sample_strength.detach()
+
+    def clear_sample_strength(self):
+        self._sample_strength = None
         
     def _mask(self, h, w, device):
         """论文 Eq.(2)：以频谱中心为心、半边长 r*min(H,W)/2 的正方形二值掩码。"""
@@ -115,6 +125,11 @@ class ALOFT(nn.Module):
         sigma = (f.var(dim=0, unbiased=False, keepdim=True) + self.eps).sqrt()
         # Eq.(7)：F_l_hat = F_l + eps * Sigma(F_l)，eps ~ N(0, alpha)
         noise = torch.randn_like(f) * self.alpha * sigma
+        if self._sample_strength is not None:
+            if self._sample_strength.shape[0] != f.shape[0]:
+                raise ValueError("sample strength count does not match the feature batch")
+            sample_strength = self._sample_strength.to(device=f.device, dtype=f.dtype)
+            noise = noise * sample_strength[:, None, None, None]
         return torch.where(m, f + noise, f)     # 掩码外即 Eq.(4) 的高频，原样保留
 
     def _by_direction(self, f, m):
