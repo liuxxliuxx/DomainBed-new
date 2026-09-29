@@ -2480,8 +2480,12 @@ class ALOFT_Stable_E(ALOFT_E):
         weights = domain_balanced_weights(raw, sizes, mix).flatten()
         aloft_modules = find_aloft_modules(self)
         if mix > 0.0:
-            strength = (weights - weights.min()) / (weights.max() - weights.min() + 1e-6)
-            sample_strength = 0.5 + (1.5 - 0.5) * strength
+            # Normalize before mixing so min-max scaling cannot cancel the schedule.
+            adaptive_weights = domain_balanced_weights(raw, sizes, 1.0).flatten()
+            strength = (adaptive_weights - adaptive_weights.min()) / (
+                adaptive_weights.max() - adaptive_weights.min() + 1e-6)
+            adaptive_strength = 0.5 + (1.5 - 0.5) * strength
+            sample_strength = 1.0 + mix * (adaptive_strength - 1.0)
             for module in aloft_modules:
                 module.set_sample_strength(sample_strength)
         # clean_features has already restored the original module modes.

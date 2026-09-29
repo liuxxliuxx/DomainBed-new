@@ -241,6 +241,38 @@ class StableALOFTIntegrationTest(unittest.TestCase):
         self.assertAlmostEqual(result["weight_class_0"], weights[[0, 3]].sum().item())
         self.assertAlmostEqual(result["batch_class_0"], 0.5)
 
+    def test_mix_scales_perturbation_deviation_from_baseline(self):
+        xs, ys = batches()
+        raw = torch.tensor([[-2.0], [1.0], [2.0], [-1.0]])
+        captured = {}
+        for mix in (0.2, 1.0):
+            model = make_model(stable_mix_max=mix).train()
+            strengths = []
+
+            def capture(module, inputs):
+                if module.training:
+                    strengths.append(module._sample_strength.detach().clone())
+
+            handles = [module.register_forward_pre_hook(capture)
+                       for module in find_aloft_modules(model)]
+            try:
+                with mock.patch("domainbed.algorithms.algorithms.learn_weights",
+                                return_value=(raw.softmax(0), raw)):
+                    model.update(xs, ys)
+            finally:
+                for handle in handles:
+                    handle.remove()
+            self.assertTrue(strengths)
+            for strength in strengths:
+                torch.testing.assert_close(strength, strengths[0])
+            self.assertTrue(all(module._sample_strength is None
+                                for module in find_aloft_modules(model)))
+            captured[mix] = strengths[0]
+
+        torch.testing.assert_close(captured[0.2] - 1, 0.2 * (captured[1.0] - 1))
+        self.assertAlmostEqual(captured[0.2].min().item(), 0.9, places=6)
+        self.assertAlmostEqual(captured[0.2].max().item(), 1.1, places=5)
+
     def test_history_warmup_ramp_and_ema_use_real_clean_features(self):
         model = make_model(stable_warmup_steps=1, stable_ramp_steps=2).train()
         xs, ys = batches()
