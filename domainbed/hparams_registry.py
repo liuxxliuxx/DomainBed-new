@@ -168,6 +168,8 @@ def _hparams(algorithm, dataset, random_state):
         hparams["aloft_struct_skeleton_iters"] = (10, 10)
     elif algorithm in ["ALOFT_CovLF_E", "ALOFT_DomainLF_E", "ALOFT_Stable_E"]:
         # Controlled extensions of the ALOFT_LF_E_mask07 baseline.
+        hparams["aloft_alpha"] = (1.0, 1.0)
+        hparams["aloft_mask_ratio"] = (0.7, 0.7)
         hparams["aloft_perturb_prob"] = (1.0, 1.0)
         hparams["stable_lrbl"]=(1.0,1.0)
         hparams["table_lambdap"]=(70.0,70.0)
